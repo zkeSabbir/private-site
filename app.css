@@ -1245,3 +1245,207 @@ button, input, select {
   border-color: var(--rust-accent);
 }
 
+/* ==========================================================================
+   Responsive Architecture, Mobile Nav, Onboarding Banner & Tables
+   ========================================================================== */
+
+/* Mobile Menu Toggle Button (hidden on desktop) */
+.mobile-menu-toggle-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--rust-text-bright);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-xs);
+  margin-right: 4px;
+}
+.mobile-menu-toggle-btn:hover {
+  background: var(--rust-surface);
+}
+
+/* Mobile Drawer Backdrop */
+.mobile-drawer-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(2px);
+  z-index: 105;
+}
+.mobile-drawer-backdrop.active {
+  display: block;
+}
+
+/* Mobile Bottom Navigation Bar (hidden on desktop) */
+.rust-mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: var(--rust-bg-sidebar);
+  border-top: var(--border-width) solid var(--rust-border);
+  align-items: center;
+  justify-content: space-around;
+  z-index: 100;
+  padding: 0 4px;
+}
+.mobile-nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: transparent;
+  border: none;
+  color: var(--rust-text-muted);
+  cursor: pointer;
+  padding: 6px 0;
+  font-size: 10.5px;
+  font-weight: 600;
+  transition: all 100ms;
+}
+.mobile-nav-btn.active {
+  color: var(--rust-accent);
+}
+
+/* Table Responsive Container */
+.rust-table-responsive-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: var(--border-width) solid var(--rust-border);
+  border-radius: var(--radius-xs);
+  background: var(--rust-surface);
+}
+
+/* Home Onboarding Banner */
+.rust-onboarding-banner {
+  background: linear-gradient(135deg, rgba(184, 84, 43, 0.12), rgba(30, 42, 58, 0.18));
+  border: 1px solid var(--rust-accent);
+  border-left: 4px solid var(--rust-accent);
+  border-radius: var(--radius-xs);
+  padding: 16px 20px;
+  margin-bottom: 6px;
+}
+
+/* Focus Visible Accessibility */
+:focus-visible {
+  outline: 2px solid var(--rust-accent) !important;
+  outline-offset: 2px !important;
+}
+
+/* KPI Grid Responsive Class */
+.home-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+/* Filter Bar Responsive Layout */
+.filter-controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+/* Media Queries: Tablet (<= 1024px) */
+@media (max-width: 1024px) {
+  .search-trigger-box {
+    width: 280px;
+  }
+  .rust-sidebar {
+    width: 220px;
+  }
+  .home-kpi-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* Media Queries: Mobile & Narrow Screens (<= 768px) */
+@media (max-width: 768px) {
+  .mobile-menu-toggle-btn {
+    display: inline-flex;
+  }
+  .rust-mobile-bottom-nav {
+    display: flex;
+  }
+  .rust-rail {
+    display: none;
+  }
+  .rust-sidebar {
+    position: fixed;
+    top: 46px;
+    bottom: 56px;
+    left: 0;
+    width: 270px;
+    z-index: 110;
+    transform: translateX(-100%);
+    transition: transform 180ms ease;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);
+  }
+  .rust-sidebar.drawer-open {
+    transform: translateX(0);
+  }
+  .rust-workspace-shell {
+    height: calc(100vh - 46px - 56px);
+  }
+  .rust-stage {
+    width: 100vw;
+  }
+  .search-trigger-box {
+    display: none;
+  }
+  .home-kpi-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .pref-modal-card {
+    width: 95vw !important;
+    height: 90vh !important;
+    flex-direction: column !important;
+  }
+  .pref-left-sidebar {
+    width: 100% !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    padding: 8px !important;
+    border-right: none !important;
+    border-bottom: var(--border-width) solid var(--rust-border) !important;
+  }
+  .pref-menu-btn {
+    white-space: nowrap !important;
+    padding: 6px 10px !important;
+    font-size: 11.5px !important;
+  }
+  .chat-thread-drawer {
+    position: fixed;
+    top: 46px;
+    bottom: 56px;
+    right: 0;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    z-index: 120;
+  }
+}
+
+/* Media Queries: Extra Small Screens (<= 480px) */
+@media (max-width: 480px) {
+  .home-kpi-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .pref-profile-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .persona-switcher-box span {
+    display: none;
+  }
+}
+
+
