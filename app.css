@@ -1,12 +1,11 @@
 /* ==========================================================================
-   RUST. — Fully Functional Slack-Grade Corporate OS
+   RUST. — Slack Dark Corporate Platform
    Typography: Funnel Display & IBM Plex Sans
    ========================================================================== */
 
 :root {
   --rust-copper: #c25e2e;
   --rust-copper-hover: #aa4e22;
-  --rust-copper-subtle: rgba(194, 94, 46, 0.15);
 
   --slack-rail-bg: #14161a;
   --slack-rail-active: #20242c;
@@ -24,13 +23,6 @@
   --text-bright: #ffffff;
   --text-muted: #94a3b8;
   --text-subtle: #64748b;
-
-  --status-urgent: #ef4444;
-  --status-urgent-bg: rgba(239, 68, 68, 0.15);
-  --status-medium: #3b82f6;
-  --status-medium-bg: rgba(59, 130, 246, 0.15);
-  --status-success: #22c55e;
-  --status-success-bg: rgba(34, 197, 94, 0.15);
 
   --font-display: 'Funnel Display', sans-serif;
   --font-ui: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -95,7 +87,7 @@ body {
   color: #fff;
 }
 
-/* Master App Body */
+/* Master App Workspace */
 .app-workspace-body {
   display: flex;
   height: calc(100vh - 46px);
@@ -103,7 +95,7 @@ body {
   overflow: hidden;
 }
 
-/* 1. Left Icon Rail (SVG Icons) */
+/* 1. Left Icon Rail */
 .left-icon-rail {
   width: 66px;
   background-color: var(--slack-rail-bg);
@@ -238,7 +230,6 @@ body {
   overflow: hidden;
 }
 
-/* Channel Top Header */
 .stage-top-bar {
   padding: 10px 20px;
   border-bottom: 1px solid var(--slack-border);
@@ -246,10 +237,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 48px;
 }
 .stage-channel-title {
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 15.5px;
   font-weight: 700;
   color: #fff;
   display: flex;
@@ -269,9 +261,7 @@ body {
   flex-direction: column;
 }
 
-/* ==========================================================================
-   EXECUTIVE HOME OVERVIEW & PROGRESS VIEW
-   ========================================================================== */
+/* Home Overview & Progress */
 .home-overview-container {
   padding: 24px;
   display: flex;
@@ -302,7 +292,6 @@ body {
   margin-top: 4px;
 }
 
-/* Work Progress Section */
 .work-progress-box {
   background: var(--slack-card-bg);
   border: 1px solid var(--slack-border);
@@ -324,7 +313,6 @@ body {
   transition: width 300ms ease;
 }
 
-/* Interactive Tasks Table in Home */
 .modern-tasks-table {
   width: 100%;
   border-collapse: collapse;
@@ -355,9 +343,7 @@ body {
   cursor: pointer;
 }
 
-/* ==========================================================================
-   SLACK CHAT & FILE ATTACHMENTS
-   ========================================================================== */
+/* Chat Messages */
 .chat-stream-box {
   flex: 1;
   overflow-y: auto;
@@ -409,7 +395,6 @@ body {
   font-family: var(--font-mono);
 }
 
-/* Attached File Preview Card */
 .attached-file-pill {
   background: var(--slack-card-elevated);
   border: 1px solid var(--slack-border);
@@ -432,27 +417,54 @@ body {
   border-radius: var(--radius-xs);
 }
 
-/* Chat Input Composer */
+/* ==========================================================================
+   PERFECT PROMINENT CHAT COMPOSER WITH FILE PREVIEW CHIP
+   ========================================================================== */
 .chat-composer-box {
-  padding: 14px 20px;
+  padding: 12px 20px 16px 20px;
   background: var(--slack-main-bg);
 }
 .composer-border-wrap {
-  border: 1px solid var(--slack-border);
+  border: 1.5px solid #3f4654;
   border-radius: var(--radius-sm);
-  background: var(--slack-composer-bg);
-  overflow: hidden;
+  background: #222630;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 150ms;
 }
+.composer-border-wrap:focus-within {
+  border-color: var(--rust-copper);
+}
+
+/* Staged File Pending Attachment Chip */
+.staged-file-chip {
+  padding: 8px 12px;
+  background: rgba(194, 94, 46, 0.15);
+  border-bottom: 1px solid rgba(194, 94, 46, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #fdba74;
+}
+
 .composer-input-field {
   padding: 12px 16px;
   min-height: 48px;
   outline: none;
-  color: #fff;
+  color: #ffffff;
+  background: transparent;
   font-size: 14px;
   width: 100%;
+  border: none;
+  font-family: var(--font-ui);
 }
+.composer-input-field::placeholder {
+  color: #94a3b8;
+}
+
 .composer-action-bar {
-  padding: 8px 14px;
+  padding: 6px 14px 8px 14px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   justify-content: space-between;
@@ -460,8 +472,8 @@ body {
 }
 .composer-tools {
   display: flex;
-  gap: 12px;
-  color: var(--text-muted);
+  gap: 14px;
+  color: #94a3b8;
   align-items: center;
 }
 .composer-tool-icon {
@@ -469,25 +481,30 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: color 100ms;
 }
 .composer-tool-icon:hover {
-  color: #fff;
+  color: #ffffff;
 }
+
 .btn-send-message {
   background: var(--rust-copper);
-  color: #fff;
+  color: #ffffff;
   border: none;
-  padding: 6px 14px;
+  padding: 7px 18px;
   border-radius: var(--radius-xs);
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 6px;
+  transition: background 120ms;
+}
+.btn-send-message:hover {
+  background: var(--rust-copper-hover);
 }
 
-/* Buttons */
 .btn-rust {
   background: var(--rust-copper);
   color: #fff;
@@ -502,7 +519,7 @@ body {
   background: var(--rust-copper-hover);
 }
 
-/* Modal Windows */
+/* Modals */
 .modal-overlay {
   position: fixed;
   inset: 0;
