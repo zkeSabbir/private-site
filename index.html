@@ -24,7 +24,9 @@
   <header class="rust-header">
     <div style="display: flex; align-items: center; gap: 8px;">
       <!-- Mobile Sidebar Drawer Toggle Button (visible on mobile only) -->
-      <button class="mobile-menu-toggle-btn" id="btn-mobile-sidebar-toggle" aria-label="Toggle Navigation Drawer">☰</button>
+      <button class="mobile-menu-toggle-btn" id="btn-mobile-sidebar-toggle" aria-label="Toggle Navigation Drawer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
 
       <div class="rust-mark" style="font-size: 20px; color: var(--rust-text-bright);" aria-label="RUST. Corporate Platform">
         RUST<span class="rust-mark-dot"></span>
@@ -50,7 +52,7 @@
       </div>
 
       <button class="btn-rust-primary" id="btn-quick-task" style="padding: 4px 10px; font-size: 11.5px;" aria-label="Create New Task">+ Task</button>
-      <button class="btn-rust-secondary" id="btn-open-preferences" style="padding: 4px 10px; font-size: 11.5px;" title="Workspace Preferences & Settings">⚙ Settings</button>
+      <button class="btn-rust-secondary" id="btn-open-preferences" style="padding: 4px 10px; font-size: 11.5px;" title="Workspace Preferences & Settings">⚙ <span class="btn-pref-text">Settings</span></button>
 
       <!-- Current User Profile Avatar -->
       <div id="btn-profile-toggle" class="avatar-tile" style="width: 32px; height: 32px; cursor: pointer; border: 1.5px solid var(--rust-accent); border-radius: var(--radius-xs);" title="Profile Settings & Persona">
@@ -98,6 +100,15 @@
 
     <!-- 2. MIDDLE CHANNELS & DMS SIDEBAR (Collapsible Drawer on Mobile) -->
     <aside class="rust-sidebar" id="main-sidebar-drawer">
+      <!-- Mobile Drawer Header with Close Button -->
+      <div class="mobile-drawer-top-strip">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div class="rust-mark" style="font-size: 16px; color: var(--rust-text-bright);">RUST<span class="rust-mark-dot"></span></div>
+          <span style="font-size: 11px; color: var(--rust-text-muted); font-family: var(--font-mono);">Fortress Group</span>
+        </div>
+        <button type="button" class="btn-rust-secondary" id="btn-close-sidebar-drawer" style="padding: 2px 8px; font-size: 13px;" aria-label="Close Navigation Drawer">✕</button>
+      </div>
+
       <div class="sidebar-header-box">
         <div class="tenant-heading">
           <span id="tenant-name-display">Digital Team - Fortress Group</span>
@@ -267,8 +278,11 @@
       <section id="view-module-chat" class="stage-view-module">
         <div class="stage-top-bar">
           <div class="stage-title">
-            <span id="active-chat-prefix" style="color: var(--rust-text-muted);">#</span>
-            <span id="active-chat-title">general</span>
+            <button type="button" class="mobile-channel-toggle-pill" id="btn-mobile-chat-channels-toggle" title="Switch Channel (Click to browse channels & DMs)">
+              <span id="active-chat-prefix" style="color: var(--rust-accent);">#</span>
+              <span id="active-chat-title">general</span>
+              <span style="font-size: 11px; opacity: 0.65; margin-left: 2px;">▾</span>
+            </button>
             <span id="notice-only-badge" style="display: none; font-size: 10px; font-family: var(--font-mono); padding: 1px 6px; border-radius: 3px; margin-left: 8px; border: 1px solid var(--rust-border); color: var(--rust-text-muted);">BROADCAST</span>
           </div>
           <div style="display: flex; align-items: center; gap: 12px;">
@@ -319,7 +333,7 @@
                       Emergency
                     </button>
 
-                    <span style="font-size: 11px; color: var(--rust-text-muted); font-family: var(--font-mono); margin-left: 6px;">Enter to send · Shift+Enter for new line</span>
+                    <span class="composer-shortcut-hint" style="font-size: 11px; color: var(--rust-text-muted); font-family: var(--font-mono); margin-left: 6px;">Enter to send · Shift+Enter for new line</span>
                   </div>
 
                   <button class="btn-rust-primary" id="btn-send-message">Send ➤</button>
@@ -542,7 +556,11 @@
   <div class="rust-lightbox-overlay" id="modal-image-lightbox" role="dialog" aria-modal="true" aria-label="Media Preview Lightbox">
     <div class="rust-lightbox-toolbar">
       <div class="rust-lightbox-title" id="lightbox-filename">Image View</div>
-      <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <button class="btn-rust-secondary" id="btn-lightbox-share" style="color: #fff; border-color: rgba(255,255,255,0.3); font-size: 12px; padding: 4px 10px; display: inline-flex; align-items: center; gap: 5px;" title="Share Image via Link or WhatsApp">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Share
+        </button>
         <button class="btn-rust-secondary" id="btn-lightbox-download" style="color: #fff; border-color: rgba(255,255,255,0.3); font-size: 12px; padding: 4px 10px; display: inline-flex; align-items: center; gap: 5px;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Download
@@ -857,6 +875,79 @@
     </div>
   </div>
 
+  <!-- ====================================================================
+       THEMED FILE SHARE MODAL (Link Share, WhatsApp Share, Direct Download)
+       ==================================================================== -->
+  <div class="rust-modal-backdrop" id="modal-share-file" role="dialog" aria-modal="true" aria-label="Share File Dialog" style="display: none;">
+    <div class="rust-modal-window file-share-modal-window">
+      <!-- Modal Header -->
+      <div class="file-share-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--rust-accent);"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          <h3 style="font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--rust-text-bright); margin: 0;">Share File · ফাইল শেয়ার</h3>
+        </div>
+        <button type="button" class="btn-rust-secondary" id="btn-close-share-modal" style="padding: 2px 8px; font-size: 13px;" aria-label="Close">✕</button>
+      </div>
+
+      <!-- File Preview Header Box -->
+      <div class="file-share-preview-card">
+        <div class="doc-icon-badge pdf" id="share-modal-badge" style="width: 44px; height: 44px; font-size: 11px; font-weight: 800; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">DOC</div>
+        <div style="flex: 1; min-width: 0;">
+          <div id="share-modal-filename" style="font-weight: 700; font-size: 13.5px; color: var(--rust-text-bright); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Deliverable_Spec.pdf</div>
+          <div style="font-size: 11.5px; color: var(--rust-text-muted); font-family: var(--font-mono); margin-top: 3px;" id="share-modal-filemeta">2.4 MB · Fortress Vault</div>
+        </div>
+      </div>
+
+      <!-- Share Options Body -->
+      <div class="file-share-actions-list">
+        
+        <!-- 1. Link Share Section -->
+        <div class="file-share-section-block">
+          <label class="file-share-label">
+            <span>🔗 Copy Shareable Link (লিংক শেয়ার)</span>
+            <span style="font-weight: normal; color: var(--rust-text-muted); font-size: 11px;">Direct access link</span>
+          </label>
+          <div class="file-share-input-group">
+            <input type="text" id="share-modal-link-input" readonly class="file-share-link-input" value="https://rustmassaging.netlify.app/?file=spec.pdf">
+            <button type="button" class="btn-rust-primary" id="btn-share-copy-link" style="white-space: nowrap; font-size: 12px; padding: 7px 14px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              <span>Copy Link</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. WhatsApp Share Button -->
+        <div class="file-share-section-block">
+          <label class="file-share-label">
+            <span>💬 WhatsApp Share (হোয়াটসঅ্যাপে শেয়ার)</span>
+          </label>
+          <button type="button" class="btn-whatsapp-share" id="btn-share-whatsapp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.301-.15-1.78-.879-2.056-.98-.276-.1-.477-.15-.678.15-.2.301-.778.98-.953 1.181-.176.201-.351.226-.653.075s-1.272-.469-2.424-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.135-.135.301-.351.452-.527.151-.176.201-.301.301-.502.101-.201.05-.377-.025-.527-.075-.15-.678-1.632-.929-2.235-.245-.588-.494-.508-.678-.517-.176-.008-.377-.01-.578-.01s-.527.075-.803.377c-.276.301-1.054 1.03-1.054 2.511s1.079 2.912 1.23 3.113c.15.201 2.123 3.242 5.143 4.547.718.311 1.279.497 1.716.636.721.23 1.377.197 1.896.12.578-.087 1.78-.727 2.031-1.43.251-.703.251-1.305.176-1.43-.075-.125-.276-.201-.577-.351zM12.04 2C6.524 2 2.048 6.474 2.048 11.99c0 1.986.58 3.844 1.588 5.412L2 22l4.78-1.564c1.51.879 3.246 1.344 5.26 1.344 5.516 0 9.992-4.474 9.992-9.79S17.556 2 12.04 2z"/></svg>
+            <span>Share via WhatsApp · হোয়াটসঅ্যাপে পাঠান</span>
+          </button>
+        </div>
+
+        <!-- 3. Direct Download Button -->
+        <div class="file-share-section-block">
+          <label class="file-share-label">
+            <span>⬇️ Direct Download (ফাইল ডাউনলোড)</span>
+          </label>
+          <button type="button" class="btn-rust-secondary btn-share-download-action" id="btn-share-download-action">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span id="share-modal-download-text">Download File Now</span>
+          </button>
+        </div>
+
+        <!-- 4. Native Device Share (Shown when supported) -->
+        <button type="button" class="btn-rust-secondary" id="btn-share-native-sheet" style="width: 100%; display: none; align-items: center; justify-content: center; gap: 8px; padding: 9px 14px; font-size: 13px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          <span>Share via other Apps (Device Share)</span>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: CREATE TEAM POLL -->
   <div class="rust-modal-backdrop" id="modal-create-poll" role="dialog" aria-modal="true" aria-label="Create Team Poll Dialog">
     <div class="rust-modal-window" style="padding: 22px; max-width: 500px;">
@@ -1088,7 +1179,7 @@
       let state = {};
       function loadState() {
         try {
-          const stored = localStorage.getItem('rust_platform_full_v5');
+          const stored = localStorage.getItem('rust_platform_full_v8');
           state = stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(DEFAULT_STATE));
         } catch (e) {
           state = JSON.parse(JSON.stringify(DEFAULT_STATE));
@@ -1096,7 +1187,7 @@
       }
       function saveState() {
         try {
-          localStorage.setItem('rust_platform_full_v5', JSON.stringify(state));
+          localStorage.setItem('rust_platform_full_v8', JSON.stringify(state));
         } catch (e) {}
       }
 
@@ -1369,7 +1460,7 @@
             const docs = msg.files.filter(f => f.type === 'doc');
             const videos = msg.files.filter(f => f.type === 'video');
 
-            // Video player / thumbnail with mouse hover download button
+            // Video player / thumbnail with mouse hover download and share button
             if (videos.length > 0) {
               videos.forEach(vid => {
                 attachmentsHtml += `
@@ -1379,26 +1470,38 @@
                       <span>▶ ${vid.duration || '0:31'}</span>
                       <span style="opacity:0.8;">${escapeHtml(vid.name)}</span>
                     </div>
-                    <button class="video-hover-download-btn" onclick="event.stopPropagation(); downloadMediaUrl('${vid.poster}', '${escapeHtml(vid.name)}');" title="Download Video">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                      Download
-                    </button>
+                    <div class="video-action-buttons">
+                      <button class="video-hover-btn" onclick="event.stopPropagation(); downloadMediaUrl('${vid.poster}', '${escapeHtml(vid.name)}');" title="Download Video">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download
+                      </button>
+                      <button class="video-hover-btn share" onclick="event.stopPropagation(); openShareFileModal({ name: '${escapeHtml(vid.name)}', size: '${vid.duration || 'Video'}', ext: 'video', url: '${vid.poster}', channel: '${channelName}' });" title="Share Video via Link, WhatsApp">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                        Share
+                      </button>
+                    </div>
                   </div>
                 `;
               });
             }
 
-            // Image Gallery with In-Place Lightbox and Hover Download Button
+            // Image Gallery with In-Place Lightbox and Hover Download / Share Buttons
             if (images.length > 0) {
               attachmentsHtml += '<div class="photo-grid-gallery">';
               images.forEach((img, imgIndex) => {
                 attachmentsHtml += `
                   <div class="photo-thumb-card" onclick="openLightboxFromMsg('${msg.id}', ${imgIndex})" title="Click to view full image in-place">
                     <img src="${img.url}" alt="${escapeHtml(img.name || 'Photo')}">
-                    <button class="photo-hover-download-btn" onclick="event.stopPropagation(); downloadMediaUrl('${img.url}', '${escapeHtml(img.name || 'photo.jpg')}');" title="Download Image">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                      Download
-                    </button>
+                    <div class="photo-action-buttons">
+                      <button class="photo-hover-btn" onclick="event.stopPropagation(); downloadMediaUrl('${img.url}', '${escapeHtml(img.name || 'photo.jpg')}');" title="Download Image">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download
+                      </button>
+                      <button class="photo-hover-btn share" onclick="event.stopPropagation(); openShareFileModal({ name: '${escapeHtml(img.name || 'photo.jpg')}', size: 'Photo Image', ext: 'image', url: '${img.url}', channel: '${channelName}' });" title="Share Image via Link, WhatsApp">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                        Share
+                      </button>
+                    </div>
                   </div>
                 `;
               });
@@ -1408,9 +1511,9 @@
               if (images.length > 1) {
                 attachmentsHtml += `
                   <div>
-                    <a class="download-all-strip" href="#" onclick="event.preventDefault(); showToast('Downloading all ${images.length} photos as archive (.zip)...');">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                      Download all ${images.length} files (.zip, 4.5 MB)
+                    <a class="download-all-strip" href="#" onclick="event.preventDefault(); openShareFileModal({ name: 'Archive_${channelName}_photos.zip', size: '${images.length} Photos (4.5 MB)', ext: 'zip', channel: '${channelName}' });">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                      Share / Download all ${images.length} files (.zip, 4.5 MB)
                     </a>
                   </div>
                 `;
@@ -1428,12 +1531,19 @@
                 attachmentsHtml += `
                   <div class="attached-doc-card">
                     <div class="doc-icon-badge ${badgeClass}">${badgeLabel}</div>
-                    <div style="flex:1;">
-                      <div style="font-weight:700;color:var(--rust-text-bright);font-size:13px;">${escapeHtml(doc.name)}</div>
+                    <div style="flex:1;min-width:0;">
+                      <div style="font-weight:700;color:var(--rust-text-bright);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(doc.name)}</div>
                       <div style="font-size:11px;color:var(--rust-text-muted);font-family:var(--font-mono);margin-top:2px;">${doc.size || 'Attachment'}</div>
                     </div>
-                    <button class="btn-rust-secondary" style="padding:4px 10px;font-size:11.5px;" onclick="showToast('Downloading ${escapeHtml(doc.name)}...')">⬇ Download</button>
-                    <button class="btn-rust-secondary" style="padding:4px 8px;font-size:11.5px;" onclick="shareMessageLink('${msg.id}')" title="Copy Link">🔗</button>
+                    <div style="display:flex;gap:6px;align-items:center;">
+                      <button class="btn-rust-secondary" style="padding:4px 9px;font-size:11.5px;display:inline-flex;align-items:center;gap:4px;" onclick="openShareFileModal({ name: '${escapeHtml(doc.name)}', size: '${escapeHtml(doc.size || 'Attachment')}', ext: '${doc.ext || 'doc'}', channel: '${channelName}', url: '${doc.url || '#'}' })" title="Share via Link, WhatsApp, Download">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                        Share
+                      </button>
+                      <button class="btn-rust-secondary" style="padding:4px 9px;font-size:11.5px;display:inline-flex;align-items:center;gap:4px;" onclick="downloadMediaUrl('${doc.url || '#'}', '${escapeHtml(doc.name)}')" title="Download">
+                        ⬇
+                      </button>
+                    </div>
                   </div>
                 `;
               });
@@ -1517,6 +1627,19 @@
               ${repliesHtml}
             </div>
           `;
+
+          // Mobile touch interaction: Tap message to toggle action toolbar on mobile screens
+          row.addEventListener('click', (e) => {
+            if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.reaction-pill-badge') || e.target.closest('.reaction-add-btn') || e.target.closest('input')) {
+              return;
+            }
+            if (window.innerWidth <= 768) {
+              document.querySelectorAll('.msg-row-container.active-mobile-actions').forEach(el => {
+                if (el !== row) el.classList.remove('active-mobile-actions');
+              });
+              row.classList.toggle('active-mobile-actions');
+            }
+          });
 
           chatMessagesContainer.appendChild(row);
         });
@@ -1904,6 +2027,168 @@
         }
       });
 
+      // Lightbox Share Button
+      const lbShareBtn = document.getElementById('btn-lightbox-share');
+      if (lbShareBtn) {
+        lbShareBtn.addEventListener('click', () => {
+          const item = currentLightboxList[currentLightboxIndex];
+          if (item) {
+            openShareFileModal({
+              name: item.name || 'Image Preview',
+              url: item.url,
+              size: 'HD Media',
+              ext: item.type === 'video' ? 'video' : 'image',
+              channel: state.activeChannelId ? state.activeChannelId.replace('c_', '').replace('g_', '').replace('user_', '') : 'general'
+            });
+          }
+        });
+      }
+
+      // =====================================================================
+      // 7.1. THEMED FILE SHARE SYSTEM (Link Share, WhatsApp Share, Download)
+      // =====================================================================
+      let currentShareFile = null;
+
+      window.openShareFileModal = function(file) {
+        if (!file) return;
+        currentShareFile = file;
+        const modal = document.getElementById('modal-share-file');
+        if (!modal) return;
+
+        const ext = (file.ext || 'doc').toLowerCase();
+        const isZip = (ext === 'zip' || ext === 'rar' || ext === '7z');
+        const isImg = (ext === 'image' || ext === 'jpg' || ext === 'png' || ext === 'webp');
+        const isVid = (ext === 'video' || ext === 'mp4');
+        
+        const badgeClass = isZip ? 'zip' : (isImg ? 'pdf' : (isVid ? 'psd' : ext));
+        const badgeLabel = isImg ? 'IMG' : (isVid ? 'VID' : (isZip ? 'ZIP' : ext.toUpperCase()));
+
+        const badgeEl = document.getElementById('share-modal-badge');
+        if (badgeEl) {
+          badgeEl.className = 'doc-icon-badge ' + badgeClass;
+          badgeEl.textContent = badgeLabel;
+        }
+
+        const nameEl = document.getElementById('share-modal-filename');
+        if (nameEl) nameEl.textContent = file.name || 'File Asset';
+
+        const metaEl = document.getElementById('share-modal-filemeta');
+        if (metaEl) {
+          const channelName = file.channel ? '#' + file.channel : 'Fortress Vault';
+          metaEl.textContent = `${file.size || 'Attachment'} · ${channelName}`;
+        }
+
+        // Generate clean shareable link
+        const origin = window.location.origin && window.location.origin !== 'null' ? window.location.origin : 'https://rustmassaging.netlify.app';
+        const pathname = window.location.pathname || '/';
+        const shareLink = `${origin}${pathname}?file=${encodeURIComponent(file.name || 'asset')}`;
+
+        const linkInp = document.getElementById('share-modal-link-input');
+        if (linkInp) linkInp.value = shareLink;
+
+        const copyBtn = document.getElementById('btn-share-copy-link');
+        if (copyBtn) {
+          copyBtn.innerHTML = `
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            <span>Copy Link</span>
+          `;
+          copyBtn.style.background = '';
+        }
+
+        const dlText = document.getElementById('share-modal-download-text');
+        if (dlText) dlText.textContent = `Download "${file.name || 'file'}" (${file.size || 'File'})`;
+
+        // Native device share button
+        const nativeBtn = document.getElementById('btn-share-native-sheet');
+        if (nativeBtn) {
+          nativeBtn.style.display = (navigator.share ? 'inline-flex' : 'none');
+        }
+
+        modal.style.display = 'flex';
+      };
+
+      window.closeShareFileModal = function() {
+        const modal = document.getElementById('modal-share-file');
+        if (modal) modal.style.display = 'none';
+      };
+
+      // Copy Link Button Action
+      const shareCopyBtn = document.getElementById('btn-share-copy-link');
+      if (shareCopyBtn) {
+        shareCopyBtn.addEventListener('click', () => {
+          const linkInp = document.getElementById('share-modal-link-input');
+          if (!linkInp) return;
+          const urlToCopy = linkInp.value;
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(urlToCopy).then(() => {
+              shareCopyBtn.innerHTML = `<span>✓ Copied!</span>`;
+              shareCopyBtn.style.background = 'var(--rust-success, #2a9d8f)';
+              showToast(`File link copied to clipboard ✓`);
+            }).catch(() => {
+              linkInp.select();
+              document.execCommand('copy');
+              showToast(`File link copied to clipboard ✓`);
+            });
+          } else {
+            linkInp.select();
+            document.execCommand('copy');
+            showToast(`File link copied to clipboard ✓`);
+          }
+        });
+      }
+
+      // WhatsApp Share Button Action
+      const shareWaBtn = document.getElementById('btn-share-whatsapp');
+      if (shareWaBtn) {
+        shareWaBtn.addEventListener('click', () => {
+          if (!currentShareFile) return;
+          const name = currentShareFile.name || 'File Asset';
+          const size = currentShareFile.size ? `(${currentShareFile.size})` : '';
+          const linkInp = document.getElementById('share-modal-link-input');
+          const link = linkInp ? linkInp.value : window.location.href;
+          const message = `📁 *${name}* ${size}\nShared from Fortress Corporate Platform (RUST)\n🔗 ${link}`;
+          const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+          window.open(waUrl, '_blank');
+          showToast(`Opening WhatsApp share for "${name}"...`);
+        });
+      }
+
+      // Direct Download Button in Share Modal Action
+      const shareDlBtn = document.getElementById('btn-share-download-action');
+      if (shareDlBtn) {
+        shareDlBtn.addEventListener('click', () => {
+          if (!currentShareFile) return;
+          downloadMediaUrl(currentShareFile.url || '#', currentShareFile.name);
+          closeShareFileModal();
+        });
+      }
+
+      // Native Device Share Sheet Action
+      const shareNativeBtn = document.getElementById('btn-share-native-sheet');
+      if (shareNativeBtn) {
+        shareNativeBtn.addEventListener('click', () => {
+          if (!currentShareFile || !navigator.share) return;
+          const linkInp = document.getElementById('share-modal-link-input');
+          const link = linkInp ? linkInp.value : window.location.href;
+          navigator.share({
+            title: currentShareFile.name || 'RUST File Share',
+            text: `Check out ${currentShareFile.name || 'file'} on RUST Fortress Platform`,
+            url: link
+          }).catch(() => {});
+        });
+      }
+
+      // Close Share Modal handlers
+      const shareCloseBtn = document.getElementById('btn-close-share-modal');
+      if (shareCloseBtn) shareCloseBtn.addEventListener('click', closeShareFileModal);
+
+      const shareModalBackdrop = document.getElementById('modal-share-file');
+      if (shareModalBackdrop) {
+        shareModalBackdrop.addEventListener('click', function(e) {
+          if (e.target === this) closeShareFileModal();
+        });
+      }
+
       // 8. Slack Thread Side Drawer
       window.openThreadDrawer = function(msgId) {
         const chId = state.activeChannelId;
@@ -2150,8 +2435,15 @@
             <td>#${escapeHtml(f.channel)}</td>
             <td>${escapeHtml(f.uploader)}</td>
             <td style="font-family:var(--font-mono);font-size:12px;">${escapeHtml(f.size)}</td>
-            <td style="font-family:var(--font-mono);font-size:12px;">${escapeHtml(f.date)}</td>
-            <td><button class="btn-rust-secondary" style="padding:3px 9px;font-size:11.5px;" onclick="downloadMediaUrl('#', '${escapeHtml(f.name)}')">⬇ Download</button></td>
+            <td style="white-space:nowrap;display:flex;gap:6px;align-items:center;">
+              <button class="btn-rust-secondary" style="padding:3px 9px;font-size:11.5px;display:inline-flex;align-items:center;gap:4px;" onclick="openShareFileModal({ name: '${escapeHtml(f.name)}', size: '${escapeHtml(f.size)}', ext: '${escapeHtml(f.ext || 'doc')}', channel: '${escapeHtml(f.channel)}', uploader: '${escapeHtml(f.uploader)}', url: '${f.url || '#'}' })" title="Share file via Link, WhatsApp, Download">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                Share
+              </button>
+              <button class="btn-rust-secondary" style="padding:3px 9px;font-size:11.5px;display:inline-flex;align-items:center;gap:4px;" onclick="downloadMediaUrl('${f.url || '#'}', '${escapeHtml(f.name)}')" title="Download">
+                ⬇
+              </button>
+            </td>
           `;
           tbody.appendChild(tr);
         });
@@ -2401,20 +2693,52 @@
         // Mobile Bottom Nav
         document.querySelectorAll('.mobile-nav-btn').forEach(b => {
           b.addEventListener('click', function() {
-            switchView(this.dataset.view);
+            const targetView = this.dataset.view;
+            if (targetView === 'chat' && currentView === 'chat') {
+              const sidebar = document.getElementById('main-sidebar-drawer');
+              const backdrop = document.getElementById('mobile-drawer-backdrop');
+              if (sidebar && sidebar.classList.contains('drawer-open')) {
+                closeMobileDrawer();
+              } else if (sidebar && backdrop) {
+                sidebar.classList.add('drawer-open');
+                backdrop.classList.add('active');
+              }
+            } else {
+              switchView(targetView);
+              closeMobileDrawer();
+            }
           });
         });
 
-        // Mobile Sidebar Drawer Toggle
+        // Mobile Sidebar Drawer Toggle & Close
         const toggleBtn = document.getElementById('btn-mobile-sidebar-toggle');
         const sidebar = document.getElementById('main-sidebar-drawer');
         const backdrop = document.getElementById('mobile-drawer-backdrop');
+        const closeDrawerBtn = document.getElementById('btn-close-sidebar-drawer');
 
-        toggleBtn.addEventListener('click', () => {
-          sidebar.classList.toggle('drawer-open');
-          backdrop.classList.toggle('active');
-        });
-        backdrop.addEventListener('click', closeMobileDrawer);
+        if (toggleBtn) {
+          toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('drawer-open');
+            backdrop.classList.toggle('active');
+          });
+        }
+        if (closeDrawerBtn) {
+          closeDrawerBtn.addEventListener('click', closeMobileDrawer);
+        }
+        if (backdrop) {
+          backdrop.addEventListener('click', closeMobileDrawer);
+        }
+
+        // Chat Header Mobile Channel Switcher
+        const mobChatToggle = document.getElementById('btn-mobile-chat-channels-toggle');
+        if (mobChatToggle) {
+          mobChatToggle.addEventListener('click', () => {
+            if (sidebar && backdrop) {
+              sidebar.classList.add('drawer-open');
+              backdrop.classList.add('active');
+            }
+          });
+        }
 
         // Overview in sidebar
         document.getElementById('nav-item-overview').addEventListener('click', () => {
@@ -2512,6 +2836,9 @@
             document.getElementById('modal-preferences').style.display = 'none';
             document.getElementById('modal-create-task').style.display = 'none';
             document.getElementById('modal-image-lightbox').style.display = 'none';
+            document.getElementById('modal-confirm-dialog').style.display = 'none';
+            document.getElementById('modal-share-file').style.display = 'none';
+            document.getElementById('modal-create-poll').style.display = 'none';
             document.getElementById('chat-thread-drawer').classList.remove('open');
             closeMobileDrawer();
           }
