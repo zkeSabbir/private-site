@@ -201,25 +201,25 @@
 
           <!-- KPI Cards (Responsive Grid: 5 cols desktop, 3 cols tablet, 2 cols mobile) -->
           <div class="home-kpi-grid">
-            <div class="attached-doc-card" style="flex-direction: column; align-items: flex-start; max-width: none; margin: 0;">
-              <div style="font-family: var(--font-display); font-size: 26px; font-weight: 800; color: var(--rust-text-bright);" id="kpi-active-tasks">0</div>
-              <div style="font-size: 11px; color: var(--rust-text-muted); text-transform: uppercase;">Active Tasks</div>
+            <div class="rust-kpi-card">
+              <div class="rust-kpi-value" style="color: var(--rust-text-bright);" id="kpi-active-tasks">0</div>
+              <div class="rust-kpi-label">Active Tasks</div>
             </div>
-            <div class="attached-doc-card" style="flex-direction: column; align-items: flex-start; max-width: none; margin: 0;">
-              <div style="font-family: var(--font-display); font-size: 26px; font-weight: 800; color: var(--rust-ok);" id="kpi-done-tasks">0</div>
-              <div style="font-size: 11px; color: var(--rust-text-muted); text-transform: uppercase;">Completed</div>
+            <div class="rust-kpi-card">
+              <div class="rust-kpi-value" style="color: var(--rust-ok);" id="kpi-done-tasks">0</div>
+              <div class="rust-kpi-label">Completed</div>
             </div>
-            <div class="attached-doc-card" style="flex-direction: column; align-items: flex-start; max-width: none; margin: 0;">
-              <div style="font-family: var(--font-display); font-size: 26px; font-weight: 800; color: var(--rust-info);" id="kpi-progress-tasks">0</div>
-              <div style="font-size: 11px; color: var(--rust-text-muted); text-transform: uppercase;">In Progress</div>
+            <div class="rust-kpi-card">
+              <div class="rust-kpi-value" style="color: var(--rust-info);" id="kpi-progress-tasks">0</div>
+              <div class="rust-kpi-label">In Progress</div>
             </div>
-            <div class="attached-doc-card" style="flex-direction: column; align-items: flex-start; max-width: none; margin: 0;">
-              <div style="font-family: var(--font-display); font-size: 26px; font-weight: 800; color: var(--rust-critical);" id="kpi-overdue-tasks">0</div>
-              <div style="font-size: 11px; color: var(--rust-text-muted); text-transform: uppercase;">Overdue Tasks</div>
+            <div class="rust-kpi-card">
+              <div class="rust-kpi-value" style="color: var(--rust-critical);" id="kpi-overdue-tasks">0</div>
+              <div class="rust-kpi-label">Overdue Tasks</div>
             </div>
-            <div class="attached-doc-card" style="flex-direction: column; align-items: flex-start; max-width: none; margin: 0;">
-              <div style="font-family: var(--font-display); font-size: 26px; font-weight: 800; color: var(--rust-warn);" id="kpi-members-count">0</div>
-              <div style="font-size: 11px; color: var(--rust-text-muted); text-transform: uppercase;">Team Members</div>
+            <div class="rust-kpi-card">
+              <div class="rust-kpi-value" style="color: var(--rust-warn);" id="kpi-members-count">0</div>
+              <div class="rust-kpi-label">Team Members</div>
             </div>
           </div>
 
@@ -246,7 +246,18 @@
                 <button class="btn-rust-secondary" id="btn-home-filter-all" style="padding: 3px 10px; font-size: 11px;">All Active Tasks</button>
               </div>
             </div>
-            <table class="rust-data-table" style="min-width: 600px;">
+            <table class="rust-data-table">
+              <thead>
+                <tr>
+                  <th style="width: 36%;">TASK / DELIVERABLE</th>
+                  <th style="width: 20%;">ASSIGNEE</th>
+                  <th style="width: 12%;">PRIORITY</th>
+                  <th style="width: 16%;">DUE DATE</th>
+                  <th style="width: 16%;">STATUS (LIVE SYNC)</th>
+                </tr>
+              </thead>
+              <tbody id="home-tasks-table-body"></tbody>
+            </table>
               <thead>
                 <tr>
                   <th>TASK / DELIVERABLE</th>
@@ -298,7 +309,7 @@
                   🔒 <strong>Official Notice Board:</strong> Only HR & Admins can broadcast announcements. You can read and add emoji reactions to notices above.
                 </div>
 
-                <input type="text" class="composer-text-input" id="chat-text-input" placeholder="Message active channel... (Select multiple photos or files, paste screenshots, drag & drop)" autocomplete="off">
+                <textarea class="composer-textarea" id="chat-text-input" rows="2" placeholder="Message active channel... (Press Enter to send, Shift+Enter for new line)"></textarea>
 
                 <div class="composer-toolbar-bottom" id="composer-toolbar-controls">
                   <div class="composer-tool-icons" style="gap: 8px;">
@@ -384,16 +395,16 @@
 
           <!-- Responsive Table Container -->
           <div class="rust-table-responsive-container">
-            <table class="rust-data-table" style="min-width: 720px;">
+            <table class="rust-data-table">
               <thead>
                 <tr>
-                  <th>TASK DELIVERABLE</th>
-                  <th>DEPARTMENT</th>
-                  <th>ASSIGNEE</th>
-                  <th>PRIORITY</th>
-                  <th>DUE DATE</th>
-                  <th>STATUS</th>
-                  <th>ACTION</th>
+                  <th style="width: 32%;">TASK DELIVERABLE</th>
+                  <th style="width: 16%;">DEPARTMENT</th>
+                  <th style="width: 16%;">ASSIGNEE</th>
+                  <th style="width: 11%;">PRIORITY</th>
+                  <th style="width: 12%;">DUE DATE</th>
+                  <th style="width: 13%;">STATUS</th>
+                  <th style="min-width: 70px; text-align: right;">ACTION</th>
                 </tr>
               </thead>
               <tbody id="full-tasks-table-body"></tbody>
@@ -438,16 +449,16 @@
 
           <!-- Responsive Table Container -->
           <div class="rust-table-responsive-container">
-            <table class="rust-data-table" style="min-width: 680px;">
+            <table class="rust-data-table">
               <thead>
                 <tr>
-                  <th>DOCUMENT NAME</th>
-                  <th>TYPE</th>
-                  <th>CHANNEL</th>
-                  <th>UPLOADED BY</th>
-                  <th>SIZE</th>
-                  <th>DATE</th>
-                  <th>ACTION</th>
+                  <th style="width: 32%;">DOCUMENT NAME</th>
+                  <th style="width: 8%;">TYPE</th>
+                  <th style="width: 14%;">CHANNEL</th>
+                  <th style="width: 18%;">UPLOADED BY</th>
+                  <th style="width: 10%;">SIZE</th>
+                  <th style="width: 10%;">DATE</th>
+                  <th style="min-width: 90px; text-align: right;">ACTION</th>
                 </tr>
               </thead>
               <tbody id="files-table-body"></tbody>
@@ -486,16 +497,16 @@
 
           <!-- Responsive Table Container -->
           <div class="rust-table-responsive-container">
-            <table class="rust-data-table" style="min-width: 760px;">
+            <table class="rust-data-table">
               <thead>
                 <tr>
-                  <th>MEMBER</th>
-                  <th>ROLE</th>
-                  <th>DEPARTMENT</th>
-                  <th>MOBILE</th>
-                  <th>EMAIL</th>
-                  <th>STATUS</th>
-                  <th>ACTION</th>
+                  <th style="width: 25%;">MEMBER</th>
+                  <th style="width: 9%;">ROLE</th>
+                  <th style="width: 17%;">DEPARTMENT</th>
+                  <th style="width: 16%;">MOBILE</th>
+                  <th style="width: 19%;">EMAIL</th>
+                  <th style="width: 14%;">STATUS</th>
+                  <th style="min-width: 80px; text-align: right;">ACTION</th>
                 </tr>
               </thead>
               <tbody id="members-table-body"></tbody>
@@ -1223,8 +1234,8 @@
 
         // Notice channel active state
         const noticeLink = document.getElementById('channel-notice-link');
-        if (state.activeChannelId === 'c_notice') {
-          noticeLink.classList.add('active');
+        if (noticeLink) {
+          noticeLink.classList.toggle('active', state.activeChannelId === 'c_notice');
         } else {
           noticeLink.classList.remove('active');
         }
@@ -1267,16 +1278,16 @@
         const chatMessagesContainer = document.getElementById('chat-messages-container');
         chatMessagesContainer.innerHTML = '';
 
-        if (messages.length === 0) {
-          chatMessagesContainer.innerHTML = `
-            <div style="text-align: center; padding: 40px; color: var(--rust-text-muted);">
-              <div style="font-size: 24px; margin-bottom: 8px;">💬</div>
-              <strong>No messages yet in this channel</strong>
-              <p style="font-size: 12px; margin-top: 4px;">Start the conversation or attach files using the composer below.</p>
-            </div>
-          `;
-          return;
-        }
+        // Slack-style Channel Greeting Header at top of stream
+        const channelName = isNoticeChannel ? 'company-notices' : chId.replace('c_', '').replace('g_', '').replace('user_', '');
+        const greetingBanner = document.createElement('div');
+        greetingBanner.className = 'channel-intro-banner';
+        greetingBanner.innerHTML = `
+          <div class="channel-intro-hash">${isNoticeChannel ? '📢' : (chId.startsWith('user_') ? '👤' : '#')}</div>
+          <h2 class="channel-intro-title">Welcome to ${isNoticeChannel ? 'company-notices' : '#' + channelName}</h2>
+          <p class="channel-intro-desc">${isNoticeChannel ? 'Official executive notices and company-wide broadcasts are published here by HR and administration.' : 'This is the start of the <strong>#' + channelName + '</strong> workspace discussion stream. Share updates, coordinate deliverable milestones, and attach project assets.'}</p>
+        `;
+        chatMessagesContainer.appendChild(greetingBanner);
 
         messages.forEach(msg => {
           const row = document.createElement('div');
@@ -1435,6 +1446,7 @@
 
           chatMessagesContainer.appendChild(row);
         });
+        chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
 
         chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
       }
