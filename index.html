@@ -1,256 +1,328 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RUST. — Corporate Platform</title>
-  
-  <!-- Funnel Display Font & IBM Plex Sans -->
+  <title>RUST. — Corporate Communication & Task Platform</title>
+
+  <!-- Typography: Funnel Display, IBM Plex Sans, IBM Plex Mono, Noto Sans Bengali fallback -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
 
-  <!-- MASTER TOP SLACK SEARCH HEADER -->
-  <header class="top-global-header">
-    <div class="header-history-controls">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="cursor: pointer;"><path d="m15 18-6-6 6-6"/></svg>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="cursor: pointer;"><path d="m9 18 6-6-6-6"/></svg>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="cursor: pointer;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+  <!-- MASTER TOP HEADER -->
+  <header class="rust-header">
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <div class="rust-mark" style="font-size: 20px; color: var(--rust-text);" aria-label="RUST. Brand">
+        RUST<span class="rust-mark-dot"></span>
+      </div>
     </div>
 
-    <div class="global-search-container" onclick="openSearchModal()">
+    <!-- Central Search Box (Ctrl+K) -->
+    <div class="search-trigger-box" id="btn-open-search" role="button" tabindex="0" aria-label="Search or switch channel">
       <div style="display: flex; align-items: center; gap: 8px;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <span id="search-placeholder">Search Fortress Group, channels, files, or tasks...</span>
+        <span id="search-bar-placeholder">Search messages, people, tasks, files...</span>
       </div>
-      <span style="font-size: 11px; font-family: var(--font-mono); opacity: 0.6;">Ctrl + K</span>
+      <kbd style="font-family: var(--font-mono); font-size: 11px; opacity: 0.6; background: rgba(0,0,0,0.15); padding: 2px 6px; border-radius: 3px;">Ctrl + K</kbd>
     </div>
 
-    <div style="display: flex; align-items: center; gap: 14px;">
-      <button class="btn-rust" onclick="openAddMemberModal()" style="padding: 4px 10px; font-size: 11.5px;">+ Invite Member</button>
-      <div style="width: 28px; height: 28px; border-radius: 4px; background: #3f0e40; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; cursor: pointer; border: 1px solid var(--rust-copper);" onclick="openAddMemberModal()">
-        ZS
+    <!-- Top Right Actions & Profile Menu -->
+    <div style="display: flex; align-items: center; gap: 12px; position: relative;">
+      <button class="btn-rust-primary" id="btn-quick-task" style="padding: 4px 10px; font-size: 11.5px;">+ Task</button>
+      <button class="btn-rust-secondary" id="btn-quick-invite" style="padding: 4px 10px; font-size: 11.5px;">+ Member</button>
+
+      <!-- User Avatar / Profile Menu Button -->
+      <div id="btn-profile-toggle" class="sender-avatar" style="width: 30px; height: 30px; font-size: 11px; cursor: pointer;" title="Profile & Preferences">
+        TD
+      </div>
+
+      <!-- Profile Popover Dropdown -->
+      <div class="profile-menu-dropdown" id="profile-popover">
+        <div style="padding: 12px 14px; border-bottom: 1px solid var(--rust-border);">
+          <div style="font-weight: 700; font-size: 13.5px;" id="profile-popover-name">Tanvir Ahmed</div>
+          <div style="font-size: 11.5px; color: var(--rust-text-muted);" id="profile-popover-title">Lead Architect · Engineering</div>
+        </div>
+        <div class="profile-menu-item" id="menu-toggle-status">
+          <span style="color: var(--rust-ok);">●</span> Set Status: Available
+        </div>
+        <div class="profile-menu-item" id="menu-toggle-theme">
+          <span>🌓</span> Switch Theme (Light / Dark)
+        </div>
+        <div class="profile-menu-item" id="menu-reset-data">
+          <span>🔄</span> Reset Demo Seed Data
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- MASTER 3-PANE WORKSPACE -->
-  <div class="app-workspace-body">
+  <!-- MASTER WORKSPACE BODY -->
+  <div class="rust-workspace-shell">
 
-    <!-- 1. LEFTMOST SLACK ICON RAIL -->
-    <nav class="left-icon-rail">
-      <div class="rail-team-tile" onclick="switchStage('home')">
-        DT
+    <!-- 1. LEFT ICON RAIL -->
+    <nav class="rust-rail" aria-label="Main Navigation">
+      <div class="rail-brand-tile" id="rail-logo-btn" title="RUST. Corporate Platform">
+        <div class="rust-mark" style="font-size: 15px; color: var(--rust-text);">
+          R<span class="rust-mark-dot"></span>
+        </div>
       </div>
 
-      <button class="rail-btn-unit active" id="rail-home-btn" onclick="switchStage('home')" title="Workspace Home Overview & Progress">
+      <button class="rail-nav-btn active" id="rail-btn-home" data-view="home" title="Executive Overview & Tasks">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         <span>Home</span>
       </button>
 
-      <button class="rail-btn-unit" id="rail-chat-btn" onclick="switchStage('chat')" title="Messages & Channels">
+      <button class="rail-nav-btn" id="rail-btn-chat" data-view="chat" title="Messages & Channels">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        <span>DMs</span>
+        <span>Chat</span>
       </button>
 
-      <button class="rail-btn-unit" id="rail-tasks-btn" onclick="switchStage('home')" title="Tasks & Progress Management">
+      <button class="rail-nav-btn" id="rail-btn-tasks" data-view="tasks" title="Workspace Task Engine">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         <span>Tasks</span>
       </button>
 
-      <button class="rail-btn-unit" id="rail-files-btn" onclick="switchStage('files')" title="Company Files & Assets">
+      <button class="rail-nav-btn" id="rail-btn-files" data-view="files" title="Document Vault">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         <span>Files</span>
       </button>
 
-      <div style="margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 8px;">
-        <button class="rail-btn-unit" onclick="openAddMemberModal()" title="Manage Team Members">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
-          <span>Team</span>
-        </button>
-      </div>
+      <button class="rail-nav-btn" id="rail-btn-members" data-view="members" title="Team Directory & Roles" style="margin-top: auto;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Team</span>
+      </button>
     </nav>
 
-    <!-- 2. MIDDLE CHANNELS & DIRECT MESSAGES SIDEBAR -->
-    <aside class="channel-sidebar-pane">
-      <div class="sidebar-team-title-row">
-        <div class="team-name-text">
-          <span>Digital Team - Fortress Group</span>
-          <span class="dot"></span>
+    <!-- 2. MIDDLE CHANNELS & DMS SIDEBAR -->
+    <aside class="rust-sidebar">
+      <div class="sidebar-header-box">
+        <div class="tenant-heading">
+          <span id="tenant-name-display">Apex Global Corp</span>
+          <span class="rust-mark-dot"></span>
         </div>
+        <span style="font-size: 11px; font-family: var(--font-mono); color: var(--rust-ok);">● RLS ACTIVE</span>
       </div>
 
-      <div class="sidebar-scroll-box">
-        <div class="sidebar-nav-entry active" id="sidebar-overview-entry" onclick="switchStage('home')">
+      <div class="sidebar-scrollable">
+        <div class="sidebar-nav-item active" id="nav-item-overview" data-action="open-home">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/></svg>
-          <span>Overview & Tasks</span>
+          <span>Executive Home</span>
         </div>
 
-        <div class="sidebar-group-label">
-          <span>Starred Team</span>
+        <div class="sidebar-category-header">
+          <span>Public Channels</span>
+          <span style="cursor: pointer;" id="btn-add-channel" title="New Channel">+</span>
         </div>
-        <div class="sidebar-nav-entry" onclick="openDirectChat('Zke Sabbir')">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <span>Zke Sabbir Designer <small style="color: var(--text-muted);">(you)</small></span>
-        </div>
-        <div class="sidebar-nav-entry" onclick="openDirectChat('Md. Naiem Hossain')">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <span>Md. Naiem Hossain</span>
-        </div>
-        <div class="sidebar-nav-entry" onclick="openDirectChat('Md Rakibul Islam')">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <span>Md Rakibul Islam</span>
+        <div id="sidebar-channels-list">
+          <!-- Populated from State -->
         </div>
 
-        <div class="sidebar-group-label">
-          <span>Channels</span>
+        <div class="sidebar-category-header">
+          <span>Private Groups</span>
         </div>
-        <div class="sidebar-nav-entry" id="channel-general-link" onclick="openChannelView('general')">
-          <span style="font-weight: 700; color: #94a3b8;">#</span>
-          <span>general</span>
-        </div>
-        <div class="sidebar-nav-entry" onclick="openChannelView('resource')">
-          <span style="font-weight: 700; color: #94a3b8;">#</span>
-          <span>resource</span>
-        </div>
-        <div class="sidebar-nav-entry" onclick="openChannelView('design-team')">
-          <span style="font-weight: 700; color: #94a3b8;">#</span>
-          <span>design-team</span>
+        <div id="sidebar-private-list">
+          <!-- Populated from State -->
         </div>
 
-        <div class="sidebar-group-label">
+        <div class="sidebar-category-header">
           <span>Direct Messages</span>
         </div>
-        <div class="sidebar-nav-entry" onclick="openDirectChat('Shimul-DMS')">
-          <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span>
-          <span>Shimul-DMS</span>
-        </div>
-        <div class="sidebar-nav-entry" onclick="openDirectChat('Anayat Munna')">
-          <span style="width: 8px; height: 8px; border-radius: 50%; background: #94a3b8;"></span>
-          <span>Anayat Munna</span>
+        <div id="sidebar-dms-list">
+          <!-- Populated from State -->
         </div>
       </div>
     </aside>
 
     <!-- 3. MAIN STAGE CONTENT PANE -->
-    <main class="main-stage-pane">
+    <main class="rust-stage">
 
       <!-- ====================================================================
-           VIEW 1: EXECUTIVE HOME OVERVIEW & WORK PROGRESS
+           MODULE 1 / VIEW 1: HOME (DENSE & ACTIONABLE)
            ==================================================================== -->
-      <section id="view-home" class="view-panel active-view">
+      <section id="view-module-home" class="stage-view-module active-view">
         <div class="stage-top-bar">
-          <div class="stage-channel-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/></svg>
-            <span>Workspace Executive Overview</span>
+          <div class="stage-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/></svg>
+            <span>Actionable Home & Priorities</span>
           </div>
-          <div style="display: flex; gap: 8px;">
-            <button class="btn-rust" onclick="openAddTaskModal()">+ Create Task</button>
-            <button class="btn-rust" style="background: rgba(255,255,255,0.08); border: 1px solid var(--slack-border);" onclick="openAddMemberModal()">+ Add Member</button>
+          <div style="font-size: 11.5px; font-family: var(--font-mono); color: var(--rust-text-muted);">
+            Workspace Scope: Engineering & Operations
           </div>
         </div>
 
-        <div class="home-overview-container">
-          <!-- 5 Master KPIs -->
-          <div class="kpi-metric-strip">
-            <div class="kpi-card">
-              <div class="kpi-val" id="kpi-total-tasks">6</div>
-              <div class="kpi-label">Active Tasks</div>
+        <div class="home-layout-box">
+
+          <!-- 1. PRIORITY INBOX DECK (Hidden when 0 unacknowledged) -->
+          <div class="priority-inbox-deck" id="home-priority-deck">
+            <div class="priority-inbox-header">
+              <span id="priority-deck-count-label">! PRIORITY MESSAGES REQUIRING ACKNOWLEDGEMENT</span>
+              <span>ESCALATION MONITOR ACTIVE</span>
             </div>
-            <div class="kpi-card">
-              <div class="kpi-val" style="color: #22c55e;" id="kpi-done-tasks">2</div>
-              <div class="kpi-label">Completed Tasks</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-val" style="color: #60a5fa;" id="kpi-progress-tasks">3</div>
-              <div class="kpi-label">In Progress</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-val" style="color: #f87171;">1</div>
-              <div class="kpi-label">Urgent / Priority</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-val" style="color: #eab308;" id="kpi-members-count">4</div>
-              <div class="kpi-label">Team Members</div>
+            <div id="priority-deck-items-container">
+              <!-- Rendered from State -->
             </div>
           </div>
 
-          <!-- Overall Work Progress Bar -->
-          <div class="work-progress-box">
+          <!-- 2. EXECUTIVE KPI ROW (Computed dynamically from State) -->
+          <div class="kpi-row">
+            <div class="kpi-unit">
+              <div class="kpi-value" id="kpi-active-tasks">0</div>
+              <div class="kpi-tag">Active Tasks</div>
+            </div>
+            <div class="kpi-unit">
+              <div class="kpi-value" style="color: var(--rust-ok);" id="kpi-done-tasks">0</div>
+              <div class="kpi-tag">Completed Tasks</div>
+            </div>
+            <div class="kpi-unit">
+              <div class="kpi-value" style="color: var(--rust-info);" id="kpi-progress-tasks">0</div>
+              <div class="kpi-tag">In Progress</div>
+            </div>
+            <div class="kpi-unit">
+              <div class="kpi-value" style="color: var(--rust-critical);" id="kpi-overdue-tasks">0</div>
+              <div class="kpi-tag">Overdue Tasks</div>
+            </div>
+            <div class="kpi-unit">
+              <div class="kpi-value" style="color: var(--rust-warn);" id="kpi-members-count">0</div>
+              <div class="kpi-tag">Team Members</div>
+            </div>
+          </div>
+
+          <!-- 3. SOLID COPPER PROGRESS TRACK -->
+          <div class="progress-card">
             <div style="display: flex; justify-content: space-between; align-items: center;">
               <div>
-                <h3 style="font-family: var(--font-display); font-size: 15px; font-weight: 700;">Overall Sprint Progress</h3>
-                <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Real-time execution status based on task updates</p>
+                <h3 style="font-family: var(--font-display); font-size: 15px; font-weight: 700;">Workspace Execution Progress</h3>
+                <p style="font-size: 12px; color: var(--rust-text-muted); margin-top: 2px;">Computed strictly from database tasks (Done / Total Non-Cancelled)</p>
               </div>
-              <span style="font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: #22c55e;" id="progress-percentage-label">33% Completed</span>
+              <span style="font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--rust-accent);" id="home-progress-percentage-label">0% Done</span>
             </div>
-            <div class="progress-bar-bg">
-              <div class="progress-bar-fill" id="progress-bar-fill-elem" style="width: 33%;"></div>
+            <div class="progress-track">
+              <div class="progress-bar-solid" id="home-progress-bar-fill" style="width: 0%;"></div>
             </div>
           </div>
 
-          <!-- Live Tasks Progress Table (Edit Status Live) -->
-          <div style="background: var(--slack-card-bg); border: 1px solid var(--slack-border); border-radius: var(--radius-sm); overflow: hidden;">
-            <div style="padding: 14px 18px; border-bottom: 1px solid var(--slack-border); display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-family: var(--font-display); font-weight: 700; font-size: 14px;">Work Execution & Tasks</span>
-              <button class="btn-rust" onclick="openAddTaskModal()" style="padding: 4px 10px; font-size: 11px;">+ New Task</button>
+          <!-- 4. MY TASKS & ACTIONABLE EXECUTION TABLE -->
+          <div style="background: var(--rust-surface); border: var(--border-width) solid var(--rust-border); border-radius: var(--radius-xs); overflow: hidden;">
+            <div style="padding: 12px 16px; border-bottom: var(--border-width) solid var(--rust-border); display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-family: var(--font-display); font-weight: 700; font-size: 14px;">My Tasks (Action Required)</span>
+              <button class="btn-rust-primary" id="btn-home-create-task" style="padding: 4px 10px; font-size: 11px;">+ New Task</button>
             </div>
-
-            <table class="modern-tasks-table">
+            <table class="rust-data-table">
               <thead>
                 <tr>
-                  <th>TASK / PROJECT</th>
+                  <th>TASK / DELIVERABLE</th>
                   <th>ASSIGNEE</th>
                   <th>PRIORITY</th>
                   <th>DUE DATE</th>
-                  <th>STATUS (CHANGE LIVE)</th>
+                  <th>STATUS (LIVE SYNC)</th>
                 </tr>
               </thead>
-              <tbody id="tasks-table-body">
+              <tbody id="home-tasks-table-body">
+                <!-- Dynamically rendered from State -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           MODULE 1 / VIEW 2: CHAT & PER-CHANNEL MESSAGING
+           ==================================================================== -->
+      <section id="view-module-chat" class="stage-view-module">
+        <div class="stage-top-bar">
+          <div class="stage-title">
+            <span id="active-chat-prefix" style="color: var(--rust-text-muted);">#</span>
+            <span id="active-chat-title">general</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 12px; font-family: var(--font-mono); color: var(--rust-text-muted);" id="active-chat-members-label">4 Members</span>
+          </div>
+        </div>
+
+        <div class="chat-scroll-stream" id="chat-messages-container">
+          <!-- Dynamically populated per channel -->
+        </div>
+
+        <!-- Chat Composer Section -->
+        <div class="chat-composer-section">
+          <input type="file" id="real-file-picker" style="display: none;">
+
+          <div class="composer-bordered-shell">
+            <!-- Coloured Bar when Priority is High or Critical -->
+            <div id="composer-priority-banner" class="composer-priority-banner">
+              PRIORITY: CRITICAL (ESCALATING NOTIFICATION)
+            </div>
+
+            <!-- Staged File Chip (Only sends when Send button or Enter is pressed) -->
+            <div id="staged-file-indicator" class="staged-file-indicator">
+              <span id="staged-file-text">📎 Attachment ready</span>
+              <span id="btn-cancel-staged-file" style="cursor: pointer; font-weight: bold; padding: 0 4px;" title="Remove Attachment">✕</span>
+            </div>
+
+            <input type="text" class="composer-text-input" id="chat-text-input" placeholder="Message active channel... (Press Enter to send)" autocomplete="off">
+
+            <div class="composer-toolbar-bottom">
+              <div class="composer-tool-icons">
+                <button type="button" class="btn-rust-secondary" id="btn-composer-attach-file" style="padding: 3px 8px; font-size: 12px;" title="Attach File">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                  Attach
+                </button>
+
+                <!-- Priority Selector (Metadata, never added as body text) -->
+                <label for="select-message-priority" style="font-size: 11px; font-family: var(--font-mono); color: var(--rust-text-muted);">Level:</label>
+                <select id="select-message-priority" class="priority-select-dropdown">
+                  <option value="normal" selected>Normal</option>
+                  <option value="high">High</option>
+                  <option value="critical">Critical</option>
+                </select>
+              </div>
+
+              <button class="btn-rust-primary" id="btn-send-message">Send ➤</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           MODULE 1 / VIEW 3: FULL TASKS ENGINE (SEPARATE VIEW)
+           ==================================================================== -->
+      <section id="view-module-tasks" class="stage-view-module">
+        <div class="stage-top-bar">
+          <div class="stage-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Workspace Task Engine</span>
+          </div>
+          <button class="btn-rust-primary" id="btn-tasks-create">+ Add New Task</button>
+        </div>
+
+        <div style="padding: 20px;">
+          <!-- Filter Tabs -->
+          <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+            <button class="btn-rust-secondary active" id="filter-task-all" data-filter="all">All Tasks</button>
+            <button class="btn-rust-secondary" id="filter-task-my" data-filter="my">My Tasks</button>
+            <button class="btn-rust-secondary" id="filter-task-overdue" data-filter="overdue">Overdue</button>
+            <button class="btn-rust-secondary" id="filter-task-critical" data-filter="critical">Critical Priority</button>
+          </div>
+
+          <div style="background: var(--rust-surface); border: var(--border-width) solid var(--rust-border); border-radius: var(--radius-xs); overflow: hidden;">
+            <table class="rust-data-table">
+              <thead>
                 <tr>
-                  <td><strong>Livora by Fortress Video Final Cut</strong><br><span style="font-size: 11px; color: var(--text-muted);">Marketing Campaign</span></td>
-                  <td>Zke Sabbir Designer</td>
-                  <td><span style="color: #ef4444; font-weight: 700; font-family: var(--font-mono); font-size: 11px;">CRITICAL</span></td>
-                  <td style="font-family: var(--font-mono); font-size: 12px;">Today</td>
-                  <td>
-                    <select class="status-select" onchange="updateTaskProgress(this)">
-                      <option value="in_progress" selected>In Progress</option>
-                      <option value="todo">To-do</option>
-                      <option value="done">Done ✓</option>
-                    </select>
-                  </td>
+                  <th>TASK DELIVERABLE</th>
+                  <th>DEPARTMENT</th>
+                  <th>ASSIGNEE</th>
+                  <th>PRIORITY</th>
+                  <th>DUE DATE</th>
+                  <th>STATUS</th>
                 </tr>
-                <tr>
-                  <td><strong>FORTRESS Print File Vector Finalization</strong><br><span style="font-size: 11px; color: var(--text-muted);">Print Media Production</span></td>
-                  <td>Zke Sabbir Designer</td>
-                  <td><span style="color: #3b82f6; font-weight: 700; font-family: var(--font-mono); font-size: 11px;">NORMAL</span></td>
-                  <td style="font-family: var(--font-mono); font-size: 12px;">Tomorrow</td>
-                  <td>
-                    <select class="status-select" onchange="updateTaskProgress(this)">
-                      <option value="done" selected>Done ✓</option>
-                      <option value="in_progress">In Progress</option>
-                      <option value="todo">To-do</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Q3 Financial Audit Ledger Signoff</strong><br><span style="font-size: 11px; color: var(--text-muted);">Accounts & Compliance</span></td>
-                  <td>Shimul-DMS</td>
-                  <td><span style="color: #ef4444; font-weight: 700; font-family: var(--font-mono); font-size: 11px;">CRITICAL</span></td>
-                  <td style="font-family: var(--font-mono); font-size: 12px;">Oct 24</td>
-                  <td>
-                    <select class="status-select" onchange="updateTaskProgress(this)">
-                      <option value="in_progress" selected>In Progress</option>
-                      <option value="todo">To-do</option>
-                      <option value="done">Done ✓</option>
-                    </select>
-                  </td>
-                </tr>
+              </thead>
+              <tbody id="full-tasks-table-body">
+                <!-- Dynamically rendered -->
               </tbody>
             </table>
           </div>
@@ -258,140 +330,62 @@
       </section>
 
       <!-- ====================================================================
-           VIEW 2: SLACK CHAT & FILE TRANSMISSION
+           MODULE 1 / VIEW 4: FILES VAULT
            ==================================================================== -->
-      <section id="view-chat" class="view-panel">
+      <section id="view-module-files" class="stage-view-module">
         <div class="stage-top-bar">
-          <div class="stage-channel-title">
-            <span style="color: #94a3b8;">#</span>
-            <span id="active-channel-name">general</span>
+          <div class="stage-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span>Company Asset & Document Vault</span>
           </div>
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <button class="btn-rust" onclick="openAddMemberModal()" style="padding: 4px 10px; font-size: 11.5px;">👥 Members (4)</button>
-          </div>
+          <button class="btn-rust-primary" id="btn-files-vault-upload">+ Upload File</button>
         </div>
 
-        <div class="chat-stream-box" id="chat-messages-container">
-          <!-- Sample message 1 -->
-          <div class="chat-message-entry">
-            <div class="sender-avatar-tile" style="background: #0284c7;">NH</div>
-            <div class="message-body-col">
-              <div class="message-header-line">
-                <span class="author-title">Md. Naiem Hossain</span>
-                <span class="timestamp-txt">09:31 AM</span>
-              </div>
-              <div style="color: #fff; line-height: 1.5;">
-                apartment spell mistak ase<br>
-                <strong>Livora by Fortress.mp4</strong>
-              </div>
-              <div style="width: 320px; border-radius: 6px; overflow: hidden; border: 1px solid var(--slack-border); background: #000; margin-top: 6px;">
-                <div style="height: 160px; background: #0f172a; display: flex; align-items: center; justify-content: center; color: #fff;">
-                  ▶ 0:31 Video Asset
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sample message 2 -->
-          <div class="chat-message-entry">
-            <div class="sender-avatar-tile" style="background: var(--rust-copper);">ZS</div>
-            <div class="message-body-col">
-              <div class="message-header-line">
-                <span class="author-title">Zke Sabbir Designer <small style="color: var(--text-muted);">(you)</small></span>
-                <span class="timestamp-txt">11:24 PM</span>
-              </div>
-              <div style="color: #fff; line-height: 1.5;">
-                Final artwork files submitted for corporate branding:
-              </div>
-              <div class="attached-file-pill">
-                <span class="file-badge-tag">AI</span>
-                <div style="flex: 1;">
-                  <div style="font-weight: 700; color: #fff; font-size: 13.5px;">FORTRESS Print File.ai</div>
-                  <div style="font-size: 11.5px; color: var(--text-muted);">Illustrator Vector · 48.2 MB</div>
-                </div>
-                <button class="btn-rust" onclick="alert('Downloading FORTRESS Print File.ai...')">↓</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Chat Input Composer -->
-        <div class="chat-composer-box">
-          <!-- Hidden file input -->
-          <input type="file" id="real-file-input" style="display: none;" onchange="handleFileStaged(event)">
-
-          <div class="composer-border-wrap">
-            <!-- Staged File Chip (Shows when file is chosen, does NOT send until Send is clicked) -->
-            <div id="staged-file-chip" class="staged-file-chip" style="display: none;">
-              <span id="staged-file-label">📎 Attachment ready</span>
-              <span style="cursor: pointer; font-weight: bold; padding: 0 4px;" onclick="cancelStagedFile()" title="Remove file">✕</span>
-            </div>
-
-            <input type="text" class="composer-input-field" id="message-text-input" placeholder="Type a message or press Enter to send..." onkeypress="handleChatEnter(event)">
-            
-            <div class="composer-action-bar">
-              <div class="composer-tools">
-                <div class="composer-tool-icon" title="Attach Document / File" onclick="document.getElementById('real-file-input').click()">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
-                </div>
-                <div class="composer-tool-icon" title="Add Critical Flag" onclick="togglePriorityPrompt()">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                </div>
-                <div class="composer-tool-icon" title="Mention Team" onclick="insertMention()">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/></svg>
-                </div>
-              </div>
-              <button class="btn-send-message" onclick="sendMessageNow()">Send ➤</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====================================================================
-           VIEW 3: FILES & DOCUMENTS VAULT
-           ==================================================================== -->
-      <section id="view-files" class="view-panel">
-        <div class="stage-top-bar">
-          <div class="stage-channel-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            <span>Company Files & Assets</span>
-          </div>
-          <button class="btn-rust" onclick="document.getElementById('real-file-input').click()">+ Upload File</button>
-        </div>
-
-        <div style="padding: 24px;">
-          <table class="modern-tasks-table">
+        <div style="padding: 20px;">
+          <table class="rust-data-table">
             <thead>
               <tr>
-                <th>FILE NAME</th>
+                <th>DOCUMENT NAME</th>
+                <th>CHANNEL</th>
                 <th>UPLOADED BY</th>
                 <th>SIZE</th>
                 <th>DATE</th>
                 <th>ACTION</th>
               </tr>
             </thead>
-            <tbody id="files-vault-list">
+            <tbody id="files-table-body">
+              <!-- Dynamically rendered -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           MODULE 1 / VIEW 5: TEAM DIRECTORY
+           ==================================================================== -->
+      <section id="view-module-members" class="stage-view-module">
+        <div class="stage-top-bar">
+          <div class="stage-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            <span>Team Directory & Role Matrix</span>
+          </div>
+          <button class="btn-rust-primary" id="btn-team-invite-member">+ Invite Member</button>
+        </div>
+
+        <div style="padding: 20px;">
+          <table class="rust-data-table">
+            <thead>
               <tr>
-                <td><strong>FORTRESS Print File.ai</strong></td>
-                <td>Zke Sabbir Designer</td>
-                <td>48.2 MB</td>
-                <td>Oct 20</td>
-                <td><button class="btn-rust" onclick="alert('Downloading FORTRESS Print File.ai')">Download</button></td>
+                <th>MEMBER</th>
+                <th>ROLE</th>
+                <th>DEPARTMENT</th>
+                <th>CORPORATE EMAIL</th>
+                <th>STATUS</th>
+                <th>ACTION</th>
               </tr>
-              <tr>
-                <td><strong>Livora by Fortress.mp4</strong></td>
-                <td>Md. Naiem Hossain</td>
-                <td>120.5 MB</td>
-                <td>Oct 15</td>
-                <td><button class="btn-rust" onclick="alert('Downloading Livora by Fortress.mp4')">Download</button></td>
-              </tr>
-              <tr>
-                <td><strong>Smitten Shah 01.pdf</strong></td>
-                <td>Shimul-DMS</td>
-                <td>250 KB</td>
-                <td>Oct 12</td>
-                <td><button class="btn-rust" onclick="alert('Downloading Smitten Shah 01.pdf')">Download</button></td>
-              </tr>
+            </thead>
+            <tbody id="members-table-body">
+              <!-- Dynamically rendered -->
             </tbody>
           </table>
         </div>
@@ -400,292 +394,1136 @@
     </main>
   </div>
 
-  <!-- MODAL: ADD MEMBER -->
-  <div class="modal-overlay" id="add-member-modal" style="display: none;" onclick="closeModal(event, 'add-member-modal')">
-    <div class="modal-window" onclick="event.stopPropagation()">
-      <div class="modal-header">
-        <h3 style="font-family: var(--font-display); font-size: 17px; font-weight: 700; color: #fff;">Invite Team Member</h3>
-        <button style="background: transparent; border: none; color: var(--text-muted); font-size: 18px; cursor: pointer;" onclick="hideModal('add-member-modal')">✕</button>
-      </div>
-      <div class="modal-body">
-        <form onsubmit="handleInviteMember(event)">
-          <div style="margin-bottom: 14px;">
-            <label style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Corporate Email Address</label>
-            <input type="email" required id="invite-email-input" class="input-text-modern" placeholder="employee@fortress.com.bd">
-          </div>
-          <div style="margin-bottom: 14px;">
-            <label style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Full Name</label>
-            <input type="text" required id="invite-name-input" class="input-text-modern" placeholder="e.g. Farhan Tanvir">
-          </div>
-          <div style="margin-bottom: 14px;">
-            <label style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Role & Department</label>
-            <select id="invite-role-input" class="input-text-modern" style="cursor: pointer;">
-              <option value="Designer">Visualizer / Designer</option>
-              <option value="Developer">IT Engineer</option>
-              <option value="Manager">Department Head</option>
-              <option value="Member">Regular Member</option>
-            </select>
-          </div>
-          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-            <button type="button" class="btn-rust" style="background: transparent; border: 1px solid var(--slack-border);" onclick="hideModal('add-member-modal')">Cancel</button>
-            <button type="submit" class="btn-rust">Send Invitation</button>
-          </div>
-        </form>
+  <!-- ====================================================================
+       GLOBAL SEARCH & SWITCHER MODAL (Ctrl+K)
+       ==================================================================== -->
+  <div class="rust-modal-backdrop" id="modal-global-search">
+    <div class="rust-modal-window">
+      <input type="text" class="search-modal-input" id="search-modal-input-field" placeholder="Search people, channels, tasks, files, messages... (Esc to close)">
+      <div class="search-results-list" id="search-modal-results-container">
+        <!-- Rendered dynamically -->
       </div>
     </div>
   </div>
 
-  <!-- MODAL: ADD TASK -->
-  <div class="modal-overlay" id="add-task-modal" style="display: none;" onclick="closeModal(event, 'add-task-modal')">
-    <div class="modal-window" onclick="event.stopPropagation()">
-      <div class="modal-header">
-        <h3 style="font-family: var(--font-display); font-size: 17px; font-weight: 700; color: #fff;">Create Workspace Task</h3>
-        <button style="background: transparent; border: none; color: var(--text-muted); font-size: 18px; cursor: pointer;" onclick="hideModal('add-task-modal')">✕</button>
+  <!-- ====================================================================
+       TASK CREATION MODAL
+       ==================================================================== -->
+  <div class="rust-modal-backdrop" id="modal-create-task">
+    <div class="rust-modal-window" style="padding: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-family: var(--font-display); font-size: 16px; font-weight: 700;">Create Workspace Task</h3>
+        <button type="button" class="btn-rust-secondary" id="btn-close-task-modal" style="padding: 2px 8px;">✕</button>
       </div>
-      <div class="modal-body">
-        <form onsubmit="handleCreateTask(event)">
-          <div style="margin-bottom: 14px;">
-            <label style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Task Title</label>
-            <input type="text" required id="task-title-input" class="input-text-modern" placeholder="e.g. Complete 2027 Calendar Packaging">
-          </div>
-          <div style="margin-bottom: 14px;">
-            <label style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Assignee</label>
-            <select id="task-assignee-input" class="input-text-modern">
-              <option value="Zke Sabbir Designer">Zke Sabbir Designer (You)</option>
-              <option value="Md. Naiem Hossain">Md. Naiem Hossain</option>
-              <option value="Shimul-DMS">Shimul-DMS</option>
-              <option value="Md Rakibul Islam">Md Rakibul Islam</option>
+
+      <form id="form-create-task">
+        <div style="margin-bottom: 12px;">
+          <label style="display: block; font-size: 11px; font-family: var(--font-mono); color: var(--rust-text-muted); margin-bottom: 4px;">TASK TITLE</label>
+          <input type="text" id="task-input-title" required class="search-modal-input" style="border: 1px solid var(--rust-border); border-radius: 4px; padding: 8px 12px;" placeholder="e.g. Audit Kubernetes cluster configurations">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+          <div>
+            <label style="display: block; font-size: 11px; font-family: var(--font-mono); color: var(--rust-text-muted); margin-bottom: 4px;">ASSIGNEE</label>
+            <select id="task-input-assignee" class="table-status-select" style="width: 100%; padding: 8px;">
+              <!-- Populated from state -->
             </select>
           </div>
-          <div style="margin-bottom: 14px;">
-            <label style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Priority</label>
-            <select id="task-priority-input" class="input-text-modern">
-              <option value="NORMAL">NORMAL</option>
-              <option value="CRITICAL">CRITICAL</option>
+          <div>
+            <label style="display: block; font-size: 11px; font-family: var(--font-mono); color: var(--rust-text-muted); margin-bottom: 4px;">PRIORITY</label>
+            <select id="task-input-priority" class="table-status-select" style="width: 100%; padding: 8px;">
+              <option value="normal">Normal</option>
+              <option value="high">High</option>
+              <option value="critical">Critical</option>
             </select>
           </div>
-          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-            <button type="button" class="btn-rust" style="background: transparent; border: 1px solid var(--slack-border);" onclick="hideModal('add-task-modal')">Cancel</button>
-            <button type="submit" class="btn-rust">Add Task</button>
-          </div>
-        </form>
-      </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn-rust-secondary" id="btn-cancel-task-form">Cancel</button>
+          <button type="submit" class="btn-rust-primary">Create Task</button>
+        </div>
+      </form>
     </div>
   </div>
 
+  <!-- ====================================================================
+       MEMBER INVITATION MODAL
+       ==================================================================== -->
+  <div class="rust-modal-backdrop" id="modal-invite-member">
+    <div class="rust-modal-window" style="padding: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-family: var(--font-display); font-size: 16px; font-weight: 700;">Invite Employee to Workspace</h3>
+        <button type="button" class="btn-rust-secondary" id="btn-close-invite-modal" style="padding: 2px 8px;">✕</button>
+      </div>
+
+      <form id="form-invite-member">
+        <div style="margin-bottom: 12px;">
+          <label style="display: block; font-size: 11px; font-family: var(--font-mono); color: var(--rust-text-muted); margin-bottom: 4px;">CORPORATE EMAIL</label>
+          <input type="email" id="invite-input-email" required class="search-modal-input" style="border: 1px solid var(--rust-border); border-radius: 4px; padding: 8px 12px;" placeholder="name@company.com">
+        </div>
+
+        <div style="margin-bottom: 12px;">
+          <label style="display: block; font-size: 11px; font-family: var(--font-mono); color: var(--rust-text-muted); margin-bottom: 4px;">FULL NAME</label>
+          <input type="text" id="invite-input-name" required class="search-modal-input" style="border: 1px solid var(--rust-border); border-radius: 4px; padding: 8px 12px;" placeholder="e.g. Robert Vance">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+          <div>
+            <label style="display: block; font-size: 11px; font-family: var(--font-mono); color: var(--rust-text-muted); margin-bottom: 4px;">DEPARTMENT</label>
+            <select id="invite-input-dept" class="table-status-select" style="width: 100%; padding: 8px;">
+              <option value="Engineering">Engineering</option>
+              <option value="Operations">Operations</option>
+              <option value="Product">Product & Design</option>
+              <option value="Accounts">Accounts & Finance</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; font-size: 11px; font-family: var(--font-mono); color: var(--rust-text-muted); margin-bottom: 4px;">ROLE</label>
+            <select id="invite-input-role" class="table-status-select" style="width: 100%; padding: 8px;">
+              <option value="member">Member</option>
+              <option value="dept_head">Department Head</option>
+              <option value="admin">Company Admin</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn-rust-secondary" id="btn-cancel-invite-form">Cancel</button>
+          <button type="submit" class="btn-rust-primary">Send Invite</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- CORE SCRIPT IMPLEMENTATION (Clean Architecture, XSS Free, LocalStorage) -->
   <script>
-    let stagedFile = null;
+    (function() {
+      'use strict';
 
-    // View Navigation
-    function switchStage(stageKey) {
-      document.querySelectorAll('.view-panel').forEach(v => v.classList.remove('active-view'));
-      document.querySelectorAll('.rail-btn-unit').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.sidebar-nav-entry').forEach(e => e.classList.remove('active'));
-
-      if (stageKey === 'home') {
-        document.getElementById('view-home').classList.add('active-view');
-        document.getElementById('rail-home-btn').classList.add('active');
-        document.getElementById('sidebar-overview-entry').classList.add('active');
-      } else if (stageKey === 'chat') {
-        document.getElementById('view-chat').classList.add('active-view');
-        document.getElementById('rail-chat-btn').classList.add('active');
-      } else if (stageKey === 'files') {
-        document.getElementById('view-files').classList.add('active-view');
-        document.getElementById('rail-files-btn').classList.add('active');
-      }
-    }
-
-    function openChannelView(name) {
-      switchStage('chat');
-      document.getElementById('active-channel-name').innerText = name;
-    }
-
-    function openDirectChat(person) {
-      switchStage('chat');
-      document.getElementById('active-channel-name').innerText = '@ ' + person;
-    }
-
-    function openAddMemberModal() {
-      document.getElementById('add-member-modal').style.display = 'flex';
-    }
-
-    function openAddTaskModal() {
-      document.getElementById('add-task-modal').style.display = 'flex';
-    }
-
-    function hideModal(id) {
-      document.getElementById(id).style.display = 'none';
-    }
-
-    function closeModal(e, id) {
-      hideModal(id);
-    }
-
-    // Dynamic Member Invite
-    function handleInviteMember(e) {
-      e.preventDefault();
-      const email = document.getElementById('invite-email-input').value;
-      const name = document.getElementById('invite-name-input').value;
-      const role = document.getElementById('invite-role-input').value;
-
-      const memCount = document.getElementById('kpi-members-count');
-      memCount.innerText = parseInt(memCount.innerText) + 1;
-
-      alert(`Invitation sent to ${email} for ${name} (${role})!`);
-      document.getElementById('invite-email-input').value = '';
-      document.getElementById('invite-name-input').value = '';
-      hideModal('add-member-modal');
-    }
-
-    // Dynamic Task Creation
-    function handleCreateTask(e) {
-      e.preventDefault();
-      const title = document.getElementById('task-title-input').value;
-      const assignee = document.getElementById('task-assignee-input').value;
-      const priority = document.getElementById('task-priority-input').value;
-
-      const tbody = document.getElementById('tasks-table-body');
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td><strong>${title}</strong><br><span style="font-size: 11px; color: var(--text-muted);">Digital Team</span></td>
-        <td>${assignee}</td>
-        <td><span style="color: ${priority === 'CRITICAL' ? '#ef4444' : '#3b82f6'}; font-weight: 700; font-family: var(--font-mono); font-size: 11px;">${priority}</span></td>
-        <td style="font-family: var(--font-mono); font-size: 12px;">Just Added</td>
-        <td>
-          <select class="status-select" onchange="updateTaskProgress(this)">
-            <option value="in_progress" selected>In Progress</option>
-            <option value="todo">To-do</option>
-            <option value="done">Done ✓</option>
-          </select>
-        </td>
-      `;
-      tbody.prepend(tr);
-
-      const totalKpi = document.getElementById('kpi-total-tasks');
-      totalKpi.innerText = parseInt(totalKpi.innerText) + 1;
-
-      recalculateProgress();
-      hideModal('add-task-modal');
-    }
-
-    function updateTaskProgress(selectEl) {
-      recalculateProgress();
-    }
-
-    function recalculateProgress() {
-      const selects = document.querySelectorAll('.status-select');
-      let doneCount = 0;
-      let totalCount = selects.length;
-
-      selects.forEach(s => {
-        if (s.value === 'done') doneCount++;
-      });
-
-      const pct = Math.round((doneCount / totalCount) * 100);
-      document.getElementById('progress-percentage-label').innerText = pct + '% Completed';
-      document.getElementById('progress-bar-fill-elem').style.width = pct + '%';
-      document.getElementById('kpi-done-tasks').innerText = doneCount;
-      document.getElementById('kpi-progress-tasks').innerText = totalCount - doneCount;
-    }
-
-    // File Staging: Selected but NOT sent until user hits Send / Enter
-    function handleFileStaged(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      stagedFile = {
-        name: file.name,
-        size: (file.size / (1024 * 1024)).toFixed(1) + ' MB'
+      // 1. Fictional Demo Seed Data (No real client/company names)
+      const SEED_DATA = {
+        currentUser: {
+          id: 'user_01',
+          name: 'Tanvir Ahmed',
+          email: 't.ahmed@apexglobal.internal',
+          title: 'Lead Architect',
+          department: 'Engineering',
+          role: 'dept_head',
+          status: 'Available'
+        },
+        members: [
+          { id: 'user_01', name: 'Tanvir Ahmed', email: 't.ahmed@apexglobal.internal', title: 'Lead Architect', department: 'Engineering', role: 'Dept Head', status: 'Available' },
+          { id: 'user_02', name: 'Elena Rostova', email: 'e.rostova@apexglobal.internal', title: 'Staff Systems Engineer', department: 'Engineering', role: 'Member', status: 'Available' },
+          { id: 'user_03', name: 'Kavita Menon', email: 'k.menon@apexglobal.internal', title: 'Operations Director', department: 'Operations', role: 'Admin', status: 'In a meeting' },
+          { id: 'user_04', name: 'David Miller', email: 'd.miller@apexglobal.internal', title: 'Product Strategist', department: 'Product', role: 'Member', status: 'Away' }
+        ],
+        channels: [
+          { id: 'c_general', name: 'general', type: 'public', unread: 0 },
+          { id: 'c_engineering', name: 'engineering-core', type: 'public', unread: 2 },
+          { id: 'c_deployments', name: 'prod-deployments', type: 'public', unread: 0 }
+        ],
+        privateGroups: [
+          { id: 'g_directors', name: 'board-executives', type: 'private', unread: 1 },
+          { id: 'g_audit', name: 'q3-compliance-audit', type: 'private', unread: 0 }
+        ],
+        activeChannelId: 'c_general',
+        messages: {
+          'c_general': [
+            { id: 'm_1', authorId: 'user_03', authorName: 'Kavita Menon', time: '09:15 AM', body: 'All department leads: Q3 departmental reviews are scheduled for Friday. Please review your deliverable boards.', priority: 'high', acknowledged: true, file: null },
+            { id: 'm_2', authorId: 'user_02', authorName: 'Elena Rostova', time: '10:04 AM', body: 'The PostgreSQL Row-Level Security isolation benchmarks have passed. Zero cross-tenant data leakage observed under 10k concurrent sessions.', priority: 'normal', acknowledged: true, file: null },
+            { id: 'm_3', authorId: 'user_01', authorName: 'Tanvir Ahmed', time: '10:20 AM', body: 'Confirmed. We will enforce RLS session context injection in the core connection middleware.', priority: 'normal', acknowledged: true, file: null }
+          ],
+          'c_engineering': [
+            { id: 'm_4', authorId: 'user_02', authorName: 'Elena Rostova', time: '08:45 AM', body: 'Please verify the Redis pub/sub reconnection fallback logic in the microservices repo.', priority: 'normal', acknowledged: true, file: null }
+          ],
+          'g_directors': [
+            { id: 'm_5', authorId: 'user_03', authorName: 'Kavita Menon', time: '07:30 AM', body: 'CRITICAL: Board acquisition term sheet draft attached. Every director must review and confirm receipt immediately.', priority: 'critical', acknowledged: false, file: { name: 'Acquisition_TermSheet_v2.pdf', size: '2.4 MB' } }
+          ]
+        },
+        tasks: [
+          { id: 't_1', title: 'Verify Row-Level Security tenant isolation policies in PostgreSQL', assignee: 'Tanvir Ahmed', assigneeId: 'user_01', priority: 'critical', department: 'Engineering', status: 'in_progress', due: 'Today' },
+          { id: 't_2', title: 'Implement signed short-lived S3 upload token generator', assignee: 'Elena Rostova', assigneeId: 'user_02', priority: 'high', department: 'Engineering', status: 'done', due: 'Oct 20' },
+          { id: 't_3', title: 'Complete annual data retention & compliance audit log exports', assignee: 'Kavita Menon', assigneeId: 'user_03', priority: 'normal', department: 'Operations', status: 'todo', due: 'Oct 25' },
+          { id: 't_4', title: 'Test Bengali typography fallback with Noto Sans Bengali in chat', assignee: 'David Miller', assigneeId: 'user_04', priority: 'normal', department: 'Product', status: 'done', due: 'Oct 19' },
+          { id: 't_5', title: 'Configure escalation reminder job queues for unacknowledged critical messages', assignee: 'Tanvir Ahmed', assigneeId: 'user_01', priority: 'critical', department: 'Engineering', status: 'in_progress', due: 'Tomorrow' }
+        ],
+        files: [
+          { id: 'f_1', name: 'Acquisition_TermSheet_v2.pdf', channel: 'board-executives', uploader: 'Kavita Menon', size: '2.4 MB', date: 'Oct 20' },
+          { id: 'f_2', name: 'RLS_Benchmark_Results.pdf', channel: 'general', uploader: 'Elena Rostova', size: '850 KB', date: 'Oct 19' },
+          { id: 'f_3', name: 'Architecture_System_Draft.png', channel: 'engineering-core', uploader: 'Tanvir Ahmed', size: '3.1 MB', date: 'Oct 18' }
+        ]
       };
 
-      document.getElementById('staged-file-label').innerText = `📎 Attached: ${stagedFile.name} (${stagedFile.size})`;
-      document.getElementById('staged-file-chip').style.display = 'flex';
-      document.getElementById('message-text-input').focus();
-    }
-
-    function cancelStagedFile() {
-      stagedFile = null;
-      document.getElementById('staged-file-chip').style.display = 'none';
-      document.getElementById('real-file-input').value = '';
-    }
-
-    // Message Dispatch
-    function handleChatEnter(e) {
-      if (e.key === 'Enter') sendMessageNow();
-    }
-
-    function sendMessageNow() {
-      const input = document.getElementById('message-text-input');
-      const text = input.value.trim();
-
-      if (!text && !stagedFile) return;
-
-      appendChatMessage(text || 'Sent an attachment', stagedFile);
-
-      // If a file was attached, add it to files vault
-      if (stagedFile) {
-        const vault = document.getElementById('files-vault-list');
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><strong>${stagedFile.name}</strong></td>
-          <td>Zke Sabbir Designer</td>
-          <td>${stagedFile.size}</td>
-          <td>Just Now</td>
-          <td><button class="btn-rust" onclick="alert('Downloading ${stagedFile.name}...')">Download</button></td>
-        `;
-        vault.prepend(tr);
+      // 2. State Management with LocalStorage persistence
+      let state = {};
+      function loadState() {
+        try {
+          const stored = localStorage.getItem('rust_platform_state_v1');
+          if (stored) {
+            state = JSON.parse(stored);
+          } else {
+            state = JSON.parse(JSON.stringify(SEED_DATA));
+            saveState();
+          }
+        } catch (err) {
+          state = JSON.parse(JSON.stringify(SEED_DATA));
+        }
       }
 
-      // Reset
-      input.value = '';
-      cancelStagedFile();
-    }
-
-    function appendChatMessage(text, fileData) {
-      const container = document.getElementById('chat-messages-container');
-      const entry = document.createElement('div');
-      entry.className = 'chat-message-entry';
-
-      let fileHtml = '';
-      if (fileData) {
-        fileHtml = `
-          <div class="attached-file-pill">
-            <span class="file-badge-tag">DOC</span>
-            <div style="flex: 1;">
-              <div style="font-weight: 700; color: #fff; font-size: 13.5px;">${fileData.name}</div>
-              <div style="font-size: 11.5px; color: var(--text-muted);">${fileData.size} · Uploaded Document</div>
-            </div>
-            <button class="btn-rust" onclick="alert('Downloading ${fileData.name}...')">↓</button>
-          </div>
-        `;
+      function saveState() {
+        try {
+          localStorage.setItem('rust_platform_state_v1', JSON.stringify(state));
+        } catch (err) {}
       }
 
-      entry.innerHTML = `
-        <div class="sender-avatar-tile" style="background: var(--rust-copper);">ZS</div>
-        <div class="message-body-col">
-          <div class="message-header-line">
-            <span class="author-title">Zke Sabbir Designer <small style="color: var(--text-muted);">(you)</small></span>
-            <span class="timestamp-txt">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-          </div>
-          <div style="color: #fff; line-height: 1.5;">${text}</div>
-          ${fileHtml}
-        </div>
-      `;
-      container.appendChild(entry);
-      container.scrollTop = container.scrollHeight;
-    }
+      // 3. Security Helper (Prevents XSS completely)
+      function safeText(str) {
+        if (str === null || str === undefined) return '';
+        const div = document.createElement('div');
+        div.textContent = String(str);
+        return div.innerHTML;
+      }
 
-    function togglePriorityPrompt() {
-      const input = document.getElementById('message-text-input');
-      input.value = '[CRITICAL PRIORITY]: ' + input.value;
-      input.focus();
-    }
+      let stagedFileObject = null;
 
-    function insertMention() {
-      const input = document.getElementById('message-text-input');
-      input.value += ' @channel ';
-      input.focus();
-    }
+      // 4. Render Home Dashboard & Recompute all KPIs strictly from State
+      function renderHome() {
+        const tasks = state.tasks || [];
+        const totalTasks = tasks.length;
+        const doneTasks = tasks.filter(t => t.status === 'done').length;
+        const inProgressTasks = tasks.filter(t => t.status === 'in_progress').length;
+        const activeTasks = totalTasks - doneTasks;
+        const overdueTasks = tasks.filter(t => t.due === 'Overdue' || (t.due === 'Today' && t.status !== 'done')).length;
+
+        // KPI calculations
+        document.getElementById('kpi-active-tasks').textContent = activeTasks;
+        document.getElementById('kpi-done-tasks').textContent = doneTasks;
+        document.getElementById('kpi-progress-tasks').textContent = inProgressTasks;
+        document.getElementById('kpi-overdue-tasks').textContent = overdueTasks;
+        document.getElementById('kpi-members-count').textContent = (state.members || []).length;
+
+        // Progress percentage calculation strictly: Done / Total
+        const pct = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+        document.getElementById('home-progress-percentage-label').textContent = pct + '% Completed';
+        document.getElementById('home-progress-bar-fill').style.width = pct + '%';
+
+        // Render Priority Inbox Deck (High & Critical unacknowledged messages)
+        const priorityContainer = document.getElementById('priority-deck-items-container');
+        priorityContainer.innerHTML = '';
+        let unacknowledgedCount = 0;
+
+        Object.keys(state.messages).forEach(channelKey => {
+          (state.messages[channelKey] || []).forEach(msg => {
+            if ((msg.priority === 'critical' || msg.priority === 'high') && !msg.acknowledged) {
+              unacknowledgedCount++;
+              const itemDiv = document.createElement('div');
+              itemDiv.className = 'priority-msg-item';
+
+              const textBlock = document.createElement('div');
+              const metaSpan = document.createElement('div');
+              metaSpan.style.fontFamily = 'var(--font-mono)';
+              metaSpan.style.fontSize = '11px';
+              metaSpan.style.color = msg.priority === 'critical' ? 'var(--rust-critical)' : 'var(--rust-warn)';
+              metaSpan.textContent = `[${msg.priority.toUpperCase()}] From ${msg.authorName} · Channel: ${channelKey} · ${msg.time}`;
+
+              const bodyP = document.createElement('div');
+              bodyP.style.fontWeight = '600';
+              bodyP.style.marginTop = '4px';
+              bodyP.textContent = msg.body;
+
+              textBlock.appendChild(metaSpan);
+              textBlock.appendChild(bodyP);
+
+              const ackBtn = document.createElement('button');
+              ackBtn.className = 'btn-rust-primary';
+              ackBtn.style.background = 'var(--rust-critical)';
+              ackBtn.textContent = '✓ Acknowledge';
+              ackBtn.dataset.channel = channelKey;
+              ackBtn.dataset.msgId = msg.id;
+              ackBtn.addEventListener('click', function() {
+                msg.acknowledged = true;
+                saveState();
+                renderHome();
+              });
+
+              itemDiv.appendChild(textBlock);
+              itemDiv.appendChild(ackBtn);
+              priorityContainer.appendChild(itemDiv);
+            }
+          });
+        });
+
+        // Toggle deck visibility
+        const deck = document.getElementById('home-priority-deck');
+        if (unacknowledgedCount > 0) {
+          deck.style.display = 'block';
+          document.getElementById('priority-deck-count-label').textContent = `! PRIORITY INBOX (${unacknowledgedCount} REQUIRING ACKNOWLEDGEMENT)`;
+        } else {
+          deck.style.display = 'none';
+        }
+
+        // Render Home Actionable Tasks Table
+        const homeTasksTbody = document.getElementById('home-tasks-table-body');
+        homeTasksTbody.innerHTML = '';
+
+        tasks.slice(0, 5).forEach(task => {
+          const tr = document.createElement('tr');
+
+          // Title
+          const tdTitle = document.createElement('td');
+          const strong = document.createElement('strong');
+          strong.textContent = task.title;
+          const sub = document.createElement('div');
+          sub.style.fontSize = '11px';
+          sub.style.color = 'var(--rust-text-muted)';
+          sub.textContent = 'Dept: ' + task.department;
+          tdTitle.appendChild(strong);
+          tdTitle.appendChild(sub);
+
+          // Assignee
+          const tdAssignee = document.createElement('td');
+          tdAssignee.textContent = task.assignee;
+
+          // Priority
+          const tdPriority = document.createElement('td');
+          tdPriority.style.fontFamily = 'var(--font-mono)';
+          tdPriority.style.fontSize = '11px';
+          tdPriority.style.fontWeight = '700';
+          if (task.priority === 'critical') {
+            tdPriority.style.color = 'var(--rust-critical)';
+            tdPriority.textContent = 'CRITICAL';
+          } else if (task.priority === 'high') {
+            tdPriority.style.color = 'var(--rust-warn)';
+            tdPriority.textContent = 'HIGH';
+          } else {
+            tdPriority.style.color = 'var(--rust-info)';
+            tdPriority.textContent = 'NORMAL';
+          }
+
+          // Due
+          const tdDue = document.createElement('td');
+          tdDue.style.fontFamily = 'var(--font-mono)';
+          tdDue.style.fontSize = '12px';
+          tdDue.textContent = task.due;
+
+          // Status selector
+          const tdStatus = document.createElement('td');
+          const sel = document.createElement('select');
+          sel.className = 'table-status-select';
+          ['todo', 'in_progress', 'done'].forEach(st => {
+            const opt = document.createElement('option');
+            opt.value = st;
+            opt.textContent = st === 'done' ? 'Done ✓' : (st === 'in_progress' ? 'In Progress' : 'To do');
+            if (task.status === st) opt.selected = true;
+            sel.appendChild(opt);
+          });
+
+          sel.addEventListener('change', function() {
+            task.status = sel.value;
+            saveState();
+            renderHome();
+            renderTasksTable('all');
+          });
+
+          tdStatus.appendChild(sel);
+
+          tr.appendChild(tdTitle);
+          tr.appendChild(tdAssignee);
+          tr.appendChild(tdPriority);
+          tr.appendChild(tdDue);
+          tr.appendChild(tdStatus);
+          homeTasksTbody.appendChild(tr);
+        });
+      }
+
+      // 5. Render Sidebar Navigation (Channels, Private Groups, DMs)
+      function renderSidebar() {
+        const channelsDiv = document.getElementById('sidebar-channels-list');
+        channelsDiv.innerHTML = '';
+        state.channels.forEach(ch => {
+          const item = document.createElement('div');
+          item.className = 'sidebar-nav-item' + (state.activeChannelId === ch.id ? ' active' : '');
+          item.dataset.channelId = ch.id;
+
+          const spanHash = document.createElement('span');
+          spanHash.style.color = 'var(--rust-text-muted)';
+          spanHash.textContent = '#';
+
+          const spanName = document.createElement('span');
+          spanName.textContent = ch.name;
+
+          item.appendChild(spanHash);
+          item.appendChild(spanName);
+
+          item.addEventListener('click', function() {
+            switchChannel(ch.id);
+          });
+          channelsDiv.appendChild(item);
+        });
+
+        const privateDiv = document.getElementById('sidebar-private-list');
+        privateDiv.innerHTML = '';
+        state.privateGroups.forEach(grp => {
+          const item = document.createElement('div');
+          item.className = 'sidebar-nav-item' + (state.activeChannelId === grp.id ? ' active' : '');
+          item.dataset.channelId = grp.id;
+
+          const spanLock = document.createElement('span');
+          spanLock.style.fontSize = '12px';
+          spanLock.textContent = '🔒';
+
+          const spanName = document.createElement('span');
+          spanName.textContent = grp.name;
+
+          item.appendChild(spanLock);
+          item.appendChild(spanName);
+
+          item.addEventListener('click', function() {
+            switchChannel(grp.id);
+          });
+          privateDiv.appendChild(item);
+        });
+
+        const dmsDiv = document.getElementById('sidebar-dms-list');
+        dmsDiv.innerHTML = '';
+        state.members.forEach(mem => {
+          if (mem.id === state.currentUser.id) return;
+          const item = document.createElement('div');
+          item.className = 'sidebar-nav-item' + (state.activeChannelId === mem.id ? ' active' : '');
+          item.dataset.channelId = mem.id;
+
+          const dot = document.createElement('span');
+          dot.style.width = '7px';
+          dot.style.height = '7px';
+          dot.style.borderRadius = '50%';
+          dot.style.backgroundColor = mem.status === 'Available' ? 'var(--rust-ok)' : 'var(--rust-text-muted)';
+
+          const nameSpan = document.createElement('span');
+          nameSpan.textContent = mem.name;
+
+          item.appendChild(dot);
+          item.appendChild(nameSpan);
+
+          item.addEventListener('click', function() {
+            switchChannel(mem.id);
+          });
+          dmsDiv.appendChild(item);
+        });
+      }
+
+      // 6. Channel Switcher & Chat View Renderer
+      function switchChannel(channelId) {
+        state.activeChannelId = channelId;
+        saveState();
+        renderSidebar();
+        switchStageView('chat');
+        renderChatMessages();
+      }
+
+      function renderChatMessages() {
+        const activeId = state.activeChannelId;
+        const messages = state.messages[activeId] || [];
+
+        // Title update
+        const titleEl = document.getElementById('active-chat-title');
+        const prefixEl = document.getElementById('active-chat-prefix');
+        let chObj = state.channels.find(c => c.id === activeId) || state.privateGroups.find(g => g.id === activeId);
+        if (chObj) {
+          prefixEl.textContent = chObj.type === 'private' ? '🔒 ' : '# ';
+          titleEl.textContent = chObj.name;
+        } else {
+          let mem = state.members.find(m => m.id === activeId);
+          prefixEl.textContent = '@ ';
+          titleEl.textContent = mem ? mem.name : activeId;
+        }
+
+        const container = document.getElementById('chat-messages-container');
+        container.innerHTML = '';
+
+        if (messages.length === 0) {
+          const emptyDiv = document.createElement('div');
+          emptyDiv.style.textAlign = 'center';
+          emptyDiv.style.padding = '40px 0';
+          emptyDiv.style.color = 'var(--rust-text-muted)';
+          emptyDiv.textContent = 'This is the start of the conversation. Send a message to begin.';
+          container.appendChild(emptyDiv);
+          return;
+        }
+
+        messages.forEach(msg => {
+          const msgRow = document.createElement('div');
+          msgRow.className = 'msg-row-container';
+
+          // Avatar
+          const av = document.createElement('div');
+          av.className = 'sender-avatar';
+          const initials = msg.authorName.split(' ').map(n => n[0]).join('').substring(0, 2);
+          av.textContent = initials;
+
+          // Column
+          const col = document.createElement('div');
+          col.className = 'msg-content-column';
+
+          const meta = document.createElement('div');
+          meta.className = 'msg-meta-line';
+
+          const author = document.createElement('span');
+          author.className = 'msg-author';
+          author.textContent = msg.authorName;
+
+          const time = document.createElement('span');
+          time.className = 'msg-time';
+          time.textContent = msg.time;
+
+          meta.appendChild(author);
+          meta.appendChild(time);
+
+          if (msg.priority && msg.priority !== 'normal') {
+            const priBadge = document.createElement('span');
+            priBadge.style.fontFamily = 'var(--font-mono)';
+            priBadge.style.fontSize = '10px';
+            priBadge.style.fontWeight = '700';
+            priBadge.style.padding = '1px 5px';
+            priBadge.style.borderRadius = '3px';
+            priBadge.style.backgroundColor = msg.priority === 'critical' ? 'var(--rust-critical)' : 'var(--rust-warn)';
+            priBadge.style.color = '#fff';
+            priBadge.textContent = msg.priority.toUpperCase();
+            meta.appendChild(priBadge);
+          }
+
+          const bodyP = document.createElement('div');
+          bodyP.style.lineHeight = '1.5';
+          bodyP.textContent = msg.body; // Safely rendered textContent (no HTML execution)
+
+          col.appendChild(meta);
+          col.appendChild(bodyP);
+
+          // Attached file preview if present
+          if (msg.file) {
+            const fileBox = document.createElement('div');
+            fileBox.style.display = 'inline-flex';
+            fileBox.style.alignItems = 'center';
+            fileBox.style.gap = '10px';
+            fileBox.style.background = 'var(--rust-surface)';
+            fileBox.style.border = '1px solid var(--rust-border)';
+            fileBox.style.padding = '8px 12px';
+            fileBox.style.borderRadius = 'var(--radius-xs)';
+            fileBox.style.marginTop = '6px';
+
+            const badge = document.createElement('span');
+            badge.style.fontFamily = 'var(--font-mono)';
+            badge.style.fontWeight = '700';
+            badge.style.fontSize = '10px';
+            badge.style.padding = '2px 5px';
+            badge.style.borderRadius = '2px';
+            badge.style.background = 'rgba(184, 84, 43, 0.2)';
+            badge.style.color = 'var(--rust-accent)';
+            badge.textContent = 'FILE';
+
+            const nameSpan = document.createElement('span');
+            nameSpan.style.fontWeight = '600';
+            nameSpan.textContent = msg.file.name + ' (' + msg.file.size + ')';
+
+            fileBox.appendChild(badge);
+            fileBox.appendChild(nameSpan);
+            col.appendChild(fileBox);
+          }
+
+          msgRow.appendChild(av);
+          msgRow.appendChild(col);
+          container.appendChild(msgRow);
+        });
+
+        container.scrollTop = container.scrollHeight;
+      }
+
+      // 7. Full Tasks View Renderer
+      function renderTasksTable(filterMode) {
+        const tbody = document.getElementById('full-tasks-table-body');
+        tbody.innerHTML = '';
+        const tasks = state.tasks || [];
+
+        let filtered = tasks;
+        if (filterMode === 'my') {
+          filtered = tasks.filter(t => t.assigneeId === state.currentUser.id || t.assignee === state.currentUser.name);
+        } else if (filterMode === 'overdue') {
+          filtered = tasks.filter(t => t.due === 'Overdue' || (t.due === 'Today' && t.status !== 'done'));
+        } else if (filterMode === 'critical') {
+          filtered = tasks.filter(t => t.priority === 'critical');
+        }
+
+        filtered.forEach(task => {
+          const tr = document.createElement('tr');
+
+          const tdTitle = document.createElement('td');
+          tdTitle.style.fontWeight = '600';
+          tdTitle.textContent = task.title;
+
+          const tdDept = document.createElement('td');
+          tdDept.textContent = task.department;
+
+          const tdAssignee = document.createElement('td');
+          tdAssignee.textContent = task.assignee;
+
+          const tdPriority = document.createElement('td');
+          tdPriority.style.fontFamily = 'var(--font-mono)';
+          tdPriority.style.fontSize = '11px';
+          tdPriority.style.fontWeight = '700';
+          tdPriority.style.color = task.priority === 'critical' ? 'var(--rust-critical)' : (task.priority === 'high' ? 'var(--rust-warn)' : 'var(--rust-info)');
+          tdPriority.textContent = task.priority.toUpperCase();
+
+          const tdDue = document.createElement('td');
+          tdDue.style.fontFamily = 'var(--font-mono)';
+          tdDue.style.fontSize = '12px';
+          tdDue.textContent = task.due;
+
+          const tdStatus = document.createElement('td');
+          const sel = document.createElement('select');
+          sel.className = 'table-status-select';
+          ['todo', 'in_progress', 'done'].forEach(st => {
+            const opt = document.createElement('option');
+            opt.value = st;
+            opt.textContent = st === 'done' ? 'Done ✓' : (st === 'in_progress' ? 'In Progress' : 'To do');
+            if (task.status === st) opt.selected = true;
+            sel.appendChild(opt);
+          });
+          sel.addEventListener('change', function() {
+            task.status = sel.value;
+            saveState();
+            renderHome();
+            renderTasksTable(filterMode);
+          });
+          tdStatus.appendChild(sel);
+
+          tr.appendChild(tdTitle);
+          tr.appendChild(tdDept);
+          tr.appendChild(tdAssignee);
+          tr.appendChild(tdPriority);
+          tr.appendChild(tdDue);
+          tr.appendChild(tdStatus);
+          tbody.appendChild(tr);
+        });
+      }
+
+      // 8. Files Vault Renderer
+      function renderFilesTable() {
+        const tbody = document.getElementById('files-table-body');
+        tbody.innerHTML = '';
+        state.files.forEach(file => {
+          const tr = document.createElement('tr');
+
+          const tdName = document.createElement('td');
+          tdName.style.fontWeight = '600';
+          tdName.textContent = file.name;
+
+          const tdChan = document.createElement('td');
+          tdChan.textContent = file.channel;
+
+          const tdUp = document.createElement('td');
+          tdUp.textContent = file.uploader;
+
+          const tdSize = document.createElement('td');
+          tdSize.style.fontFamily = 'var(--font-mono)';
+          tdSize.textContent = file.size;
+
+          const tdDate = document.createElement('td');
+          tdDate.textContent = file.date;
+
+          const tdAct = document.createElement('td');
+          const btn = document.createElement('button');
+          btn.className = 'btn-rust-secondary';
+          btn.style.padding = '2px 8px';
+          btn.style.fontSize = '11.5px';
+          btn.textContent = 'Download';
+          btn.addEventListener('click', function() {
+            alert(`Safe Download Stream initialized for: ${file.name}`);
+          });
+          tdAct.appendChild(btn);
+
+          tr.appendChild(tdName);
+          tr.appendChild(tdChan);
+          tr.appendChild(tdUp);
+          tr.appendChild(tdSize);
+          tr.appendChild(tdDate);
+          tr.appendChild(tdAct);
+          tbody.appendChild(tr);
+        });
+      }
+
+      // 9. Members Directory Renderer
+      function renderMembersTable() {
+        const tbody = document.getElementById('members-table-body');
+        tbody.innerHTML = '';
+        state.members.forEach(mem => {
+          const tr = document.createElement('tr');
+
+          const tdName = document.createElement('td');
+          const strong = document.createElement('strong');
+          strong.textContent = mem.name;
+          const sub = document.createElement('div');
+          sub.style.fontSize = '11px';
+          sub.style.color = 'var(--rust-text-muted)';
+          sub.textContent = mem.title;
+          tdName.appendChild(strong);
+          tdName.appendChild(sub);
+
+          const tdRole = document.createElement('td');
+          tdRole.style.fontFamily = 'var(--font-mono)';
+          tdRole.style.fontSize = '11.5px';
+          tdRole.textContent = mem.role;
+
+          const tdDept = document.createElement('td');
+          tdDept.textContent = mem.department;
+
+          const tdEmail = document.createElement('td');
+          tdEmail.style.fontFamily = 'var(--font-mono)';
+          tdEmail.style.fontSize = '12px';
+          tdEmail.textContent = mem.email;
+
+          const tdStatus = document.createElement('td');
+          tdStatus.style.color = mem.status === 'Available' ? 'var(--rust-ok)' : 'var(--rust-text-muted)';
+          tdStatus.textContent = '● ' + mem.status;
+
+          const tdAct = document.createElement('td');
+          const btnMsg = document.createElement('button');
+          btnMsg.className = 'btn-rust-secondary';
+          btnMsg.style.padding = '2px 8px';
+          btnMsg.style.fontSize = '11.5px';
+          btnMsg.textContent = 'Direct Message';
+          btnMsg.addEventListener('click', function() {
+            switchChannel(mem.id);
+          });
+          tdAct.appendChild(btnMsg);
+
+          tr.appendChild(tdName);
+          tr.appendChild(tdRole);
+          tr.appendChild(tdDept);
+          tr.appendChild(tdEmail);
+          tr.appendChild(tdStatus);
+          tr.appendChild(tdAct);
+          tbody.appendChild(tr);
+        });
+      }
+
+      // 10. Global Search Modal (Ctrl+K)
+      function openSearchModal() {
+        const modal = document.getElementById('modal-global-search');
+        modal.style.display = 'flex';
+        const input = document.getElementById('search-modal-input-field');
+        input.value = '';
+        input.focus();
+        executeSearch('');
+      }
+
+      function closeSearchModal() {
+        document.getElementById('modal-global-search').style.display = 'none';
+      }
+
+      function executeSearch(query) {
+        const container = document.getElementById('search-modal-results-container');
+        container.innerHTML = '';
+        const q = query.toLowerCase().trim();
+
+        // 1. People
+        const peopleMatches = state.members.filter(m => m.name.toLowerCase().includes(q) || m.department.toLowerCase().includes(q));
+        if (peopleMatches.length > 0) {
+          const h = document.createElement('div');
+          h.className = 'search-group-heading';
+          h.textContent = 'People & Team';
+          container.appendChild(h);
+          peopleMatches.forEach(p => {
+            const item = document.createElement('div');
+            item.className = 'search-hit-item';
+            item.textContent = `${p.name} (${p.title} · ${p.department})`;
+            item.addEventListener('click', function() {
+              closeSearchModal();
+              switchChannel(p.id);
+            });
+            container.appendChild(item);
+          });
+        }
+
+        // 2. Channels
+        const channelMatches = [...state.channels, ...state.privateGroups].filter(c => c.name.toLowerCase().includes(q));
+        if (channelMatches.length > 0) {
+          const h = document.createElement('div');
+          h.className = 'search-group-heading';
+          h.textContent = 'Channels & Groups';
+          container.appendChild(h);
+          channelMatches.forEach(c => {
+            const item = document.createElement('div');
+            item.className = 'search-hit-item';
+            item.textContent = (c.type === 'private' ? '🔒 ' : '# ') + c.name;
+            item.addEventListener('click', function() {
+              closeSearchModal();
+              switchChannel(c.id);
+            });
+            container.appendChild(item);
+          });
+        }
+
+        // 3. Tasks
+        const taskMatches = state.tasks.filter(t => t.title.toLowerCase().includes(q));
+        if (taskMatches.length > 0) {
+          const h = document.createElement('div');
+          h.className = 'search-group-heading';
+          h.textContent = 'Tasks';
+          container.appendChild(h);
+          taskMatches.forEach(t => {
+            const item = document.createElement('div');
+            item.className = 'search-hit-item';
+            item.textContent = `☑ ${t.title} [${t.priority.toUpperCase()}]`;
+            item.addEventListener('click', function() {
+              closeSearchModal();
+              switchStageView('tasks');
+            });
+            container.appendChild(item);
+          });
+        }
+
+        // 4. Files
+        const fileMatches = state.files.filter(f => f.name.toLowerCase().includes(q));
+        if (fileMatches.length > 0) {
+          const h = document.createElement('div');
+          h.className = 'search-group-heading';
+          h.textContent = 'Files & Documents';
+          container.appendChild(h);
+          fileMatches.forEach(f => {
+            const item = document.createElement('div');
+            item.className = 'search-hit-item';
+            item.textContent = `📄 ${f.name} (${f.size})`;
+            item.addEventListener('click', function() {
+              closeSearchModal();
+              switchStageView('files');
+            });
+            container.appendChild(item);
+          });
+        }
+      }
+
+      // 11. View Module Navigation Router
+      function switchStageView(viewKey) {
+        document.querySelectorAll('.stage-view-module').forEach(el => el.classList.remove('active-view'));
+        document.querySelectorAll('.rail-nav-btn').forEach(btn => btn.classList.remove('active'));
+
+        const target = document.getElementById('view-module-' + viewKey);
+        if (target) target.classList.add('active-view');
+
+        const railBtn = document.querySelector(`.rail-nav-btn[data-view="${viewKey}"]`);
+        if (railBtn) railBtn.classList.add('active');
+
+        if (viewKey === 'home') renderHome();
+        if (viewKey === 'tasks') renderTasksTable('all');
+        if (viewKey === 'files') renderFilesTable();
+        if (viewKey === 'members') renderMembersTable();
+      }
+
+      // 12. Send Message Handler
+      function dispatchMessage() {
+        const input = document.getElementById('chat-text-input');
+        const text = input.value.trim();
+        const priSelect = document.getElementById('select-message-priority');
+        const priority = priSelect.value;
+
+        if (!text && !stagedFileObject) return;
+
+        const activeId = state.activeChannelId;
+        if (!state.messages[activeId]) state.messages[activeId] = [];
+
+        const newMsg = {
+          id: 'm_' + Date.now(),
+          authorId: state.currentUser.id,
+          authorName: state.currentUser.name,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          body: text || 'Attached document file',
+          priority: priority,
+          acknowledged: priority === 'normal',
+          file: stagedFileObject ? { name: stagedFileObject.name, size: stagedFileObject.size } : null
+        };
+
+        // If file attached, register in files vault
+        if (stagedFileObject) {
+          state.files.unshift({
+            id: 'f_' + Date.now(),
+            name: stagedFileObject.name,
+            channel: activeId,
+            uploader: state.currentUser.name,
+            size: stagedFileObject.size,
+            date: 'Today'
+          });
+        }
+
+        state.messages[activeId].push(newMsg);
+        saveState();
+
+        // Clear input and staged file
+        input.value = '';
+        cancelStagedFile();
+        priSelect.value = 'normal';
+        updatePriorityComposerBanner();
+
+        renderChatMessages();
+        renderHome();
+      }
+
+      function updatePriorityComposerBanner() {
+        const sel = document.getElementById('select-message-priority').value;
+        const banner = document.getElementById('composer-priority-banner');
+        banner.className = 'composer-priority-banner';
+        if (sel === 'critical') {
+          banner.classList.add('critical');
+          banner.textContent = 'PRIORITY: CRITICAL (ESCALATING NOTIFICATION HOURLY)';
+        } else if (sel === 'high') {
+          banner.classList.add('high');
+          banner.textContent = 'PRIORITY: HIGH (HOME DECK ACKNOWLEDGEMENT REQUIRED)';
+        }
+      }
+
+      function stageFile(file) {
+        if (!file) return;
+        const sizeStr = file.size > 1048576 ? (file.size / 1048576).toFixed(1) + ' MB' : Math.round(file.size / 1024) + ' KB';
+        stagedFileObject = {
+          name: file.name,
+          size: sizeStr
+        };
+        const chip = document.getElementById('staged-file-indicator');
+        document.getElementById('staged-file-text').textContent = `📎 Attachment Ready: ${stagedFileObject.name} (${stagedFileObject.size})`;
+        chip.style.display = 'flex';
+        document.getElementById('chat-text-input').focus();
+      }
+
+      function cancelStagedFile() {
+        stagedFileObject = null;
+        document.getElementById('staged-file-indicator').style.display = 'none';
+        document.getElementById('real-file-picker').value = '';
+      }
+
+      // 13. Event Listeners Setup (Strictly no inline HTML handlers)
+      function initListeners() {
+        // Rail Buttons
+        document.querySelectorAll('.rail-nav-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            switchStageView(this.dataset.view);
+          });
+        });
+
+        // Overview nav item in sidebar
+        document.getElementById('nav-item-overview').addEventListener('click', function() {
+          switchStageView('home');
+        });
+
+        // Search Trigger
+        document.getElementById('btn-open-search').addEventListener('click', openSearchModal);
+        document.getElementById('search-modal-input-field').addEventListener('input', function(e) {
+          executeSearch(e.target.value);
+        });
+
+        // Keyboard Shortcuts: Ctrl+K / Cmd+K and Escape
+        window.addEventListener('keydown', function(e) {
+          if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+            e.preventDefault();
+            openSearchModal();
+          }
+          if (e.key === 'Escape') {
+            closeSearchModal();
+            document.getElementById('modal-create-task').style.display = 'none';
+            document.getElementById('modal-invite-member').style.display = 'none';
+            document.getElementById('profile-popover').style.display = 'none';
+          }
+        });
+
+        // Close search on backdrop click
+        document.getElementById('modal-global-search').addEventListener('click', function(e) {
+          if (e.target === this) closeSearchModal();
+        });
+
+        // Profile Toggle
+        document.getElementById('btn-profile-toggle').addEventListener('click', function(e) {
+          e.stopPropagation();
+          const pop = document.getElementById('profile-popover');
+          pop.style.display = pop.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', function() {
+          document.getElementById('profile-popover').style.display = 'none';
+        });
+
+        // Theme Toggle
+        document.getElementById('menu-toggle-theme').addEventListener('click', function() {
+          const current = document.documentElement.getAttribute('data-theme');
+          const next = current === 'light' ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('rust_theme_preference', next);
+        });
+
+        // Reset Data Menu
+        document.getElementById('menu-reset-data').addEventListener('click', function() {
+          if (confirm('Reset workspace to clean demo seed data?')) {
+            localStorage.removeItem('rust_platform_state_v1');
+            loadState();
+            renderAll();
+          }
+        });
+
+        // Chat Sending
+        document.getElementById('btn-send-message').addEventListener('click', dispatchMessage);
+        document.getElementById('chat-text-input').addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            dispatchMessage();
+          }
+        });
+
+        // Priority Dropdown in Composer
+        document.getElementById('select-message-priority').addEventListener('change', updatePriorityComposerBanner);
+
+        // File picker trigger
+        document.getElementById('btn-composer-attach-file').addEventListener('click', function() {
+          document.getElementById('real-file-picker').click();
+        });
+        document.getElementById('real-file-picker').addEventListener('change', function(e) {
+          stageFile(e.target.files[0]);
+        });
+        document.getElementById('btn-cancel-staged-file').addEventListener('click', cancelStagedFile);
+
+        // Vault upload button
+        document.getElementById('btn-files-vault-upload').addEventListener('click', function() {
+          document.getElementById('real-file-picker').click();
+        });
+
+        // Task Modal
+        const taskModal = document.getElementById('modal-create-task');
+        function openTaskModal() {
+          taskModal.style.display = 'flex';
+          const sel = document.getElementById('task-input-assignee');
+          sel.innerHTML = '';
+          state.members.forEach(m => {
+            const opt = document.createElement('option');
+            opt.value = m.name;
+            opt.textContent = `${m.name} (${m.department})`;
+            sel.appendChild(opt);
+          });
+          document.getElementById('task-input-title').value = '';
+          document.getElementById('task-input-title').focus();
+        }
+
+        document.getElementById('btn-quick-task').addEventListener('click', openTaskModal);
+        document.getElementById('btn-home-create-task').addEventListener('click', openTaskModal);
+        document.getElementById('btn-tasks-create').addEventListener('click', openTaskModal);
+        document.getElementById('btn-close-task-modal').addEventListener('click', () => taskModal.style.display = 'none');
+        document.getElementById('btn-cancel-task-form').addEventListener('click', () => taskModal.style.display = 'none');
+
+        document.getElementById('form-create-task').addEventListener('submit', function(e) {
+          e.preventDefault();
+          const title = document.getElementById('task-input-title').value.trim();
+          const assigneeName = document.getElementById('task-input-assignee').value;
+          const priority = document.getElementById('task-input-priority').value;
+          const assignedMember = state.members.find(m => m.name === assigneeName);
+
+          const newTask = {
+            id: 't_' + Date.now(),
+            title: title,
+            assignee: assigneeName,
+            assigneeId: assignedMember ? assignedMember.id : 'user_01',
+            department: assignedMember ? assignedMember.department : 'Engineering',
+            priority: priority,
+            status: 'todo',
+            due: 'Due Soon'
+          };
+
+          state.tasks.unshift(newTask);
+          saveState();
+          taskModal.style.display = 'none';
+          renderHome();
+          renderTasksTable('all');
+        });
+
+        // Invite Modal
+        const inviteModal = document.getElementById('modal-invite-member');
+        function openInviteModal() {
+          inviteModal.style.display = 'flex';
+          document.getElementById('invite-input-email').value = '';
+          document.getElementById('invite-input-name').value = '';
+          document.getElementById('invite-input-email').focus();
+        }
+
+        document.getElementById('btn-quick-invite').addEventListener('click', openInviteModal);
+        document.getElementById('btn-team-invite-member').addEventListener('click', openInviteModal);
+        document.getElementById('btn-close-invite-modal').addEventListener('click', () => inviteModal.style.display = 'none');
+        document.getElementById('btn-cancel-invite-form').addEventListener('click', () => inviteModal.style.display = 'none');
+
+        document.getElementById('form-invite-member').addEventListener('submit', function(e) {
+          e.preventDefault();
+          const email = document.getElementById('invite-input-email').value.trim();
+          const name = document.getElementById('invite-input-name').value.trim();
+          const dept = document.getElementById('invite-input-dept').value;
+          const role = document.getElementById('invite-input-role').value;
+
+          const newMember = {
+            id: 'user_' + Date.now(),
+            name: name,
+            email: email,
+            title: role === 'dept_head' ? 'Department Head' : 'Associate Specialist',
+            department: dept,
+            role: role === 'dept_head' ? 'Dept Head' : 'Member',
+            status: 'Available'
+          };
+
+          state.members.push(newMember);
+          saveState();
+          inviteModal.style.display = 'none';
+          renderHome();
+          renderSidebar();
+          renderMembersTable();
+          alert(`Single-use 7-day token sent to ${email} for ${name}. Member added to directory.`);
+        });
+
+        // Filter buttons in tasks view
+        document.querySelectorAll('#view-module-tasks .btn-rust-secondary').forEach(btn => {
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('#view-module-tasks .btn-rust-secondary').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            renderTasksTable(this.dataset.filter);
+          });
+        });
+
+        // Create Channel placeholder
+        document.getElementById('btn-add-channel').addEventListener('click', function() {
+          const name = prompt('Enter channel name (lowercase, no spaces):');
+          if (name) {
+            const clean = name.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+            state.channels.push({ id: 'c_' + clean, name: clean, type: 'public', unread: 0 });
+            state.messages['c_' + clean] = [];
+            saveState();
+            renderSidebar();
+            switchChannel('c_' + clean);
+          }
+        });
+      }
+
+      function renderAll() {
+        renderSidebar();
+        renderHome();
+        renderChatMessages();
+        renderTasksTable('all');
+        renderFilesTable();
+        renderMembersTable();
+      }
+
+      // Initialize System
+      loadState();
+
+      // Theme restore
+      const savedTheme = localStorage.getItem('rust_theme_preference');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+
+      initListeners();
+      renderAll();
+
+    })();
   </script>
 </body>
 </html>

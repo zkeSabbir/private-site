@@ -1,38 +1,52 @@
 /* ==========================================================================
-   RUST. — Slack Dark Corporate Platform
-   Typography: Funnel Display & IBM Plex Sans
+   RUST. — Corporate Communication & Task Platform Design System
+   Section 4 Specification: Clean, Industrial, High-Contrast, WCAG AA
+   Typography: Funnel Display, IBM Plex Sans, IBM Plex Mono, Noto Sans Bengali
    ========================================================================== */
 
 :root {
-  --rust-copper: #c25e2e;
-  --rust-copper-hover: #aa4e22;
+  /* Dark Theme Tokens (Default) */
+  --rust-bg-base: #15171B;
+  --rust-bg-sidebar: #1B1E24;
+  --rust-surface: #23272F;
+  --rust-border: #2F343D;
+  --rust-text: #E6E1D8;
+  --rust-text-muted: #A39E94;
+  --rust-accent: #B8542B; /* Oxidised copper */
+  --rust-accent-hover: #9E4623;
+  --rust-ink: #1E2A3A;
+  --rust-ok: #6B8F5A;
+  --rust-warn: #C29A3B;
+  --rust-critical: #B4402F;
+  --rust-info: #5E7F9C;
 
-  --slack-rail-bg: #14161a;
-  --slack-rail-active: #20242c;
-  --slack-sidebar-bg: #191c22;
-  --slack-sidebar-hover: #212630;
-  --slack-sidebar-active: #1164a3;
-  --slack-main-bg: #1a1d24;
-  --slack-card-bg: #21252e;
-  --slack-card-elevated: #282d38;
-  --slack-composer-bg: #21252e;
-  --slack-border: #2e3440;
-  --slack-border-subtle: rgba(255, 255, 255, 0.08);
-
-  --text-main: #e2e8f0;
-  --text-bright: #ffffff;
-  --text-muted: #94a3b8;
-  --text-subtle: #64748b;
-
+  /* Typography */
   --font-display: 'Funnel Display', sans-serif;
-  --font-ui: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-ui: 'IBM Plex Sans', 'Noto Sans Bengali', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
 
+  /* Sizing & Borders */
   --radius-xs: 4px;
   --radius-sm: 6px;
   --radius-md: 8px;
-  --radius-lg: 12px;
   --radius-pill: 9999px;
+  --border-width: 1px;
+}
+
+[data-theme="light"] {
+  --rust-bg-base: #F4F0E8; /* Warm paper */
+  --rust-bg-sidebar: #EAE5D9;
+  --rust-surface: #FBF9F4;
+  --rust-border: #D9D2C5;
+  --rust-text: #1F2328;
+  --rust-text-muted: #6B665C;
+  --rust-accent: #A8481F;
+  --rust-accent-hover: #8E3E1A;
+  --rust-ink: #1E2A3A;
+  --rust-ok: #4F6F40;
+  --rust-warn: #9A7424;
+  --rust-critical: #9A3123;
+  --rust-info: #3F627F;
 }
 
 * {
@@ -44,51 +58,61 @@
 
 body {
   font-family: var(--font-ui);
-  background-color: var(--slack-rail-bg);
-  color: var(--text-main);
+  background-color: var(--rust-bg-base);
+  color: var(--rust-text);
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  font-size: 13.5px;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-/* Master Top Navigation Search Bar */
-.top-global-header {
+/* Transitions: Functional only, max 150ms */
+button, input, select, .interactive-item {
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Global Top Navigation */
+.rust-header {
   height: 46px;
-  background-color: var(--slack-rail-bg);
-  border-bottom: 1px solid var(--slack-border);
+  background-color: var(--rust-bg-sidebar);
+  border-bottom: var(--border-width) solid var(--rust-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
   user-select: none;
 }
-.header-history-controls {
-  display: flex;
-  gap: 12px;
-  color: var(--text-muted);
-}
-.global-search-container {
-  width: 520px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid var(--slack-border);
-  border-radius: var(--radius-sm);
+
+.search-trigger-box {
+  width: 480px;
+  max-width: 100%;
+  background: var(--rust-surface);
+  border: var(--border-width) solid var(--rust-border);
+  border-radius: var(--radius-xs);
   padding: 6px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: var(--text-muted);
+  color: var(--rust-text-muted);
   font-size: 13px;
   cursor: pointer;
-  transition: all 120ms;
 }
-.global-search-container:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+.search-trigger-box:hover, .search-trigger-box:focus-visible {
+  border-color: var(--rust-accent);
+  color: var(--rust-text);
+  outline: none;
 }
 
-/* Master App Workspace */
-.app-workspace-body {
+/* Master App Layout Container */
+.rust-workspace-shell {
   display: flex;
   height: calc(100vh - 46px);
   width: 100vw;
@@ -96,124 +120,141 @@ body {
 }
 
 /* 1. Left Icon Rail */
-.left-icon-rail {
-  width: 66px;
-  background-color: var(--slack-rail-bg);
-  border-right: 1px solid var(--slack-border);
+.rust-rail {
+  width: 64px;
+  background-color: var(--rust-bg-sidebar);
+  border-right: var(--border-width) solid var(--rust-border);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 12px 0;
   gap: 10px;
+  flex-shrink: 0;
 }
-.rail-team-tile {
-  width: 42px;
-  height: 42px;
-  border-radius: var(--radius-sm);
-  background: #3f0e40;
-  border: 2px solid var(--rust-copper);
+
+/* RustMark Brand Component */
+.rust-mark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: baseline;
+  line-height: 1;
+}
+.rust-mark-dot {
+  width: 0.22em;
+  height: 0.22em;
+  background-color: var(--rust-accent);
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 0.08em;
+  flex-shrink: 0;
+}
+
+.rail-brand-tile {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-xs);
+  background: var(--rust-surface);
+  border: var(--border-width) solid var(--rust-border);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 16px;
-  color: #fff;
   cursor: pointer;
   margin-bottom: 6px;
 }
-.rail-btn-unit {
+
+.rail-nav-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  width: 58px;
+  gap: 3px;
+  width: 56px;
   padding: 6px 0;
-  border-radius: var(--radius-sm);
-  color: var(--text-muted);
+  border-radius: var(--radius-xs);
+  color: var(--rust-text-muted);
   cursor: pointer;
   background: transparent;
-  border: none;
-  transition: all 100ms;
+  border: var(--border-width) solid transparent;
 }
-.rail-btn-unit span {
-  font-size: 10.5px;
+.rail-nav-btn span {
+  font-size: 11px;
   font-weight: 600;
 }
-.rail-btn-unit svg {
+.rail-nav-btn svg {
   width: 18px;
   height: 18px;
 }
-.rail-btn-unit:hover {
-  background: var(--slack-sidebar-hover);
-  color: #fff;
+.rail-nav-btn:hover {
+  background: var(--rust-surface);
+  color: var(--rust-text);
 }
-.rail-btn-unit.active {
-  background: var(--slack-rail-active);
-  color: var(--rust-copper);
-  border: 1px solid rgba(194, 94, 46, 0.3);
+.rail-nav-btn.active {
+  background: var(--rust-surface);
+  color: var(--rust-accent);
+  border-color: var(--rust-border);
 }
 
-/* 2. Middle Navigation Sidebar */
-.channel-sidebar-pane {
+/* 2. Middle Sidebar */
+.rust-sidebar {
   width: 250px;
-  background-color: var(--slack-sidebar-bg);
-  border-right: 1px solid var(--slack-border);
+  background-color: var(--rust-bg-sidebar);
+  border-right: var(--border-width) solid var(--rust-border);
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 }
-.sidebar-team-title-row {
+
+.sidebar-header-box {
   padding: 12px 16px;
-  border-bottom: 1px solid var(--slack-border);
+  border-bottom: var(--border-width) solid var(--rust-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.team-name-text {
+.tenant-heading {
   font-family: var(--font-display);
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 700;
-  color: #fff;
+  color: var(--rust-text);
   display: flex;
   align-items: baseline;
-  gap: 3px;
+  gap: 2px;
 }
-.team-name-text .dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--rust-copper);
-  display: inline-block;
-}
-.sidebar-scroll-box {
+
+.sidebar-scrollable {
   flex: 1;
   overflow-y: auto;
   padding: 10px 8px;
 }
-.sidebar-nav-entry {
+
+.sidebar-nav-item {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 7px 10px;
   border-radius: var(--radius-xs);
-  color: var(--text-main);
+  color: var(--rust-text);
   font-size: 13.5px;
   cursor: pointer;
-  margin-bottom: 1px;
+  margin-bottom: 2px;
+  border: var(--border-width) solid transparent;
 }
-.sidebar-nav-entry:hover {
-  background: var(--slack-sidebar-hover);
+.sidebar-nav-item:hover {
+  background: var(--rust-surface);
+}
+.sidebar-nav-item.active {
+  background: var(--rust-ink);
   color: #fff;
+  border-color: var(--rust-border);
 }
-.sidebar-nav-entry.active {
-  background: var(--slack-sidebar-active);
-  color: #fff;
-  font-weight: 600;
-}
-.sidebar-group-label {
+
+.sidebar-category-header {
   font-size: 11.5px;
   font-weight: 700;
-  color: var(--text-muted);
+  color: var(--rust-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   padding: 14px 10px 4px 10px;
   display: flex;
   align-items: center;
@@ -221,121 +262,153 @@ body {
 }
 
 /* 3. Main Stage Content Area */
-.main-stage-pane {
+.rust-stage {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: var(--slack-main-bg);
+  background-color: var(--rust-bg-base);
   height: 100%;
   overflow: hidden;
 }
 
 .stage-top-bar {
   padding: 10px 20px;
-  border-bottom: 1px solid var(--slack-border);
-  background-color: var(--slack-main-bg);
+  border-bottom: var(--border-width) solid var(--rust-border);
+  background-color: var(--rust-surface);
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 48px;
+  flex-shrink: 0;
 }
-.stage-channel-title {
+.stage-title {
   font-family: var(--font-display);
-  font-size: 15.5px;
+  font-size: 16px;
   font-weight: 700;
-  color: #fff;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
-/* Sub-views */
-.view-panel {
+/* View Modules */
+.stage-view-module {
   display: none;
   flex: 1;
   overflow-y: auto;
   height: calc(100vh - 46px - 48px);
 }
-.view-panel.active-view {
+.stage-view-module.active-view {
   display: flex;
   flex-direction: column;
 }
 
-/* Home Overview & Progress */
-.home-overview-container {
-  padding: 24px;
+/* ==========================================================================
+   EXECUTIVE HOME SCREEN
+   ========================================================================== */
+.home-layout-box {
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
-.kpi-metric-strip {
+
+/* Priority Inbox Panel (Top) */
+.priority-inbox-deck {
+  background: rgba(180, 64, 47, 0.1);
+  border: var(--border-width) solid var(--rust-critical);
+  border-radius: var(--radius-xs);
+  padding: 14px 16px;
+}
+.priority-inbox-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--rust-critical);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.priority-msg-item {
+  background: var(--rust-surface);
+  border-left: 3px solid var(--rust-critical);
+  border-radius: var(--radius-xs);
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* KPI Summary Cards */
+.kpi-row {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 14px;
+  gap: 12px;
 }
-.kpi-card {
-  background: var(--slack-card-bg);
-  border: 1px solid var(--slack-border);
-  border-radius: var(--radius-sm);
-  padding: 16px;
+.kpi-unit {
+  background: var(--rust-surface);
+  border: var(--border-width) solid var(--rust-border);
+  border-radius: var(--radius-xs);
+  padding: 14px 16px;
 }
-.kpi-val {
+.kpi-value {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 800;
-  color: #fff;
 }
-.kpi-label {
-  font-size: 11.5px;
-  color: var(--text-muted);
+.kpi-tag {
+  font-size: 11px;
+  color: var(--rust-text-muted);
   text-transform: uppercase;
   margin-top: 4px;
 }
 
-.work-progress-box {
-  background: var(--slack-card-bg);
-  border: 1px solid var(--slack-border);
-  border-radius: var(--radius-sm);
-  padding: 18px;
+/* Solid Copper Progress Bar */
+.progress-card {
+  background: var(--rust-surface);
+  border: var(--border-width) solid var(--rust-border);
+  border-radius: var(--radius-xs);
+  padding: 16px;
 }
-.progress-bar-bg {
+.progress-track {
   width: 100%;
   height: 8px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-pill);
   overflow: hidden;
   margin-top: 8px;
 }
-.progress-bar-fill {
+.progress-bar-solid {
   height: 100%;
-  background: linear-gradient(90deg, var(--rust-copper) 0%, #22c55e 100%);
-  border-radius: var(--radius-pill);
-  transition: width 300ms ease;
+  background: var(--rust-accent);
+  transition: width 150ms ease;
 }
 
-.modern-tasks-table {
+/* Modern Tasks Table */
+.rust-data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13.5px;
-  margin-top: 12px;
 }
-.modern-tasks-table th {
+.rust-data-table th {
   text-align: left;
   padding: 10px 14px;
-  color: var(--text-muted);
+  color: var(--rust-text-muted);
   font-size: 11.5px;
   font-family: var(--font-display);
-  border-bottom: 1px solid var(--slack-border);
+  border-bottom: var(--border-width) solid var(--rust-border);
   background: rgba(0, 0, 0, 0.15);
 }
-.modern-tasks-table td {
+.rust-data-table td {
   padding: 12px 14px;
-  border-bottom: 1px solid var(--slack-border);
+  border-bottom: var(--border-width) solid var(--rust-border);
 }
-.status-select {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--slack-border);
-  color: #fff;
+
+.table-status-select {
+  background: var(--rust-bg-base);
+  border: var(--border-width) solid var(--rust-border);
+  color: var(--rust-text);
   padding: 4px 8px;
   border-radius: var(--radius-xs);
   font-size: 12px;
@@ -343,8 +416,10 @@ body {
   cursor: pointer;
 }
 
-/* Chat Messages */
-.chat-stream-box {
+/* ==========================================================================
+   CHAT MESSAGING STREAM & COMPOSER
+   ========================================================================== */
+.chat-scroll-stream {
   flex: 1;
   overflow-y: auto;
   padding: 16px 20px;
@@ -352,212 +427,243 @@ body {
   flex-direction: column;
   gap: 16px;
 }
-.chat-message-entry {
+.msg-row-container {
   display: flex;
   gap: 12px;
-  padding: 6px 8px;
-  border-radius: var(--radius-sm);
-  transition: background 80ms;
-}
-.chat-message-entry:hover {
-  background: rgba(255, 255, 255, 0.03);
-}
-.sender-avatar-tile {
-  width: 38px;
-  height: 38px;
+  padding: 4px 8px;
   border-radius: var(--radius-xs);
-  background: #3f0e40;
+}
+.msg-row-container:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+.sender-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-xs);
+  background: var(--rust-ink);
+  border: var(--border-width) solid var(--rust-border);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 12.5px;
   color: #fff;
   flex-shrink: 0;
 }
-.message-body-col {
+.msg-content-column {
   flex: 1;
 }
-.message-header-line {
+.msg-meta-line {
   display: flex;
   align-items: baseline;
   gap: 8px;
   margin-bottom: 4px;
 }
-.author-title {
+.msg-author {
   font-weight: 700;
-  font-size: 14.5px;
-  color: #fff;
+  font-size: 14px;
 }
-.timestamp-txt {
+.msg-time {
   font-size: 11px;
-  color: var(--text-muted);
+  color: var(--rust-text-muted);
   font-family: var(--font-mono);
 }
 
-.attached-file-pill {
-  background: var(--slack-card-elevated);
-  border: 1px solid var(--slack-border);
-  border-radius: var(--radius-sm);
-  padding: 10px 14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 8px;
-  max-width: 440px;
-}
-.file-badge-tag {
-  background: rgba(194, 94, 46, 0.2);
-  border: 1px solid var(--rust-copper);
-  color: var(--rust-copper);
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 10px;
-  padding: 3px 6px;
-  border-radius: var(--radius-xs);
-}
-
-/* ==========================================================================
-   PERFECT PROMINENT CHAT COMPOSER WITH FILE PREVIEW CHIP
-   ========================================================================== */
-.chat-composer-box {
+/* Priority Selector on Composer */
+.chat-composer-section {
   padding: 12px 20px 16px 20px;
-  background: var(--slack-main-bg);
+  background: var(--rust-bg-base);
 }
-.composer-border-wrap {
-  border: 1.5px solid #3f4654;
-  border-radius: var(--radius-sm);
-  background: #222630;
+.composer-bordered-shell {
+  border: var(--border-width) solid var(--rust-border);
+  border-radius: var(--radius-xs);
+  background: var(--rust-surface);
   display: flex;
   flex-direction: column;
-  transition: border-color 150ms;
 }
-.composer-border-wrap:focus-within {
-  border-color: var(--rust-copper);
+.composer-bordered-shell:focus-within {
+  border-color: var(--rust-accent);
+}
+.composer-priority-banner {
+  display: none;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #fff;
+}
+.composer-priority-banner.critical {
+  display: block;
+  background: var(--rust-critical);
+}
+.composer-priority-banner.high {
+  display: block;
+  background: var(--rust-warn);
 }
 
-/* Staged File Pending Attachment Chip */
-.staged-file-chip {
-  padding: 8px 12px;
-  background: rgba(194, 94, 46, 0.15);
-  border-bottom: 1px solid rgba(194, 94, 46, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 12px;
-  color: #fdba74;
-}
-
-.composer-input-field {
-  padding: 12px 16px;
+.composer-text-input {
+  padding: 12px 14px;
   min-height: 48px;
   outline: none;
-  color: #ffffff;
+  color: var(--rust-text);
   background: transparent;
   font-size: 14px;
   width: 100%;
   border: none;
   font-family: var(--font-ui);
 }
-.composer-input-field::placeholder {
-  color: #94a3b8;
-}
 
-.composer-action-bar {
-  padding: 6px 14px 8px 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+.composer-toolbar-bottom {
+  padding: 6px 12px 8px 12px;
+  border-top: var(--border-width) solid rgba(255, 255, 255, 0.05);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.composer-tools {
+.composer-tool-icons {
   display: flex;
-  gap: 14px;
-  color: #94a3b8;
+  gap: 12px;
+  color: var(--rust-text-muted);
   align-items: center;
-}
-.composer-tool-icon {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 100ms;
-}
-.composer-tool-icon:hover {
-  color: #ffffff;
 }
 
-.btn-send-message {
-  background: var(--rust-copper);
-  color: #ffffff;
-  border: none;
-  padding: 7px 18px;
+.priority-select-dropdown {
+  background: var(--rust-bg-base);
+  border: var(--border-width) solid var(--rust-border);
+  color: var(--rust-text);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  padding: 3px 6px;
   border-radius: var(--radius-xs);
-  font-size: 12.5px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: background 120ms;
-}
-.btn-send-message:hover {
-  background: var(--rust-copper-hover);
+  outline: none;
 }
 
-.btn-rust {
-  background: var(--rust-copper);
+/* Staged File Banner */
+.staged-file-indicator {
+  display: none;
+  padding: 6px 12px;
+  background: rgba(184, 84, 43, 0.15);
+  border-bottom: var(--border-width) solid rgba(184, 84, 43, 0.3);
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--rust-accent);
+}
+
+/* Primary Buttons */
+.btn-rust-primary {
+  background: var(--rust-accent);
   color: #fff;
   border: none;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 600;
   padding: 6px 14px;
   border-radius: var(--radius-xs);
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
-.btn-rust:hover {
-  background: var(--rust-copper-hover);
+.btn-rust-primary:hover {
+  background: var(--rust-accent-hover);
 }
 
-/* Modals */
-.modal-overlay {
+.btn-rust-secondary {
+  background: transparent;
+  border: var(--border-width) solid var(--rust-border);
+  color: var(--rust-text);
+  font-size: 12.5px;
+  padding: 6px 12px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+}
+.btn-rust-secondary:hover {
+  background: var(--rust-surface);
+}
+
+/* ==========================================================================
+   SEARCH QUICK SWITCHER MODAL (Ctrl+K)
+   ========================================================================== */
+.rust-modal-backdrop {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
+  display: none;
+  align-items: flex-start;
   justify-content: center;
-  z-index: 999;
+  padding-top: 10vh;
+  z-index: 1000;
 }
-.modal-window {
-  background: var(--slack-card-bg);
-  border: 1px solid var(--slack-border);
-  border-radius: var(--radius-md);
-  width: 500px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+.rust-modal-window {
+  background: var(--rust-surface);
+  border: var(--border-width) solid var(--rust-border);
+  border-radius: var(--radius-sm);
+  width: 580px;
+  max-width: 95vw;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
-.modal-header {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--slack-border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.modal-body {
-  padding: 20px;
-}
-.input-text-modern {
+.search-modal-input {
   width: 100%;
-  background: var(--slack-rail-bg);
-  border: 1px solid var(--slack-border);
-  border-radius: var(--radius-xs);
-  padding: 9px 12px;
-  color: #fff;
-  font-size: 13.5px;
+  padding: 14px 18px;
+  background: var(--rust-bg-base);
+  border: none;
+  border-bottom: var(--border-width) solid var(--rust-border);
+  color: var(--rust-text);
+  font-size: 15px;
   outline: none;
-  margin-top: 6px;
+  font-family: var(--font-ui);
 }
-.input-text-modern:focus {
-  border-color: var(--rust-copper);
+.search-results-list {
+  max-height: 360px;
+  overflow-y: auto;
+  padding: 8px;
+}
+.search-group-heading {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--rust-text-muted);
+  text-transform: uppercase;
+  padding: 8px 12px 4px 12px;
+}
+.search-hit-item {
+  padding: 8px 12px;
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 13.5px;
+}
+.search-hit-item:hover, .search-hit-item.selected {
+  background: var(--rust-ink);
+  color: #fff;
+}
+
+/* Profile Popover Menu */
+.profile-menu-dropdown {
+  position: absolute;
+  top: 48px;
+  right: 16px;
+  background: var(--rust-surface);
+  border: var(--border-width) solid var(--rust-border);
+  border-radius: var(--radius-xs);
+  width: 220px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+  z-index: 1100;
+  display: none;
+  overflow: hidden;
+}
+.profile-menu-item {
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  border-bottom: var(--border-width) solid rgba(255, 255, 255, 0.04);
+}
+.profile-menu-item:hover {
+  background: var(--rust-bg-base);
+  color: var(--rust-accent);
 }
