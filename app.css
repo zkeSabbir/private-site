@@ -1,52 +1,101 @@
 /* ==========================================================================
-   RUST. — Corporate Communication & Task Platform Design System
-   Section 4 Specification: Clean, Industrial, High-Contrast, WCAG AA
-   Typography: Funnel Display, IBM Plex Sans, IBM Plex Mono, Noto Sans Bengali
+   RUST. — Ultra-Rich Enterprise Corporate Platform (Slack-Grade)
+   Design System: Section 4 Specs + Multi-Theme + Rich Attachments + Preferences
    ========================================================================== */
 
 :root {
-  /* Dark Theme Tokens (Default) */
-  --rust-bg-base: #15171B;
-  --rust-bg-sidebar: #1B1E24;
-  --rust-surface: #23272F;
-  --rust-border: #2F343D;
-  --rust-text: #E6E1D8;
-  --rust-text-muted: #A39E94;
+  /* Default: Aubergine Dark (Slack / RUST hybrid) */
+  --rust-bg-base: #1a1d21;
+  --rust-bg-sidebar: #19171d;
+  --rust-surface: #222529;
+  --rust-surface-elevated: #282c32;
+  --rust-border: #33363b;
+  --rust-text: #d1d2d3;
+  --rust-text-bright: #ffffff;
+  --rust-text-muted: #94a3b8;
   --rust-accent: #B8542B; /* Oxidised copper */
   --rust-accent-hover: #9E4623;
   --rust-ink: #1E2A3A;
-  --rust-ok: #6B8F5A;
+  --rust-ok: #4F6F40;
   --rust-warn: #C29A3B;
   --rust-critical: #B4402F;
   --rust-info: #5E7F9C;
 
-  /* Typography */
   --font-display: 'Funnel Display', sans-serif;
   --font-ui: 'IBM Plex Sans', 'Noto Sans Bengali', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
 
-  /* Sizing & Borders */
   --radius-xs: 4px;
   --radius-sm: 6px;
   --radius-md: 8px;
+  --radius-lg: 12px;
   --radius-pill: 9999px;
   --border-width: 1px;
 }
 
-[data-theme="light"] {
-  --rust-bg-base: #F4F0E8; /* Warm paper */
+/* Theme 1: Pure Charcoal Dark */
+[data-theme="dark-charcoal"] {
+  --rust-bg-base: #111418;
+  --rust-bg-sidebar: #161a1f;
+  --rust-surface: #1e232a;
+  --rust-surface-elevated: #242a33;
+  --rust-border: #2a313c;
+  --rust-text: #e2e8f0;
+  --rust-text-bright: #ffffff;
+  --rust-text-muted: #8b95a5;
+  --rust-accent: #B8542B;
+}
+
+/* Theme 2: Warm Paper Light */
+[data-theme="light-paper"] {
+  --rust-bg-base: #F4F0E8;
   --rust-bg-sidebar: #EAE5D9;
   --rust-surface: #FBF9F4;
+  --rust-surface-elevated: #FFFFFF;
   --rust-border: #D9D2C5;
   --rust-text: #1F2328;
+  --rust-text-bright: #0f1215;
   --rust-text-muted: #6B665C;
   --rust-accent: #A8481F;
-  --rust-accent-hover: #8E3E1A;
-  --rust-ink: #1E2A3A;
-  --rust-ok: #4F6F40;
-  --rust-warn: #9A7424;
-  --rust-critical: #9A3123;
-  --rust-info: #3F627F;
+}
+
+/* Theme 3: Deep Navy Blue */
+[data-theme="deep-navy"] {
+  --rust-bg-base: #0B111B;
+  --rust-bg-sidebar: #0E1624;
+  --rust-surface: #141F33;
+  --rust-surface-elevated: #1B2942;
+  --rust-border: #223452;
+  --rust-text: #E0E7FF;
+  --rust-text-bright: #ffffff;
+  --rust-text-muted: #818CF8;
+  --rust-accent: #C25E2E;
+}
+
+/* Theme 4: Evergreen Forest */
+[data-theme="evergreen-forest"] {
+  --rust-bg-base: #0d1a14;
+  --rust-bg-sidebar: #09140f;
+  --rust-surface: #13241c;
+  --rust-surface-elevated: #1a3026;
+  --rust-border: #224234;
+  --rust-text: #e2f0e8;
+  --rust-text-bright: #ffffff;
+  --rust-text-muted: #7ba38e;
+  --rust-accent: #2e9e65;
+}
+
+/* Theme 5: Sunset Bronze */
+[data-theme="sunset-bronze"] {
+  --rust-bg-base: #17110e;
+  --rust-bg-sidebar: #130d0a;
+  --rust-surface: #221813;
+  --rust-surface-elevated: #2d201a;
+  --rust-border: #422e25;
+  --rust-text: #f5e8e2;
+  --rust-text-bright: #ffffff;
+  --rust-text-muted: #aa8677;
+  --rust-accent: #d8622c;
 }
 
 * {
@@ -63,23 +112,15 @@ body {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  font-size: 14px;
+  font-size: 13.5px;
   line-height: 1.5;
 }
 
-/* Transitions: Functional only, max 150ms */
-button, input, select, .interactive-item {
-  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+button, input, select {
+  font-family: inherit;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-/* Global Top Navigation */
+/* Top Global Header */
 .rust-header {
   height: 46px;
   background-color: var(--rust-bg-sidebar);
@@ -92,9 +133,9 @@ button, input, select, .interactive-item {
 }
 
 .search-trigger-box {
-  width: 480px;
+  width: 520px;
   max-width: 100%;
-  background: var(--rust-surface);
+  background: rgba(255, 255, 255, 0.06);
   border: var(--border-width) solid var(--rust-border);
   border-radius: var(--radius-xs);
   padding: 6px 14px;
@@ -104,14 +145,14 @@ button, input, select, .interactive-item {
   color: var(--rust-text-muted);
   font-size: 13px;
   cursor: pointer;
+  transition: all 120ms;
 }
-.search-trigger-box:hover, .search-trigger-box:focus-visible {
-  border-color: var(--rust-accent);
-  color: var(--rust-text);
-  outline: none;
+.search-trigger-box:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--rust-text-bright);
 }
 
-/* Master App Layout Container */
+/* Workspace Shell */
 .rust-workspace-shell {
   display: flex;
   height: calc(100vh - 46px);
@@ -119,20 +160,31 @@ button, input, select, .interactive-item {
   overflow: hidden;
 }
 
-/* 1. Left Icon Rail */
+/* Left Icon Rail */
 .rust-rail {
-  width: 64px;
+  width: 66px;
   background-color: var(--rust-bg-sidebar);
   border-right: var(--border-width) solid var(--rust-border);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 12px 0;
-  gap: 10px;
+  gap: 12px;
   flex-shrink: 0;
 }
 
-/* RustMark Brand Component */
+.rail-brand-tile {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  background: #3f0e40;
+  border: 2px solid var(--rust-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 4px;
+}
 .rust-mark {
   font-family: var(--font-display);
   font-weight: 800;
@@ -151,34 +203,22 @@ button, input, select, .interactive-item {
   flex-shrink: 0;
 }
 
-.rail-brand-tile {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-xs);
-  background: var(--rust-surface);
-  border: var(--border-width) solid var(--rust-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin-bottom: 6px;
-}
-
 .rail-nav-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  width: 56px;
+  width: 58px;
   padding: 6px 0;
   border-radius: var(--radius-xs);
   color: var(--rust-text-muted);
   cursor: pointer;
   background: transparent;
   border: var(--border-width) solid transparent;
+  transition: all 100ms;
 }
 .rail-nav-btn span {
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 600;
 }
 .rail-nav-btn svg {
@@ -187,7 +227,7 @@ button, input, select, .interactive-item {
 }
 .rail-nav-btn:hover {
   background: var(--rust-surface);
-  color: var(--rust-text);
+  color: var(--rust-text-bright);
 }
 .rail-nav-btn.active {
   background: var(--rust-surface);
@@ -195,7 +235,7 @@ button, input, select, .interactive-item {
   border-color: var(--rust-border);
 }
 
-/* 2. Middle Sidebar */
+/* Middle Sidebar */
 .rust-sidebar {
   width: 250px;
   background-color: var(--rust-bg-sidebar);
@@ -214,18 +254,18 @@ button, input, select, .interactive-item {
 }
 .tenant-heading {
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 700;
-  color: var(--rust-text);
+  color: var(--rust-text-bright);
   display: flex;
   align-items: baseline;
-  gap: 2px;
+  gap: 3px;
 }
 
 .sidebar-scrollable {
   flex: 1;
   overflow-y: auto;
-  padding: 10px 8px;
+  padding: 8px 8px;
 }
 
 .sidebar-nav-item {
@@ -239,13 +279,16 @@ button, input, select, .interactive-item {
   cursor: pointer;
   margin-bottom: 2px;
   border: var(--border-width) solid transparent;
+  transition: all 100ms;
 }
 .sidebar-nav-item:hover {
   background: var(--rust-surface);
+  color: var(--rust-text-bright);
 }
 .sidebar-nav-item.active {
   background: var(--rust-ink);
   color: #fff;
+  font-weight: 600;
   border-color: var(--rust-border);
 }
 
@@ -261,7 +304,18 @@ button, input, select, .interactive-item {
   justify-content: space-between;
 }
 
-/* 3. Main Stage Content Area */
+/* Notice Badge in Sidebar */
+.notice-pill-badge {
+  background: var(--rust-accent);
+  color: #fff;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+}
+
+/* Main Stage */
 .rust-stage {
   flex: 1;
   display: flex;
@@ -290,7 +344,6 @@ button, input, select, .interactive-item {
   gap: 8px;
 }
 
-/* View Modules */
 .stage-view-module {
   display: none;
   flex: 1;
@@ -302,123 +355,28 @@ button, input, select, .interactive-item {
   flex-direction: column;
 }
 
-/* ==========================================================================
-   EXECUTIVE HOME SCREEN
-   ========================================================================== */
-.home-layout-box {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-/* Priority Inbox Panel (Top) */
-.priority-inbox-deck {
-  background: rgba(180, 64, 47, 0.1);
-  border: var(--border-width) solid var(--rust-critical);
+/* Avatar Components */
+.avatar-tile {
+  width: 36px;
+  height: 36px;
   border-radius: var(--radius-xs);
-  padding: 14px 16px;
-}
-.priority-inbox-header {
+  background: #3f0e40;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  color: var(--rust-critical);
-  font-family: var(--font-mono);
-  font-size: 11.5px;
+  justify-content: center;
   font-weight: 700;
-  margin-bottom: 10px;
-}
-.priority-msg-item {
-  background: var(--rust-surface);
-  border-left: 3px solid var(--rust-critical);
-  border-radius: var(--radius-xs);
-  padding: 12px 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-/* KPI Summary Cards */
-.kpi-row {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-}
-.kpi-unit {
-  background: var(--rust-surface);
-  border: var(--border-width) solid var(--rust-border);
-  border-radius: var(--radius-xs);
-  padding: 14px 16px;
-}
-.kpi-value {
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 800;
-}
-.kpi-tag {
-  font-size: 11px;
-  color: var(--rust-text-muted);
-  text-transform: uppercase;
-  margin-top: 4px;
-}
-
-/* Solid Copper Progress Bar */
-.progress-card {
-  background: var(--rust-surface);
-  border: var(--border-width) solid var(--rust-border);
-  border-radius: var(--radius-xs);
-  padding: 16px;
-}
-.progress-track {
-  width: 100%;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-pill);
-  overflow: hidden;
-  margin-top: 8px;
-}
-.progress-bar-solid {
-  height: 100%;
-  background: var(--rust-accent);
-  transition: width 150ms ease;
-}
-
-/* Modern Tasks Table */
-.rust-data-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13.5px;
-}
-.rust-data-table th {
-  text-align: left;
-  padding: 10px 14px;
-  color: var(--rust-text-muted);
-  font-size: 11.5px;
-  font-family: var(--font-display);
-  border-bottom: var(--border-width) solid var(--rust-border);
-  background: rgba(0, 0, 0, 0.15);
-}
-.rust-data-table td {
-  padding: 12px 14px;
-  border-bottom: var(--border-width) solid var(--rust-border);
-}
-
-.table-status-select {
-  background: var(--rust-bg-base);
-  border: var(--border-width) solid var(--rust-border);
-  color: var(--rust-text);
-  padding: 4px 8px;
-  border-radius: var(--radius-xs);
   font-size: 12px;
-  outline: none;
-  cursor: pointer;
+  color: #fff;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.avatar-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* ==========================================================================
-   CHAT MESSAGING STREAM & COMPOSER
-   ========================================================================== */
+/* Chat Messages */
 .chat-scroll-stream {
   flex: 1;
   overflow-y: auto;
@@ -430,29 +388,52 @@ button, input, select, .interactive-item {
 .msg-row-container {
   display: flex;
   gap: 12px;
-  padding: 4px 8px;
+  padding: 6px 8px;
   border-radius: var(--radius-xs);
+  position: relative;
 }
 .msg-row-container:hover {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.03);
 }
-.sender-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-xs);
-  background: var(--rust-ink);
+.msg-row-container:hover .msg-hover-actions {
+  display: flex;
+}
+
+/* Hover Action Bar on Message (React, Reply, Emergency, Edit, Delete, Share) */
+.msg-hover-actions {
+  display: none;
+  position: absolute;
+  top: -12px;
+  right: 14px;
+  background: var(--rust-surface-elevated);
   border: var(--border-width) solid var(--rust-border);
+  border-radius: var(--radius-xs);
+  padding: 2px 6px;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+.hover-action-btn {
+  background: transparent;
+  border: none;
+  color: var(--rust-text-muted);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 12.5px;
-  color: #fff;
-  flex-shrink: 0;
 }
-.msg-content-column {
-  flex: 1;
+.hover-action-btn:hover {
+  background: var(--rust-surface);
+  color: var(--rust-text-bright);
 }
+.hover-action-btn.emergency:hover {
+  color: var(--rust-critical);
+}
+
 .msg-meta-line {
   display: flex;
   align-items: baseline;
@@ -462,6 +443,7 @@ button, input, select, .interactive-item {
 .msg-author {
   font-weight: 700;
   font-size: 14px;
+  color: var(--rust-text-bright);
 }
 .msg-time {
   font-size: 11px;
@@ -469,7 +451,140 @@ button, input, select, .interactive-item {
   font-family: var(--font-mono);
 }
 
-/* Priority Selector on Composer */
+/* Multi-photo Grid Gallery (From User Screenshot) */
+.photo-grid-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+  max-width: 600px;
+}
+.photo-thumb-card {
+  height: 140px;
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  border: var(--border-width) solid var(--rust-border);
+  background: #000;
+  cursor: pointer;
+  position: relative;
+}
+.photo-thumb-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* File Attachment Card (Zip, PSD, PDF) */
+.attached-doc-card {
+  background: var(--rust-surface);
+  border: var(--border-width) solid var(--rust-border);
+  border-radius: var(--radius-xs);
+  padding: 10px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  max-width: 440px;
+}
+.doc-icon-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+}
+.doc-icon-badge.zip { background: rgba(194, 154, 59, 0.2); color: var(--rust-warn); border: 1px solid var(--rust-warn); }
+.doc-icon-badge.pdf { background: rgba(180, 64, 47, 0.2); color: var(--rust-critical); border: 1px solid var(--rust-critical); }
+.doc-icon-badge.psd { background: rgba(94, 127, 156, 0.2); color: var(--rust-info); border: 1px solid var(--rust-info); }
+.doc-icon-badge.ai  { background: rgba(184, 84, 43, 0.2); color: var(--rust-accent); border: 1px solid var(--rust-accent); }
+
+/* Reactions List Under Message */
+.msg-reactions-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+.reaction-pill-badge {
+  background: var(--rust-surface);
+  border: var(--border-width) solid var(--rust-border);
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  font-size: 11.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.reaction-pill-badge:hover {
+  border-color: var(--rust-accent);
+}
+
+/* Thread Reply Container */
+.thread-replies-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--rust-info);
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 6px;
+  cursor: pointer;
+}
+.thread-replies-summary:hover {
+  text-decoration: underline;
+}
+
+/* Staged Attachments Preview Strip in Composer (Multiple Files & Thumbnails) */
+.composer-staged-strip {
+  display: none;
+  padding: 8px 14px;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: var(--border-width) solid var(--rust-border);
+  gap: 10px;
+  overflow-x: auto;
+  align-items: center;
+}
+.staged-thumb-unit {
+  position: relative;
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-xs);
+  border: var(--border-width) solid var(--rust-border);
+  overflow: hidden;
+  background: var(--rust-surface);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.staged-thumb-unit img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.staged-thumb-remove {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  cursor: pointer;
+  border: none;
+}
+
+/* Chat Composer */
 .chat-composer-section {
   padding: 12px 20px 16px 20px;
   background: var(--rust-bg-base);
@@ -484,23 +599,6 @@ button, input, select, .interactive-item {
 .composer-bordered-shell:focus-within {
   border-color: var(--rust-accent);
 }
-.composer-priority-banner {
-  display: none;
-  padding: 4px 12px;
-  font-size: 11px;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  color: #fff;
-}
-.composer-priority-banner.critical {
-  display: block;
-  background: var(--rust-critical);
-}
-.composer-priority-banner.high {
-  display: block;
-  background: var(--rust-warn);
-}
-
 .composer-text-input {
   padding: 12px 14px;
   min-height: 48px;
@@ -525,29 +623,6 @@ button, input, select, .interactive-item {
   gap: 12px;
   color: var(--rust-text-muted);
   align-items: center;
-}
-
-.priority-select-dropdown {
-  background: var(--rust-bg-base);
-  border: var(--border-width) solid var(--rust-border);
-  color: var(--rust-text);
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  padding: 3px 6px;
-  border-radius: var(--radius-xs);
-  outline: none;
-}
-
-/* Staged File Banner */
-.staged-file-indicator {
-  display: none;
-  padding: 6px 12px;
-  background: rgba(184, 84, 43, 0.15);
-  border-bottom: var(--border-width) solid rgba(184, 84, 43, 0.3);
-  align-items: center;
-  justify-content: space-between;
-  font-size: 12px;
-  color: var(--rust-accent);
 }
 
 /* Primary Buttons */
@@ -579,19 +654,99 @@ button, input, select, .interactive-item {
 }
 .btn-rust-secondary:hover {
   background: var(--rust-surface);
+  color: var(--rust-text-bright);
 }
 
-/* ==========================================================================
-   SEARCH QUICK SWITCHER MODAL (Ctrl+K)
-   ========================================================================== */
+/* Custom Preferences Modal (Slack Screenshot 5 Exact) */
+.pref-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.pref-modal-card {
+  background: var(--rust-surface);
+  border: var(--border-width) solid var(--rust-border);
+  border-radius: var(--radius-sm);
+  width: 740px;
+  height: 520px;
+  display: flex;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  overflow: hidden;
+}
+.pref-left-sidebar {
+  width: 220px;
+  background: var(--rust-bg-sidebar);
+  border-right: var(--border-width) solid var(--rust-border);
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pref-menu-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-xs);
+  color: var(--rust-text);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 500;
+}
+.pref-menu-btn:hover {
+  background: var(--rust-surface);
+  color: var(--rust-text-bright);
+}
+.pref-menu-btn.active {
+  background: var(--rust-ink);
+  color: #fff;
+  font-weight: 600;
+}
+.pref-right-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+.pref-section-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--rust-text-bright);
+  margin-bottom: 16px;
+}
+.theme-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+.theme-card-option {
+  border: 2px solid var(--rust-border);
+  border-radius: var(--radius-xs);
+  padding: 12px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 120ms;
+}
+.theme-card-option:hover, .theme-card-option.active {
+  border-color: var(--rust-accent);
+}
+
+/* Modals */
 .rust-modal-backdrop {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
   display: none;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  padding-top: 10vh;
   z-index: 1000;
 }
 .rust-modal-window {
@@ -612,19 +767,11 @@ button, input, select, .interactive-item {
   color: var(--rust-text);
   font-size: 15px;
   outline: none;
-  font-family: var(--font-ui);
 }
 .search-results-list {
   max-height: 360px;
   overflow-y: auto;
   padding: 8px;
-}
-.search-group-heading {
-  font-size: 11px;
-  font-family: var(--font-mono);
-  color: var(--rust-text-muted);
-  text-transform: uppercase;
-  padding: 8px 12px 4px 12px;
 }
 .search-hit-item {
   padding: 8px 12px;
@@ -635,35 +782,279 @@ button, input, select, .interactive-item {
   cursor: pointer;
   font-size: 13.5px;
 }
-.search-hit-item:hover, .search-hit-item.selected {
+.search-hit-item:hover {
   background: var(--rust-ink);
   color: #fff;
 }
 
-/* Profile Popover Menu */
-.profile-menu-dropdown {
-  position: absolute;
-  top: 48px;
-  right: 16px;
-  background: var(--rust-surface);
-  border: var(--border-width) solid var(--rust-border);
-  border-radius: var(--radius-xs);
-  width: 220px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
-  z-index: 1100;
-  display: none;
-  overflow: hidden;
-}
-.profile-menu-item {
-  padding: 10px 14px;
+/* ==========================================================================
+   Slack-Grade Message Inline Actions & Emergency Status (Screenshot 1 Match)
+   ========================================================================== */
+.msg-inline-actions {
+  margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  font-size: 13px;
-  border-bottom: var(--border-width) solid rgba(255, 255, 255, 0.04);
+  gap: 6px;
 }
-.profile-menu-item:hover {
-  background: var(--rust-bg-base);
+
+.btn-msg-emergency {
+  background: rgba(180, 64, 47, 0.12);
+  border: 1px solid var(--rust-critical);
+  color: var(--rust-critical);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all 120ms;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.btn-msg-emergency:hover, .btn-msg-emergency.active {
+  background: var(--rust-critical);
+  color: #ffffff;
+}
+
+.btn-msg-delete {
+  background: transparent;
+  border: 1px solid rgba(180, 64, 47, 0.4);
+  color: var(--rust-critical);
+  font-size: 11px;
+  padding: 1px 8px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all 120ms;
+}
+.btn-msg-delete:hover {
+  background: var(--rust-critical);
+  color: #ffffff;
+}
+
+.msg-row-container.is-emergency {
+  background: rgba(180, 64, 47, 0.1) !important;
+  border-left: 3px solid var(--rust-critical);
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+  box-shadow: inset 0 0 16px rgba(180, 64, 47, 0.08);
+}
+
+.emergency-pill-tag {
+  background: var(--rust-critical);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  animation: pulseCritical 2s infinite ease-in-out;
+}
+
+@keyframes pulseCritical {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(0.98); }
+}
+
+/* Download All Files Strip (Screenshot 1 Match) */
+.download-all-strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--rust-info);
+  margin-top: 6px;
+  cursor: pointer;
+  padding: 3px 0;
+  font-weight: 600;
+  text-decoration: none;
+}
+.download-all-strip:hover {
+  text-decoration: underline;
   color: var(--rust-accent);
+}
+
+/* Inline Edit Box */
+.msg-inline-edit-box {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.msg-edit-textarea {
+  width: 100%;
+  background: var(--rust-surface);
+  border: 1px solid var(--rust-accent);
+  border-radius: var(--radius-xs);
+  color: var(--rust-text);
+  padding: 8px 12px;
+  font-size: 13.5px;
+  font-family: var(--font-ui);
+  resize: vertical;
+  min-height: 50px;
+}
+.msg-edit-btn-row {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* Video Thumbnail Card (Screenshot 3 Match: Livora.mp4) */
+.attached-video-card {
+  position: relative;
+  max-width: 320px;
+  height: 200px;
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  border: var(--border-width) solid var(--rust-border);
+  background: #000;
+  margin-top: 8px;
+  cursor: pointer;
+}
+.attached-video-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.video-play-overlay-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Dedicated ZIP File Card Badge */
+.doc-icon-badge.zip {
+  background: rgba(224, 155, 38, 0.2);
+  color: #E09B26;
+  border: 1px solid #E09B26;
+}
+
+/* ==========================================================================
+   Slack Thread Side Drawer (Panel on Right Side)
+   ========================================================================== */
+.chat-split-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  height: calc(100% - 48px);
+}
+.chat-feed-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+}
+.chat-thread-drawer {
+  width: 390px;
+  max-width: 45vw;
+  background: var(--rust-surface);
+  border-left: var(--border-width) solid var(--rust-border);
+  display: none;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.3);
+  z-index: 15;
+}
+.chat-thread-drawer.open {
+  display: flex;
+}
+.thread-header-bar {
+  padding: 10px 16px;
+  border-bottom: var(--border-width) solid var(--rust-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--rust-surface-elevated);
+}
+.thread-parent-box {
+  padding: 14px 16px;
+  border-bottom: var(--border-width) solid var(--rust-border);
+  background: rgba(0, 0, 0, 0.15);
+}
+.thread-replies-stream {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.thread-reply-item {
+  display: flex;
+  gap: 10px;
+}
+.thread-composer-box {
+  padding: 12px 16px;
+  border-top: var(--border-width) solid var(--rust-border);
+  background: var(--rust-surface-elevated);
+}
+
+/* Toast Notifications */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 9999;
+  pointer-events: none;
+}
+.rust-toast {
+  background: var(--rust-surface-elevated);
+  border: 1px solid var(--rust-border);
+  color: var(--rust-text-bright);
+  padding: 10px 16px;
+  border-radius: var(--radius-xs);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+  animation: toastFadeIn 150ms ease;
+  border-left: 3px solid var(--rust-accent);
+}
+.rust-toast.critical {
+  border-left-color: var(--rust-critical);
+}
+@keyframes toastFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Persona Switcher in Header */
+.persona-switcher-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: var(--border-width) solid var(--rust-border);
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+  font-size: 11.5px;
+}
+.persona-switcher-box select {
+  background: transparent;
+  border: none;
+  color: var(--rust-text-bright);
+  font-size: 11.5px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
 }
