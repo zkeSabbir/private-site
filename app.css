@@ -663,11 +663,13 @@ button, input, select {
   background: var(--rust-bg-base);
 }
 .composer-bordered-shell {
-  border: var(--border-width) solid var(--rust-border);
+  border: 1px solid var(--rust-border);
   border-radius: var(--radius-xs);
   background: var(--rust-surface);
   display: flex;
   flex-direction: column;
+  transition: border-color 150ms ease;
+  overflow: hidden;
 }
 .composer-bordered-shell:focus-within {
   border-color: var(--rust-accent);
@@ -1366,10 +1368,26 @@ button, input, select {
   margin-bottom: 6px;
 }
 
-/* Focus Visible Accessibility */
-:focus-visible {
+/* Focus Visible Accessibility (Buttons, links, interactive controls) */
+button:focus-visible,
+a:focus-visible,
+select:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
   outline: 2px solid var(--rust-accent) !important;
   outline-offset: 2px !important;
+}
+
+textarea:focus,
+textarea:focus-visible,
+input:focus,
+input:focus-visible,
+.composer-textarea:focus,
+.composer-textarea:focus-visible,
+.composer-bordered-shell:focus,
+.composer-bordered-shell:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* KPI Grid Responsive Class */
@@ -1613,22 +1631,30 @@ button, input, select {
    ========================================================================== */
 .composer-textarea {
   width: 100%;
-  border: none;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
   background: transparent;
   color: var(--rust-text-bright);
   font-family: var(--font-sans);
   font-size: 13.5px;
   line-height: 1.5;
-  padding: 12px 16px;
-  resize: vertical;
-  min-height: 60px;
-  max-height: 200px;
-  outline: none;
+  padding: 12px 16px 6px 16px;
+  resize: none !important; /* Removes the corner resize handle completely */
+  min-height: 52px;
+  max-height: 160px;
+  overflow-y: auto;
   box-sizing: border-box;
 }
 .composer-textarea::placeholder {
   color: var(--rust-text-muted);
   opacity: 0.8;
+}
+.composer-textarea:focus,
+.composer-textarea:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 /* ==========================================================================
