@@ -2,277 +2,545 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Private Portal</title>
+  <title>RUST. — Corporate Communication & Execution OS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
   <style>
-    :root {
-      --bg: #0b0f19;
-      --card-bg: rgba(23, 32, 54, 0.7);
-      --card-border: rgba(255, 255, 255, 0.1);
-      --primary: #6366f1;
-      --primary-hover: #4f46e5;
-      --text: #f3f4f6;
-      --text-muted: #9ca3af;
-      --danger: #ef4444;
-      --glow: rgba(99, 102, 241, 0.35);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Outfit', sans-serif;
-    }
-
-    body {
-      background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, var(--bg) 70%);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      overflow-x: hidden;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 440px;
-      position: relative;
-    }
-
-    .glass-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 40px 32px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 40px var(--glow);
-      text-align: center;
-      transition: transform 0.3s ease;
-    }
-
-    .lock-icon {
-      width: 64px;
-      height: 64px;
-      background: rgba(99, 102, 241, 0.15);
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 24px;
-      color: #818cf8;
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
-    }
-
-    h1 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      margin-bottom: 8px;
-    }
-
-    p.subtitle {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 28px;
-    }
-
-    .input-group {
-      margin-bottom: 20px;
-      text-align: left;
-    }
-
-    label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-
-    input[type="password"] {
-      width: 100%;
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 12px;
-      padding: 14px 16px;
-      color: #fff;
-      font-size: 1rem;
-      letter-spacing: 2px;
-      outline: none;
-      transition: all 0.2s ease;
-    }
-
-    input[type="password"]:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 14px var(--glow);
-    }
-
-    button.btn {
-      width: 100%;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 14px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
-      transition: all 0.2s ease;
-    }
-
-    button.btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
-    }
-
-    .error-msg {
-      color: var(--danger);
-      font-size: 0.875rem;
-      margin-top: 14px;
-      min-height: 20px;
-    }
-
-    /* Secret Content */
-    #private-content {
-      display: none;
-      text-align: left;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 4px 12px;
-      background: rgba(34, 197, 94, 0.15);
-      border: 1px solid rgba(34, 197, 94, 0.3);
-      color: #4ade80;
-      border-radius: 9999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .content-box {
-      background: rgba(15, 23, 42, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      padding: 20px;
-      margin: 16px 0;
-      line-height: 1.6;
-    }
-
-    .logout-btn {
-      background: transparent;
+    /* View Switcher Overlay for Demo/Review */
+    .view-pill-bar {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #090d16;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      color: var(--text-muted);
-      border-radius: 8px;
-      padding: 8px 16px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      transition: all 0.2s ease;
-      margin-top: 10px;
+      border-radius: 30px;
+      padding: 4px 6px;
+      display: flex;
+      gap: 6px;
+      z-index: 999;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     }
-
-    .logout-btn:hover {
+    .view-pill-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 120ms;
+    }
+    .view-pill-btn.active {
+      background: var(--rust-copper);
       color: #fff;
-      border-color: rgba(255, 255, 255, 0.5);
+    }
+    .view-container {
+      display: none;
+      height: 100%;
+      width: 100%;
+    }
+    .view-container.active-view {
+      display: flex;
+      flex-direction: column;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- Login Screen -->
-    <div id="login-card" class="glass-card">
-      <div class="lock-icon">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-        </svg>
-      </div>
-      <h1>Restricted Access</h1>
-      <p class="subtitle">This repository and portal are strictly confidential.</p>
+  <!-- Floating Multi-screen Switcher for Testing/Demonstration -->
+  <div class="view-pill-bar">
+    <button class="view-pill-btn active" onclick="switchView('home-view')">1. HOME (DENSE)</button>
+    <button class="view-pill-btn" onclick="switchView('channel-view')">2. CHANNEL & THREADS</button>
+    <button class="view-pill-btn" onclick="switchView('tasks-view')">3. MY TASKS</button>
+    <button class="view-pill-btn" onclick="switchView('admin-view')">4. TENANT ADMIN</button>
+  </div>
 
-      <form id="auth-form" onsubmit="handleAuth(event)">
-        <div class="input-group">
-          <label for="passcode">Security Key / Password</label>
-          <input type="password" id="passcode" placeholder="••••••••••••" autofocus required>
+  <div class="app-container">
+    
+    <!-- LEFT NAVIGATION SIDEBAR (Multi-tenant Slack Style) -->
+    <aside class="sidebar">
+      <div class="workspace-header">
+        <div>
+          <div class="brand-logo">RUST<span class="brand-dot"></span></div>
+          <div class="workspace-badge">APEX HOLDINGS CORP</div>
         </div>
-        <button type="submit" class="btn">Authenticate</button>
-        <div id="error-msg" class="error-msg"></div>
-      </form>
-    </div>
-
-    <!-- Protected Content Screen -->
-    <div id="private-content" class="glass-card">
-      <span class="badge">Authenticated Session</span>
-      <h1>Welcome to Your Private Site</h1>
-      <p class="subtitle">Only authorized credentials can view this content.</p>
-
-      <div class="content-box">
-        <p>🔒 <strong>Private Space</strong></p>
-        <p style="margin-top: 8px; font-size: 0.95rem; color: #cbd5e1;">
-          আপনার প্রাইভেট সাইট সফলভাবে সেটআপ হয়েছে। এটি সার্চ ইঞ্জিন ইনডেক্সিং এবং পাবলিক ব্রাউজিং থেকে সুরক্ষিত।
-        </p>
+        <div style="font-size: 11px; font-family: var(--font-mono); color: #94a3b8; cursor: pointer;">
+          [TRIAL · 14d]
+        </div>
       </div>
 
-      <button onclick="handleLogout()" class="logout-btn">Log out</button>
-    </div>
+      <div class="sidebar-scroll">
+        <!-- Quick System Jump -->
+        <div class="nav-item active" onclick="switchView('home-view')">
+          <span>⚡</span>
+          <span>Home & Priority</span>
+          <span class="badge-counter badge-critical">1 CRIT</span>
+        </div>
+        <div class="nav-item" onclick="switchView('tasks-view')">
+          <span>☑</span>
+          <span>My Tasks</span>
+          <span class="badge-counter">4</span>
+        </div>
+        <div class="nav-item">
+          <span>@</span>
+          <span>Mentions & Reactions</span>
+          <span class="badge-counter">2</span>
+        </div>
+
+        <!-- PUBLIC CHANNELS -->
+        <div class="nav-section-title" style="margin-top: 14px;">
+          <span>Channels</span>
+          <span style="cursor: pointer; font-size: 14px;">+</span>
+        </div>
+        <div class="nav-item" onclick="switchView('channel-view')">
+          <span style="font-family: var(--font-mono); font-size: 12px; color: #94a3b8;">#</span>
+          <span>announcements</span>
+        </div>
+        <div class="nav-item">
+          <span style="font-family: var(--font-mono); font-size: 12px; color: #94a3b8;">#</span>
+          <span>operations-daily</span>
+          <span class="badge-counter">8</span>
+        </div>
+        <div class="nav-item">
+          <span style="font-family: var(--font-mono); font-size: 12px; color: #94a3b8;">#</span>
+          <span>engineering</span>
+        </div>
+
+        <!-- STRICT PRIVATE GROUPS -->
+        <div class="nav-section-title" style="margin-top: 14px;">
+          <span>Private Groups</span>
+          <span style="cursor: pointer; font-size: 14px;">+</span>
+        </div>
+        <div class="nav-item">
+          <span style="font-size: 12px;">🔒</span>
+          <span>board-directors</span>
+        </div>
+        <div class="nav-item">
+          <span style="font-size: 12px;">🔒</span>
+          <span>q3-audit-team</span>
+        </div>
+
+        <!-- DIRECT MESSAGES -->
+        <div class="nav-section-title" style="margin-top: 14px;">
+          <span>Direct Messages</span>
+        </div>
+        <div class="nav-item">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: #22c55e; display: inline-block;"></span>
+          <span>Tanvir Ahmed (CTO)</span>
+        </div>
+        <div class="nav-item">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: #94a3b8; display: inline-block;"></span>
+          <span>Nusrat Jahan (HR)</span>
+        </div>
+
+        <!-- TENANT & SYSTEM ADMIN -->
+        <div class="nav-section-title" style="margin-top: 14px;">
+          <span>Administration</span>
+        </div>
+        <div class="nav-item" onclick="switchView('admin-view')">
+          <span>⚙</span>
+          <span>Workspace Settings</span>
+        </div>
+      </div>
+
+      <!-- Current User Footer -->
+      <div class="user-profile-bar">
+        <div style="position: relative;">
+          <div class="avatar">ZS</div>
+          <div class="avatar-status-dot"></div>
+        </div>
+        <div style="flex: 1; overflow: hidden;">
+          <div style="font-size: 12.5px; font-weight: 600; color: #f3f4f6;">Z. K. Sabbir</div>
+          <div style="font-size: 10.5px; font-family: var(--font-mono); color: #94a3b8;">Managing Director</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER PANE: DYNAMIC VIEWS -->
+    <main class="main-feed">
+
+      <!-- VIEW 1: HOME (DENSE & ACTIONABLE) -->
+      <section id="home-view" class="view-container active-view">
+        <header class="top-bar">
+          <div class="top-bar-title">
+            <span>⚡ Actionable Home</span>
+            <span style="font-size: 11px; font-weight: 400; color: var(--text-muted);">| Strict Priority Order</span>
+          </div>
+          <div class="top-actions">
+            <button class="icon-btn" onclick="toggleTheme()">Toggle Dark / Light</button>
+            <button class="icon-btn" style="background: var(--rust-copper); color: #fff; border: none; font-weight: 600;">+ Quick Task</button>
+          </div>
+        </header>
+
+        <div class="feed-content">
+          <!-- 1. PRIORITY MESSAGES PANEL (MUST BE ACKNOWLEDGED) -->
+          <div class="priority-deck" id="crit-banner">
+            <div class="priority-deck-header">
+              <span class="priority-pill">🚨 CRITICAL PRIORITY · ACKNOWLEDGMENT REQUIRED</span>
+              <span class="priority-meta">ESCALATING IN: 18m</span>
+            </div>
+            <div class="priority-body">
+              <strong>From Chairman / MD:</strong> Emergency Board meeting convened for 11:30 AM today regarding Q3 subsidiary acquisition. All voting members must review the attached audit ledger and confirm receipt immediately.
+            </div>
+            <div class="ack-action-bar">
+              <div class="ack-status-text">
+                Status: <strong>4 of 6 acknowledged</strong> (Pending: You, Farhan)
+              </div>
+              <button class="ack-btn" onclick="acknowledgeMessage(this)">✓ Confirm Acknowledged</button>
+            </div>
+          </div>
+
+          <!-- 2. MY TASKS (DUE TODAY & OVERDUE) -->
+          <div>
+            <div class="section-headline">
+              <span>My Tasks (Action Required Today)</span>
+              <span style="font-family: var(--font-mono); font-size: 11px;">4 Tasks</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+              <div class="task-row">
+                <div class="task-left">
+                  <input type="checkbox" class="task-checkbox" onchange="markDone(this)">
+                  <span class="task-title">Approve IT server procurement invoice for Dhaka Datacenter</span>
+                </div>
+                <span class="task-due" style="background: #fee2e2; color: #991b1b;">OVERDUE · 2h ago</span>
+              </div>
+              <div class="task-row">
+                <div class="task-left">
+                  <input type="checkbox" class="task-checkbox" onchange="markDone(this)">
+                  <span class="task-title">Review final draft of Q3 Financial Consolidated Statement</span>
+                </div>
+                <span class="task-due">Due Today · 4:00 PM</span>
+              </div>
+              <div class="task-row">
+                <div class="task-left">
+                  <input type="checkbox" class="task-checkbox" onchange="markDone(this)">
+                  <span class="task-title">Sign off on Departmental restructuring policy (HR Team)</span>
+                </div>
+                <span class="task-due" style="color: #475569; background: #e2e8f0;">Tomorrow</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. UNREAD MENTIONS & DIRECT MESSAGES -->
+          <div>
+            <div class="section-headline">
+              <span>Direct Mentions & Attention</span>
+              <span style="font-family: var(--font-mono); font-size: 11px;">2 Unread</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 10px;">
+              <div class="message-card">
+                <div class="avatar" style="background: #0284c7;">TA</div>
+                <div style="flex: 1;">
+                  <div class="message-header">
+                    <span class="sender-name">Tanvir Ahmed</span>
+                    <span class="message-time">09:42 AM · in #engineering</span>
+                  </div>
+                  <div class="message-text">
+                    <span style="background: rgba(194, 94, 46, 0.15); color: var(--rust-copper); font-weight: 600; padding: 1px 4px; border-radius: 3px;">@Sabbir</span> We have completed the PostgreSQL RLS tenant partitioning migration benchmark. Ready for your signoff.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. RECENT ACTIVITY & CHANNELS -->
+          <div>
+            <div class="section-headline">
+              <span>Recent Channels Summary</span>
+            </div>
+            <div style="font-size: 12.5px; color: var(--text-muted); padding: 8px 0;">
+              No unread messages in #announcements or #operations-daily.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: CHANNEL & CONVERSATION VIEW -->
+      <section id="channel-view" class="view-container">
+        <header class="top-bar">
+          <div class="top-bar-title">
+            <span># announcements</span>
+            <span style="font-size: 11px; font-weight: 400; color: var(--text-muted); font-family: var(--font-mono);">34 Members · Company-wide</span>
+          </div>
+          <div class="top-actions">
+            <button class="icon-btn">🔍 Search in channel</button>
+            <button class="icon-btn">📌 Pinned (3)</button>
+          </div>
+        </header>
+
+        <div class="feed-content" style="justify-content: flex-end;">
+          <div class="message-card">
+            <div class="avatar" style="background: #475569;">NJ</div>
+            <div style="flex: 1;">
+              <div class="message-header">
+                <span class="sender-name">Nusrat Jahan</span>
+                <span class="message-time">10:15 AM</span>
+                <div class="msg-actions">
+                  <button class="icon-btn" onclick="turnIntoTask('Holiday schedule review')">Turn into Task</button>
+                  <button class="icon-btn">Reply in Thread</button>
+                </div>
+              </div>
+              <div class="message-text">
+                Please note that upcoming public holiday duty rosters have been finalized. Department heads are requested to confirm backup coverage.
+              </div>
+            </div>
+          </div>
+
+          <div class="message-card" style="border-left: 3px solid var(--rust-copper); background: var(--bg-subtle);">
+            <div class="avatar" style="background: #991b1b;">ZS</div>
+            <div style="flex: 1;">
+              <div class="message-header">
+                <span class="sender-name">Z. K. Sabbir</span>
+                <span class="message-time">10:30 AM</span>
+                <span class="priority-pill" style="font-size: 9px; padding: 1px 5px;">HIGH PRIORITY</span>
+              </div>
+              <div class="message-text">
+                All department leads must complete the quarterly equipment audit before Friday 5:00 PM. No budget releases will occur without it.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Composer -->
+        <div class="chat-composer">
+          <div class="composer-box">
+            <textarea class="composer-textarea" placeholder="Message #announcements... (Use @ to mention, / for commands)"></textarea>
+            <div class="composer-toolbar">
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <select class="priority-select">
+                  <option value="normal">Priority: Normal</option>
+                  <option value="high">Priority: High</option>
+                  <option value="critical">Priority: Critical (Escalating)</option>
+                </select>
+                <button class="icon-btn">📎 Attach File</button>
+              </div>
+              <button class="btn-send">Send Message</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 3: TASKS WORKSPACE -->
+      <section id="tasks-view" class="view-container">
+        <header class="top-bar">
+          <div class="top-bar-title">
+            <span>☑ Tasks & Assignments</span>
+            <span style="font-size: 11px; font-weight: 400; color: var(--text-muted);">| Execution Engine</span>
+          </div>
+          <div class="top-actions">
+            <button class="icon-btn" style="background: var(--rust-copper); color: #fff; border: none;">+ Create Task</button>
+          </div>
+        </header>
+
+        <div class="feed-content">
+          <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+            <button class="icon-btn" style="background: var(--bg-subtle); font-weight: 600;">My Tasks (4)</button>
+            <button class="icon-btn">Assigned by Me (7)</button>
+            <button class="icon-btn">Department Tasks (12)</button>
+            <button class="icon-btn">Overdue (1)</button>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px;" id="tasks-list-container">
+            <div class="task-row">
+              <div class="task-left">
+                <input type="checkbox" class="task-checkbox" onchange="markDone(this)">
+                <div>
+                  <div class="task-title">Approve IT server procurement invoice for Dhaka Datacenter</div>
+                  <div style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); margin-top: 3px;">
+                    Department: IT & Infrastructure · Assignee: Z. K. Sabbir
+                  </div>
+                </div>
+              </div>
+              <span class="task-due" style="background: #fee2e2; color: #991b1b;">OVERDUE</span>
+            </div>
+
+            <div class="task-row">
+              <div class="task-left">
+                <input type="checkbox" class="task-checkbox" onchange="markDone(this)">
+                <div>
+                  <div class="task-title">Review final draft of Q3 Financial Consolidated Statement</div>
+                  <div style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); margin-top: 3px;">
+                    Department: Accounts · Assignee: Z. K. Sabbir
+                  </div>
+                </div>
+              </div>
+              <span class="task-due">Due Today</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 4: MULTI-TENANT ADMIN PANEL -->
+      <section id="admin-view" class="view-container">
+        <header class="top-bar">
+          <div class="top-bar-title">
+            <span>⚙ Workspace Admin & Compliance</span>
+            <span style="font-size: 11px; font-weight: 400; color: var(--text-muted);">| Tenant ID: a981c-tenant-apex</span>
+          </div>
+        </header>
+
+        <div class="feed-content">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="stat-box">
+              <div class="stat-num">24 / 25</div>
+              <div class="stat-label">Active Seats Used (Trial Tier)</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num" style="color: #16a34a;">Compliant</div>
+              <div class="stat-label">PostgreSQL RLS Data Isolation Active</div>
+            </div>
+          </div>
+
+          <div class="section-headline">
+            <span>Employee Directory & Role Matrix</span>
+            <button class="icon-btn">+ Invite Employee (CSV)</button>
+          </div>
+
+          <table style="width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--border-hairline); text-align: left; color: var(--text-muted); font-family: var(--font-mono); font-size: 11px;">
+                <th style="padding: 8px;">NAME</th>
+                <th style="padding: 8px;">DEPARTMENT</th>
+                <th style="padding: 8px;">ROLE</th>
+                <th style="padding: 8px;">PRIORITY MSG PERMIT</th>
+                <th style="padding: 8px;">STATUS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border-hairline);">
+                <td style="padding: 10px 8px; font-weight: 600;">Z. K. Sabbir</td>
+                <td style="padding: 10px 8px;">Executive</td>
+                <td style="padding: 10px 8px; font-family: var(--font-mono); color: var(--rust-copper);">Owner</td>
+                <td style="padding: 10px 8px; color: #16a34a;">Critical / High</td>
+                <td style="padding: 10px 8px;"><span style="color: #16a34a;">Active</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-hairline);">
+                <td style="padding: 10px 8px; font-weight: 600;">Tanvir Ahmed</td>
+                <td style="padding: 10px 8px;">IT & Engineering</td>
+                <td style="padding: 10px 8px; font-family: var(--font-mono);">Dept Head</td>
+                <td style="padding: 10px 8px; color: #16a34a;">Critical / High</td>
+                <td style="padding: 10px 8px;"><span style="color: #16a34a;">Active</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-hairline);">
+                <td style="padding: 10px 8px; font-weight: 600;">Nusrat Jahan</td>
+                <td style="padding: 10px 8px;">Human Resources</td>
+                <td style="padding: 10px 8px; font-family: var(--font-mono);">Member</td>
+                <td style="padding: 10px 8px; color: #94a3b8;">Normal only</td>
+                <td style="padding: 10px 8px;"><span style="color: #16a34a;">Active</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- RIGHT CONTEXT PANE: DETAILS & AUDIT -->
+    <aside class="right-pane">
+      <div class="right-pane-header">
+        <span>EXECUTIVE AUDIT & STATS</span>
+        <span style="font-family: var(--font-mono); font-size: 11px; color: var(--rust-copper);">LIVE</span>
+      </div>
+
+      <div class="right-pane-body">
+        <div class="stat-box">
+          <div class="stat-num">98.4%</div>
+          <div class="stat-label">Priority Acknowledgment Rate</div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">Avg Response Time: 7.2 minutes</div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-num">0 msgs</div>
+          <div class="stat-label">Cross-Tenant Leak Risk</div>
+          <div style="font-size: 11px; color: #16a34a; margin-top: 6px;">Postgres RLS Session Verified</div>
+        </div>
+
+        <div>
+          <div class="section-headline">
+            <span>Today's Calendar / Brief</span>
+          </div>
+          <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 8px;">
+            <div style="background: var(--bg-surface); padding: 10px; border-radius: var(--radius-sm); border: var(--border-hairline);">
+              <div style="font-family: var(--font-mono); font-size: 11px; color: var(--rust-copper);">11:30 AM - 12:30 PM</div>
+              <div style="font-weight: 600; font-size: 12.5px; margin-top: 2px;">Emergency Board Meeting</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Acquisition Term Sheets</div>
+            </div>
+            <div style="background: var(--bg-surface); padding: 10px; border-radius: var(--radius-sm); border: var(--border-hairline);">
+              <div style="font-family: var(--font-mono); font-size: 11px; color: #64748b;">03:00 PM - 03:45 PM</div>
+              <div style="font-weight: 600; font-size: 12.5px; margin-top: 2px;">IT Security & RLS Compliance Review</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Engineering Architecture Team</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-headline">
+            <span>Brand System Reference</span>
+          </div>
+          <div style="font-size: 11.5px; color: var(--text-muted); line-height: 1.5; margin-top: 6px;">
+            Wordmark: <strong>RUST.</strong> with engineered dot.<br>
+            Palette: Warm paper, deep navy slate, oxidized burnt copper.
+          </div>
+        </div>
+      </div>
+    </aside>
+
   </div>
 
   <script>
-    // SHA-256 hash of password. Default password is: secret123
-    // SHA-256 for "secret123" is: "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"
-    const TARGET_HASH = "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3";
+    function switchView(viewId) {
+      document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active-view'));
+      const target = document.getElementById(viewId);
+      if (target) target.classList.add('active-view');
 
-    async function sha256(message) {
-      const msgBuffer = new TextEncoder().encode(message);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      document.querySelectorAll('.view-pill-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('onclick').includes(viewId)) {
+          btn.classList.add('active');
+        }
+      });
     }
 
-    async function handleAuth(event) {
-      event.preventDefault();
-      const inputPass = document.getElementById('passcode').value;
-      const errorMsg = document.getElementById('error-msg');
-      
-      const hash = await sha256(inputPass);
-      if (hash === TARGET_HASH) {
-        sessionStorage.setItem('site_authenticated', 'true');
-        showPrivateView();
-      } else {
-        errorMsg.textContent = 'Invalid passkey. Access denied.';
-        document.getElementById('passcode').value = '';
-        document.getElementById('passcode').focus();
+    function acknowledgeMessage(btn) {
+      btn.innerText = "✓ Acknowledged at " + new Date().toLocaleTimeString();
+      btn.style.background = "#16a34a";
+      btn.disabled = true;
+      const statusText = document.querySelector('.ack-status-text');
+      if (statusText) {
+        statusText.innerHTML = "Status: <strong>5 of 6 acknowledged</strong> (You confirmed)";
       }
     }
 
-    function showPrivateView() {
-      document.getElementById('login-card').style.display = 'none';
-      document.getElementById('private-content').style.display = 'block';
+    function markDone(checkbox) {
+      const parentRow = checkbox.closest('.task-row');
+      if (checkbox.checked) {
+        parentRow.style.opacity = '0.5';
+        parentRow.style.textDecoration = 'line-through';
+      } else {
+        parentRow.style.opacity = '1';
+        parentRow.style.textDecoration = 'none';
+      }
     }
 
-    function handleLogout() {
-      sessionStorage.removeItem('site_authenticated');
-      document.getElementById('private-content').style.display = 'none';
-      document.getElementById('login-card').style.display = 'block';
-      document.getElementById('passcode').value = '';
-      document.getElementById('error-msg').textContent = '';
+    function turnIntoTask(title) {
+      switchView('tasks-view');
+      alert(`Message successfully converted into Task: "${title}"`);
     }
 
-    // Check if session already authenticated
-    if (sessionStorage.getItem('site_authenticated') === 'true') {
-      showPrivateView();
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      if (current === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
     }
   </script>
 </body>
