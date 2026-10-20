@@ -9,538 +9,700 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="app.css">
-  <style>
-    /* View Switcher Overlay for Demo/Review */
-    .view-pill-bar {
-      position: fixed;
-      bottom: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #090d16;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 30px;
-      padding: 4px 6px;
-      display: flex;
-      gap: 6px;
-      z-index: 999;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    }
-    .view-pill-btn {
-      background: transparent;
-      border: none;
-      color: #94a3b8;
-      font-size: 11px;
-      font-family: var(--font-mono);
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 120ms;
-    }
-    .view-pill-btn.active {
-      background: var(--rust-copper);
-      color: #fff;
-    }
-    .view-container {
-      display: none;
-      height: 100%;
-      width: 100%;
-    }
-    .view-container.active-view {
-      display: flex;
-      flex-direction: column;
-    }
-  </style>
 </head>
 <body>
 
-  <!-- Floating Multi-screen Switcher for Testing/Demonstration -->
-  <div class="view-pill-bar">
-    <button class="view-pill-btn active" onclick="switchView('home-view')">1. HOME (DENSE)</button>
-    <button class="view-pill-btn" onclick="switchView('channel-view')">2. CHANNEL & THREADS</button>
-    <button class="view-pill-btn" onclick="switchView('tasks-view')">3. MY TASKS</button>
-    <button class="view-pill-btn" onclick="switchView('admin-view')">4. TENANT ADMIN</button>
-  </div>
+  <div class="app-shell">
 
-  <div class="app-container">
-    
-    <!-- LEFT NAVIGATION SIDEBAR (Multi-tenant Slack Style) -->
-    <aside class="sidebar">
-      <div class="workspace-header">
-        <div>
-          <div class="brand-logo">RUST<span class="brand-dot"></span></div>
-          <div class="workspace-badge">APEX HOLDINGS CORP</div>
-        </div>
-        <div style="font-size: 11px; font-family: var(--font-mono); color: #94a3b8; cursor: pointer;">
-          [TRIAL · 14d]
-        </div>
+    <!-- 1. PRIMARY ICON RAIL -->
+    <nav class="icon-rail">
+      <div class="rail-logo" onclick="navigateTo('home')">
+        RUST<span class="dot"></span>
       </div>
 
-      <div class="sidebar-scroll">
-        <!-- Quick System Jump -->
-        <div class="nav-item active" onclick="switchView('home-view')">
+      <button class="rail-btn active" id="rail-home" onclick="navigateTo('home')" title="Dashboard & Priority">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </button>
+
+      <button class="rail-btn" id="rail-chat" onclick="navigateTo('chat')" title="Messages & Channels">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span class="rail-badge">2</span>
+      </button>
+
+      <button class="rail-btn" id="rail-tasks" onclick="navigateTo('tasks')" title="Tasks & Kanban">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      </button>
+
+      <button class="rail-btn" id="rail-team" onclick="navigateTo('team')" title="Team Directory & Roles">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      </button>
+
+      <div style="margin-top: auto; display: flex; flex-direction: column; gap: 12px; align-items: center;">
+        <button class="rail-btn" id="rail-profile" onclick="navigateTo('profile')" title="My Profile & Settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- 2. WORKSPACE CHANNELS SIDEBAR -->
+    <aside class="channel-sidebar">
+      <div class="workspace-title-box">
+        <div>
+          <div class="workspace-name">FORTRESS CORP</div>
+          <div class="workspace-tenant">TENANT · #mb-tenant-01</div>
+        </div>
+        <span style="font-size: 11px; font-family: var(--font-mono); color: #22c55e;">● LIVE</span>
+      </div>
+
+      <div class="sidebar-content-scroll">
+        <!-- Quick Nav -->
+        <div class="channel-item active" onclick="navigateTo('home')">
           <span>⚡</span>
-          <span>Home & Priority</span>
-          <span class="badge-counter badge-critical">1 CRIT</span>
+          <span>Home Overview</span>
         </div>
-        <div class="nav-item" onclick="switchView('tasks-view')">
+        <div class="channel-item" onclick="navigateTo('tasks')">
           <span>☑</span>
-          <span>My Tasks</span>
-          <span class="badge-counter">4</span>
-        </div>
-        <div class="nav-item">
-          <span>@</span>
-          <span>Mentions & Reactions</span>
-          <span class="badge-counter">2</span>
+          <span>Tasks & Board</span>
+          <span style="margin-left: auto; font-family: var(--font-mono); font-size: 10px; background: rgba(255,255,255,0.1); padding: 1px 6px; border-radius: 8px;">14</span>
         </div>
 
-        <!-- PUBLIC CHANNELS -->
-        <div class="nav-section-title" style="margin-top: 14px;">
-          <span>Channels</span>
-          <span style="cursor: pointer; font-size: 14px;">+</span>
+        <!-- AFA ADMIN FOR ALL -->
+        <div class="channel-category-label">
+          <span>AFA · Admin For All</span>
         </div>
-        <div class="nav-item" onclick="switchView('channel-view')">
-          <span style="font-family: var(--font-mono); font-size: 12px; color: #94a3b8;">#</span>
-          <span>announcements</span>
+        <div class="channel-item" onclick="openChannel('afa-facilities')">
+          <span style="color: #64748b;">#</span>
+          <span>afa-facilities</span>
         </div>
-        <div class="nav-item">
-          <span style="font-family: var(--font-mono); font-size: 12px; color: #94a3b8;">#</span>
-          <span>operations-daily</span>
-          <span class="badge-counter">8</span>
+        <div class="channel-item" onclick="openChannel('afa-hr-leave')">
+          <span style="color: #64748b;">#</span>
+          <span>afa-hr-leave</span>
         </div>
-        <div class="nav-item">
-          <span style="font-family: var(--font-mono); font-size: 12px; color: #94a3b8;">#</span>
-          <span>engineering</span>
+        <div class="channel-item" onclick="openChannel('afa-it-help')">
+          <span style="color: #64748b;">#</span>
+          <span>afa-it-help</span>
+        </div>
+        <div class="channel-item" onclick="openChannel('afa-notices')">
+          <span style="color: #64748b;">#</span>
+          <span>afa-notices</span>
         </div>
 
-        <!-- STRICT PRIVATE GROUPS -->
-        <div class="nav-section-title" style="margin-top: 14px;">
-          <span>Private Groups</span>
-          <span style="cursor: pointer; font-size: 14px;">+</span>
+        <!-- BRAND KITCHEN (LOCKED CHANNELS) -->
+        <div class="channel-category-label">
+          <span>Brand Kitchen (Private)</span>
         </div>
-        <div class="nav-item">
-          <span style="font-size: 12px;">🔒</span>
-          <span>board-directors</span>
+        <div class="channel-item" onclick="openChannel('fortress-logo')">
+          <span>🔒</span>
+          <span>fortress-logo</span>
         </div>
-        <div class="nav-item">
-          <span style="font-size: 12px;">🔒</span>
-          <span>q3-audit-team</span>
+        <div class="channel-item" onclick="openChannel('mb-announcements')">
+          <span>🔒</span>
+          <span>mb-announcements</span>
+        </div>
+        <div class="channel-item" onclick="openChannel('mb-brand-strategy')">
+          <span>🔒</span>
+          <span>mb-brand-strategy</span>
+        </div>
+        <div class="channel-item" onclick="openChannel('mb-design')">
+          <span>🔒</span>
+          <span>mb-design</span>
+        </div>
+        <div class="channel-item active" onclick="openChannel('mb-general')">
+          <span>🔒</span>
+          <span>mb-general</span>
+          <span style="margin-left: auto; font-family: var(--font-mono); font-size: 10px; background: #dc2626; color: #fff; padding: 1px 5px; border-radius: 8px;">1</span>
+        </div>
+        <div class="channel-item" onclick="openChannel('mb-user-password')">
+          <span>🔒</span>
+          <span>mb-user-password</span>
         </div>
 
         <!-- DIRECT MESSAGES -->
-        <div class="nav-section-title" style="margin-top: 14px;">
+        <div class="channel-category-label">
           <span>Direct Messages</span>
         </div>
-        <div class="nav-item">
-          <span style="width: 7px; height: 7px; border-radius: 50%; background: #22c55e; display: inline-block;"></span>
-          <span>Tanvir Ahmed (CTO)</span>
+        <div class="channel-item" onclick="openDirectMessage('Anayat Munna')">
+          <div class="avatar-offline-dot"></div>
+          <span>Anayat Munna (Lead)</span>
         </div>
-        <div class="nav-item">
-          <span style="width: 7px; height: 7px; border-radius: 50%; background: #94a3b8; display: inline-block;"></span>
-          <span>Nusrat Jahan (HR)</span>
+        <div class="channel-item" onclick="openDirectMessage('Shimul Ahmad')">
+          <div class="avatar-online-dot"></div>
+          <span>Shimul Ahmad (Admin)</span>
         </div>
-
-        <!-- TENANT & SYSTEM ADMIN -->
-        <div class="nav-section-title" style="margin-top: 14px;">
-          <span>Administration</span>
-        </div>
-        <div class="nav-item" onclick="switchView('admin-view')">
-          <span>⚙</span>
-          <span>Workspace Settings</span>
+        <div class="channel-item" onclick="openDirectMessage('Naiem Hossain')">
+          <div class="avatar-online-dot"></div>
+          <span>Naiem Hossain</span>
         </div>
       </div>
 
       <!-- Current User Footer -->
-      <div class="user-profile-bar">
-        <div style="position: relative;">
-          <div class="avatar">ZS</div>
-          <div class="avatar-status-dot"></div>
+      <div class="user-footer-card">
+        <div class="user-avatar-sm" onclick="navigateTo('profile')" style="cursor: pointer;">
+          ZS
         </div>
-        <div style="flex: 1; overflow: hidden;">
-          <div style="font-size: 12.5px; font-weight: 600; color: #f3f4f6;">Z. K. Sabbir</div>
-          <div style="font-size: 10.5px; font-family: var(--font-mono); color: #94a3b8;">Managing Director</div>
+        <div style="flex: 1; overflow: hidden; cursor: pointer;" onclick="navigateTo('profile')">
+          <div style="font-size: 12.5px; font-weight: 600; color: #fff;">Sazzad Hossain Sabbir</div>
+          <div style="font-size: 10.5px; font-family: var(--font-mono); color: var(--rust-copper);">VISUALIZER · BRAND</div>
         </div>
+        <button onclick="navigateTo('profile')" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer;" title="Profile">
+          ⚙
+        </button>
       </div>
     </aside>
 
-    <!-- CENTER PANE: DYNAMIC VIEWS -->
-    <main class="main-feed">
+    <!-- 3. MAIN STAGE WORKSPACE -->
+    <main class="main-stage">
 
-      <!-- VIEW 1: HOME (DENSE & ACTIONABLE) -->
-      <section id="home-view" class="view-container active-view">
-        <header class="top-bar">
-          <div class="top-bar-title">
-            <span>⚡ Actionable Home</span>
-            <span style="font-size: 11px; font-weight: 400; color: var(--text-muted);">| Strict Priority Order</span>
-          </div>
-          <div class="top-actions">
-            <button class="icon-btn" onclick="toggleTheme()">Toggle Dark / Light</button>
-            <button class="icon-btn" style="background: var(--rust-copper); color: #fff; border: none; font-weight: 600;">+ Quick Task</button>
-          </div>
-        </header>
+      <!-- TOP STAGE BAR -->
+      <header class="top-stage-bar">
+        <div class="stage-title" id="stage-main-title">
+          <span>Hello, Sazzad</span>
+          <span style="font-size: 12px; font-weight: 400; color: var(--text-muted);">| Here is what is happening in your workspace</span>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <button class="btn-action-sm" onclick="showNewTaskModal()">+ New Task</button>
+        </div>
+      </header>
 
-        <div class="feed-content">
-          <!-- 1. PRIORITY MESSAGES PANEL (MUST BE ACKNOWLEDGED) -->
-          <div class="priority-deck" id="crit-banner">
-            <div class="priority-deck-header">
-              <span class="priority-pill">🚨 CRITICAL PRIORITY · ACKNOWLEDGMENT REQUIRED</span>
-              <span class="priority-meta">ESCALATING IN: 18m</span>
+      <!-- SCREEN 1: DASHBOARD OVERVIEW (#home) -->
+      <section id="screen-home" class="screen-view active-screen">
+        <div class="dashboard-grid">
+
+          <!-- 6 Top Metrics (from your Screenshot) -->
+          <div class="metrics-row">
+            <div class="metric-card">
+              <div class="metric-num">8</div>
+              <div class="metric-label">Team members</div>
             </div>
-            <div class="priority-body">
-              <strong>From Chairman / MD:</strong> Emergency Board meeting convened for 11:30 AM today regarding Q3 subsidiary acquisition. All voting members must review the attached audit ledger and confirm receipt immediately.
+            <div class="metric-card">
+              <div class="metric-num" style="color: #22c55e;">1</div>
+              <div class="metric-label">Online now</div>
             </div>
-            <div class="ack-action-bar">
-              <div class="ack-status-text">
-                Status: <strong>4 of 6 acknowledged</strong> (Pending: You, Farhan)
-              </div>
-              <button class="ack-btn" onclick="acknowledgeMessage(this)">✓ Confirm Acknowledged</button>
+            <div class="metric-card">
+              <div class="metric-num">4</div>
+              <div class="metric-label">Messages today</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-num" style="color: #60a5fa;">14</div>
+              <div class="metric-label">Open tasks</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-num" style="color: #f87171;">0</div>
+              <div class="metric-label">Overdue tasks</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-num" style="color: #4ade80;">5</div>
+              <div class="metric-label">Done this week</div>
             </div>
           </div>
 
-          <!-- 2. MY TASKS (DUE TODAY & OVERDUE) -->
-          <div>
-            <div class="section-headline">
-              <span>My Tasks (Action Required Today)</span>
-              <span style="font-family: var(--font-mono); font-size: 11px;">4 Tasks</span>
+          <!-- Priority Messages Deck (Signature Feature) -->
+          <div class="priority-section">
+            <div class="priority-header">
+              <span>! Priority messages (2) · ACKNOWLEDGMENT REQUIRED</span>
+              <span>LIVE ESCALATION ACTIVE</span>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
-              <div class="task-row">
-                <div class="task-left">
-                  <input type="checkbox" class="task-checkbox" onchange="markDone(this)">
-                  <span class="task-title">Approve IT server procurement invoice for Dhaka Datacenter</span>
+            <div class="priority-list">
+              <div class="priority-item-card">
+                <div>
+                  <div style="font-size: 11.5px; font-family: var(--font-mono); color: #fca5a5;">
+                    Shimul Ahmad · #mb-general · Oct 18, 12:15 PM
+                  </div>
+                  <div style="font-weight: 600; font-size: 13.5px; margin-top: 4px;">
+                    "Naiem Nexus service er logo ta design kore dao"
+                  </div>
                 </div>
-                <span class="task-due" style="background: #fee2e2; color: #991b1b;">OVERDUE · 2h ago</span>
+                <button class="btn-action-sm" style="background: #dc2626;" onclick="acknowledgeItem(this)">
+                  ✓ Acknowledge
+                </button>
               </div>
-              <div class="task-row">
-                <div class="task-left">
-                  <input type="checkbox" class="task-checkbox" onchange="markDone(this)">
-                  <span class="task-title">Review final draft of Q3 Financial Consolidated Statement</span>
+
+              <div class="priority-item-card">
+                <div>
+                  <div style="font-size: 11.5px; font-family: var(--font-mono); color: #fca5a5;">
+                    Shimul Ahmad · Direct message · Oct 17, 1:46 PM
+                  </div>
+                  <div style="font-weight: 600; font-size: 13.5px; margin-top: 4px;">
+                    "Emergency review required on Fortress Q3 Brochure"
+                  </div>
                 </div>
-                <span class="task-due">Due Today · 4:00 PM</span>
-              </div>
-              <div class="task-row">
-                <div class="task-left">
-                  <input type="checkbox" class="task-checkbox" onchange="markDone(this)">
-                  <span class="task-title">Sign off on Departmental restructuring policy (HR Team)</span>
-                </div>
-                <span class="task-due" style="color: #475569; background: #e2e8f0;">Tomorrow</span>
+                <button class="btn-action-sm" style="background: #dc2626;" onclick="acknowledgeItem(this)">
+                  ✓ Acknowledge
+                </button>
               </div>
             </div>
           </div>
 
-          <!-- 3. UNREAD MENTIONS & DIRECT MESSAGES -->
-          <div>
-            <div class="section-headline">
-              <span>Direct Mentions & Attention</span>
-              <span style="font-family: var(--font-mono); font-size: 11px;">2 Unread</span>
+          <!-- Team Today Activity Table -->
+          <div style="background: var(--bg-surface); border: var(--border-subtle); border-radius: var(--radius-sm); overflow: hidden;">
+            <div style="padding: 12px 16px; border-bottom: var(--border-subtle); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: space-between;">
+              <span>Team today <span style="color: #22c55e; font-size: 11px; font-family: var(--font-mono);">● LIVE</span></span>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 10px;">
-              <div class="message-card">
-                <div class="avatar" style="background: #0284c7;">TA</div>
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>MEMBER</th>
+                  <th>STATUS</th>
+                  <th>MESSAGES</th>
+                  <th>@ GIVEN</th>
+                  <th>@ RECEIVED</th>
+                  <th>DONE</th>
+                  <th>OPEN TASKS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Anayat Munna</strong><br><span style="font-size: 11px; color: var(--text-muted);">ARCH LEAD</span></td>
+                  <td><span style="color: #94a3b8;">● Not active yet</span></td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <td><strong>MINHAJ</strong><br><span style="font-size: 11px; color: var(--text-muted);">DDQC</span></td>
+                  <td><span style="color: #eab308;">● Active 5h ago</span></td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>3</td>
+                </tr>
+                <tr>
+                  <td><strong>Sazzad Hossain Sabbir</strong><br><span style="font-size: 11px; color: var(--rust-copper);">VISUALIZER</span></td>
+                  <td><span style="color: #22c55e;">● Active Now</span></td>
+                  <td>14</td>
+                  <td>2</td>
+                  <td>4</td>
+                  <td>2</td>
+                  <td>4</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SCREEN 2: TASKS KANBAN BOARD (#tasks) -->
+      <section id="screen-tasks" class="screen-view">
+        <div class="tasks-top-filter">
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <span style="font-weight: 600; font-size: 13px;">Tasks:</span>
+            <span style="font-size: 11px; color: var(--text-muted);">Drag cards between columns to update status</span>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <select class="filter-dropdown">
+              <option>Everyone</option>
+              <option>Sazzad Hossain</option>
+              <option>Naiem Hossain</option>
+            </select>
+            <select class="filter-dropdown">
+              <option>All projects</option>
+              <option>FORTRESS</option>
+              <option>THE PANAROMA</option>
+            </select>
+            <select class="filter-dropdown">
+              <option>All priorities</option>
+              <option>URGENT</option>
+              <option>MEDIUM</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="kanban-board">
+          <!-- Column 1: TO DO -->
+          <div class="kanban-column">
+            <div class="column-header">
+              <span>TO DO</span>
+              <span class="column-count">8</span>
+            </div>
+            <div class="cards-scroll-container">
+              <div class="task-card">
+                <div style="font-weight: 600; font-size: 13px; margin-bottom: 8px;">Nexus Service Logo Design</div>
+                <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 8px;">
+                  <span class="badge-urgent">URGENT</span>
+                  <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">2026-10-20</span>
+                </div>
+                <div style="font-size: 11.5px; color: var(--text-muted);">New Concern of FORTRESS</div>
+              </div>
+
+              <div class="task-card">
+                <div style="font-weight: 600; font-size: 13px; margin-bottom: 8px;">The Panaroma by FORTRESS boundary wall design</div>
+                <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 8px;">
+                  <span class="badge-urgent">URGENT</span>
+                </div>
+                <div style="font-size: 11.5px; color: var(--text-muted);">THE PANAROMA</div>
+              </div>
+
+              <div class="task-card">
+                <div style="font-weight: 600; font-size: 13px; margin-bottom: 8px;">Brochure || THE ODYSSEY</div>
+                <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 8px;">
+                  <span class="badge-urgent">URGENT</span>
+                </div>
+                <div style="font-size: 11.5px; color: var(--text-muted);">Assignee: Naiem</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: IN PROGRESS -->
+          <div class="kanban-column">
+            <div class="column-header">
+              <span>IN PROGRESS</span>
+              <span class="column-count">6</span>
+            </div>
+            <div class="cards-scroll-container">
+              <div class="task-card">
+                <div style="font-weight: 600; font-size: 13px; margin-bottom: 8px;">AR-FDL Starlit Abode Air — 3 new creatives</div>
+                <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 8px;">
+                  <span class="badge-medium">MEDIUM</span>
+                </div>
+                <div style="font-size: 11.5px; color: var(--text-muted);">AR-FDL Starlit Abode Air</div>
+              </div>
+
+              <div class="task-card">
+                <div style="font-weight: 600; font-size: 13px; margin-bottom: 8px;">2027 calendar design</div>
+                <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 8px;">
+                  <span class="badge-medium">MEDIUM</span>
+                </div>
+                <div style="font-size: 11.5px; color: var(--text-muted);">Corporate Collateral</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 3: IN REVIEW -->
+          <div class="kanban-column">
+            <div class="column-header">
+              <span>IN REVIEW</span>
+              <span class="column-count">0</span>
+            </div>
+            <div class="cards-scroll-container">
+              <div style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 20px 0;">
+                No tasks under review
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 4: DONE -->
+          <div class="kanban-column">
+            <div class="column-header">
+              <span>DONE</span>
+              <span class="column-count">5</span>
+            </div>
+            <div class="cards-scroll-container">
+              <div class="task-card" style="opacity: 0.8;">
+                <div style="font-weight: 600; font-size: 13px; margin-bottom: 8px; text-decoration: line-through;">Id Card Design</div>
+                <span class="badge-medium">MEDIUM</span>
+                <div style="font-size: 11.5px; color: #22c55e; margin-top: 6px;">Completed by Sazzad</div>
+              </div>
+
+              <div class="task-card" style="opacity: 0.8;">
+                <div style="font-weight: 600; font-size: 13px; margin-bottom: 8px; text-decoration: line-through;">Zenith by FORTRESS Brochure</div>
+                <span class="badge-medium">MEDIUM</span>
+                <div style="font-size: 11.5px; color: #22c55e; margin-top: 6px;">Completed by Sazzad</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 3: CHAT & POLLS (#chat) -->
+      <section id="screen-chat" class="screen-view">
+        <div class="chat-layout">
+          <div class="chat-header">
+            <div>
+              <div style="font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px;">
+                <span>🔒</span>
+                <span id="chat-channel-title">mb-general</span>
+              </div>
+              <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">4 members · Strict Private Group</div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-action-sm" onclick="showCreatePollModal()" style="background: var(--bg-surface-elevated); border: var(--border-subtle); color: #fff;">
+                📊 Create Poll
+              </button>
+            </div>
+          </div>
+
+          <div class="pinned-banner">
+            <span>⭐</span>
+            <span><strong>10 Pinned:</strong> Q3 Campaign deadlines and brand assets guidelines locked.</span>
+          </div>
+
+          <div class="chat-messages-scroll" id="chat-scroll">
+
+            <!-- Message with Image & PSD attachment -->
+            <div>
+              <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px;">
+                <span style="font-weight: 600;">Sazzad Hossain Sabbir</span>
+                <span style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">2:39 PM</span>
+              </div>
+              
+              <!-- File Attachment Card (From your Screenshot) -->
+              <div class="file-attachment-card" style="margin-top: 8px;">
+                <div class="file-icon-box">📄</div>
                 <div style="flex: 1;">
-                  <div class="message-header">
-                    <span class="sender-name">Tanvir Ahmed</span>
-                    <span class="message-time">09:42 AM · in #engineering</span>
-                  </div>
-                  <div class="message-text">
-                    <span style="background: rgba(194, 94, 46, 0.15); color: var(--rust-copper); font-weight: 600; padding: 1px 4px; border-radius: 3px;">@Sabbir</span> We have completed the PostgreSQL RLS tenant partitioning migration benchmark. Ready for your signoff.
-                  </div>
+                  <div style="font-weight: 600; font-size: 12.5px;">Newspaper Ads Final File.psd</div>
+                  <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">385.9 MB · Photoshop Asset</div>
                 </div>
+                <button class="btn-action-sm" style="background: var(--rust-copper);" onclick="alert('Downloading Newspaper Ads Final File.psd')">↓</button>
               </div>
             </div>
+
+            <!-- INTERACTIVE POLL WIDGET (From your Screenshot) -->
+            <div class="poll-widget-card">
+              <div class="poll-question">
+                <span>📊</span>
+                <span>Which direction should we take for the landing page?</span>
+              </div>
+
+              <!-- Option 1 -->
+              <div class="poll-option-row" onclick="votePoll(1)">
+                <div class="poll-bar-wrapper">
+                  <div class="poll-fill" id="fill-1" style="width: 31%;"></div>
+                  <span class="poll-text">Bold and colourful</span>
+                  <span class="poll-pct" id="pct-1">31%</span>
+                </div>
+              </div>
+
+              <!-- Option 2 -->
+              <div class="poll-option-row" onclick="votePoll(2)">
+                <div class="poll-bar-wrapper">
+                  <div class="poll-fill" id="fill-2" style="width: 54%; background: rgba(194, 94, 46, 0.65);"></div>
+                  <span class="poll-text">Minimal and clean</span>
+                  <span class="poll-pct" id="pct-2">54%</span>
+                </div>
+              </div>
+
+              <!-- Option 3 -->
+              <div class="poll-option-row" onclick="votePoll(3)">
+                <div class="poll-bar-wrapper">
+                  <div class="poll-fill" id="fill-3" style="width: 15%;"></div>
+                  <span class="poll-text">Illustration heavy</span>
+                  <span class="poll-pct" id="pct-3">15%</span>
+                </div>
+              </div>
+
+              <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); margin-top: 8px;" id="poll-votes-count">
+                13 votes · Click option to submit your vote
+              </div>
+            </div>
+
+            <!-- Priority High Notice -->
+            <div style="background: rgba(220, 38, 38, 0.08); border-left: 3px solid #dc2626; padding: 10px 14px; border-radius: var(--radius-xs);">
+              <div style="display: flex; justify-content: space-between;">
+                <span style="font-weight: 700; color: #f87171; font-size: 11px; font-family: var(--font-mono);">HIGH PRIORITY MESSAGE</span>
+                <span style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">4:15 PM</span>
+              </div>
+              <div style="font-size: 13.5px; margin-top: 4px;">
+                All department leads must confirm their duty roster for Friday before 5:00 PM today.
+              </div>
+            </div>
+
           </div>
 
-          <!-- 4. RECENT ACTIVITY & CHANNELS -->
-          <div>
-            <div class="section-headline">
-              <span>Recent Channels Summary</span>
-            </div>
-            <div style="font-size: 12.5px; color: var(--text-muted); padding: 8px 0;">
-              No unread messages in #announcements or #operations-daily.
+          <!-- Bottom Composer -->
+          <div class="chat-bottom-input-zone">
+            <div class="composer-input-row">
+              <input type="text" class="composer-text-field" id="chat-input-box" placeholder="Message #mb-general... (Use @ to mention, /task to create task)" onkeypress="handleChatEnter(event)">
+              <button class="btn-action-sm" onclick="sendChatMessage()">Send</button>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- VIEW 2: CHANNEL & CONVERSATION VIEW -->
-      <section id="channel-view" class="view-container">
-        <header class="top-bar">
-          <div class="top-bar-title">
-            <span># announcements</span>
-            <span style="font-size: 11px; font-weight: 400; color: var(--text-muted); font-family: var(--font-mono);">34 Members · Company-wide</span>
-          </div>
-          <div class="top-actions">
-            <button class="icon-btn">🔍 Search in channel</button>
-            <button class="icon-btn">📌 Pinned (3)</button>
-          </div>
-        </header>
-
-        <div class="feed-content" style="justify-content: flex-end;">
-          <div class="message-card">
-            <div class="avatar" style="background: #475569;">NJ</div>
-            <div style="flex: 1;">
-              <div class="message-header">
-                <span class="sender-name">Nusrat Jahan</span>
-                <span class="message-time">10:15 AM</span>
-                <div class="msg-actions">
-                  <button class="icon-btn" onclick="turnIntoTask('Holiday schedule review')">Turn into Task</button>
-                  <button class="icon-btn">Reply in Thread</button>
-                </div>
-              </div>
-              <div class="message-text">
-                Please note that upcoming public holiday duty rosters have been finalized. Department heads are requested to confirm backup coverage.
-              </div>
+      <!-- SCREEN 4: TEAM DIRECTORY (#team) -->
+      <section id="screen-team" class="screen-view">
+        <div style="padding: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+              <h2 style="font-size: 18px; font-weight: 700;">Team Directory & Roles</h2>
+              <p style="font-size: 12px; color: var(--text-muted);">8 active members in FORTRESS CORP</p>
             </div>
+            <button class="btn-action-sm" onclick="alert('Bulk Invite Modal Opened')">+ Invite via CSV / Email</button>
           </div>
 
-          <div class="message-card" style="border-left: 3px solid var(--rust-copper); background: var(--bg-subtle);">
-            <div class="avatar" style="background: #991b1b;">ZS</div>
-            <div style="flex: 1;">
-              <div class="message-header">
-                <span class="sender-name">Z. K. Sabbir</span>
-                <span class="message-time">10:30 AM</span>
-                <span class="priority-pill" style="font-size: 9px; padding: 1px 5px;">HIGH PRIORITY</span>
-              </div>
-              <div class="message-text">
-                All department leads must complete the quarterly equipment audit before Friday 5:00 PM. No budget releases will occur without it.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Chat Composer -->
-        <div class="chat-composer">
-          <div class="composer-box">
-            <textarea class="composer-textarea" placeholder="Message #announcements... (Use @ to mention, / for commands)"></textarea>
-            <div class="composer-toolbar">
-              <div style="display: flex; gap: 8px; align-items: center;">
-                <select class="priority-select">
-                  <option value="normal">Priority: Normal</option>
-                  <option value="high">Priority: High</option>
-                  <option value="critical">Priority: Critical (Escalating)</option>
-                </select>
-                <button class="icon-btn">📎 Attach File</button>
-              </div>
-              <button class="btn-send">Send Message</button>
-            </div>
+          <div style="background: var(--bg-surface); border: var(--border-subtle); border-radius: var(--radius-sm); overflow: hidden;">
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>MEMBER</th>
+                  <th>EMAIL</th>
+                  <th>ROLE</th>
+                  <th>STATUS</th>
+                  <th>ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Anayat Munna</strong><br><span style="font-size: 11px; color: var(--text-muted);">ARCH-LEAD</span></td>
+                  <td>anayat@fortress.com.bd</td>
+                  <td><span style="font-family: var(--font-mono); font-size: 11px;">ARCH</span></td>
+                  <td><span style="color: #22c55e;">Active</span></td>
+                  <td><button class="btn-action-sm" style="background: var(--bg-surface-elevated); border: var(--border-subtle); color: #fff;" onclick="openDirectMessage('Anayat Munna')">Message</button></td>
+                </tr>
+                <tr>
+                  <td><strong>MINHAJ</strong><br><span style="font-size: 11px; color: var(--text-muted);">DDQC</span></td>
+                  <td>minhaj@fortress.com.bd</td>
+                  <td><span style="font-family: var(--font-mono); font-size: 11px;">DDQC</span></td>
+                  <td><span style="color: #22c55e;">Active</span></td>
+                  <td><button class="btn-action-sm" style="background: var(--bg-surface-elevated); border: var(--border-subtle); color: #fff;" onclick="openDirectMessage('MINHAJ')">Message</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Sazzad Hossain Sabbir</strong><br><span style="font-size: 11px; color: var(--rust-copper);">VISUALIZER</span></td>
+                  <td>sabbir@fortress.com.bd</td>
+                  <td><span style="font-family: var(--font-mono); font-size: 11px; color: var(--rust-copper);">Visualizer</span></td>
+                  <td><span style="color: #22c55e;">Active (You)</span></td>
+                  <td><button class="btn-action-sm" onclick="navigateTo('profile')">Edit Profile</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Shimul Ahmad</strong><br><span style="font-size: 11px; color: var(--text-muted);">Manager, Brand & Communications</span></td>
+                  <td>shimul@fortress.com.bd</td>
+                  <td><span style="font-family: var(--font-mono); font-size: 11px; color: #eab308;">Admin</span></td>
+                  <td><span style="color: #22c55e;">Active</span></td>
+                  <td><button class="btn-action-sm" style="background: var(--bg-surface-elevated); border: var(--border-subtle); color: #fff;" onclick="openDirectMessage('Shimul Ahmad')">Message</button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
 
-      <!-- VIEW 3: TASKS WORKSPACE -->
-      <section id="tasks-view" class="view-container">
-        <header class="top-bar">
-          <div class="top-bar-title">
-            <span>☑ Tasks & Assignments</span>
-            <span style="font-size: 11px; font-weight: 400; color: var(--text-muted);">| Execution Engine</span>
-          </div>
-          <div class="top-actions">
-            <button class="icon-btn" style="background: var(--rust-copper); color: #fff; border: none;">+ Create Task</button>
-          </div>
-        </header>
+      <!-- SCREEN 5: PROFILE EDIT (#profile) -->
+      <section id="screen-profile" class="screen-view">
+        <div class="profile-card-container">
+          <div class="profile-main-box">
+            <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 4px;">Your Profile</h2>
+            <p style="font-size: 12px; font-family: var(--font-mono); color: var(--rust-copper); margin-bottom: 24px;">sabbir@fortress.com.bd · VISUALIZER</p>
 
-        <div class="feed-content">
-          <div style="display: flex; gap: 8px; margin-bottom: 10px;">
-            <button class="icon-btn" style="background: var(--bg-subtle); font-weight: 600;">My Tasks (4)</button>
-            <button class="icon-btn">Assigned by Me (7)</button>
-            <button class="icon-btn">Department Tasks (12)</button>
-            <button class="icon-btn">Overdue (1)</button>
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 8px;" id="tasks-list-container">
-            <div class="task-row">
-              <div class="task-left">
-                <input type="checkbox" class="task-checkbox" onchange="markDone(this)">
-                <div>
-                  <div class="task-title">Approve IT server procurement invoice for Dhaka Datacenter</div>
-                  <div style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); margin-top: 3px;">
-                    Department: IT & Infrastructure · Assignee: Z. K. Sabbir
-                  </div>
-                </div>
+            <div class="profile-header-avatar-zone">
+              <div class="profile-large-img">
+                ZS
               </div>
-              <span class="task-due" style="background: #fee2e2; color: #991b1b;">OVERDUE</span>
-            </div>
-
-            <div class="task-row">
-              <div class="task-left">
-                <input type="checkbox" class="task-checkbox" onchange="markDone(this)">
-                <div>
-                  <div class="task-title">Review final draft of Q3 Financial Consolidated Statement</div>
-                  <div style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); margin-top: 3px;">
-                    Department: Accounts · Assignee: Z. K. Sabbir
-                  </div>
-                </div>
+              <div>
+                <button class="btn-action-sm" style="margin-right: 8px;">Change photo</button>
+                <button class="btn-action-sm" style="background: transparent; border: var(--border-subtle); color: var(--text-muted);">Remove photo</button>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">JPEG, PNG, WebP. Max 5MB.</div>
               </div>
-              <span class="task-due">Due Today</span>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- VIEW 4: MULTI-TENANT ADMIN PANEL -->
-      <section id="admin-view" class="view-container">
-        <header class="top-bar">
-          <div class="top-bar-title">
-            <span>⚙ Workspace Admin & Compliance</span>
-            <span style="font-size: 11px; font-weight: 400; color: var(--text-muted);">| Tenant ID: a981c-tenant-apex</span>
-          </div>
-        </header>
+            <form onsubmit="handleProfileSave(event)">
+              <div class="form-group-dense">
+                <label class="form-label-dense">Name</label>
+                <input type="text" class="form-input-dense" value="Sazzad Hossain Sabbir" id="prof-name">
+              </div>
 
-        <div class="feed-content">
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
-            <div class="stat-box">
-              <div class="stat-num">24 / 25</div>
-              <div class="stat-label">Active Seats Used (Trial Tier)</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-num" style="color: #16a34a;">Compliant</div>
-              <div class="stat-label">PostgreSQL RLS Data Isolation Active</div>
-            </div>
-          </div>
+              <div class="form-group-dense">
+                <label class="form-label-dense">Designation</label>
+                <input type="text" class="form-input-dense" value="Executive, Brand & Communications" id="prof-desig">
+              </div>
 
-          <div class="section-headline">
-            <span>Employee Directory & Role Matrix</span>
-            <button class="icon-btn">+ Invite Employee (CSV)</button>
-          </div>
+              <div class="form-group-dense">
+                <label class="form-label-dense">Phone</label>
+                <input type="text" class="form-input-dense" value="+8801761134166" id="prof-phone">
+              </div>
 
-          <table style="width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px;">
-            <thead>
-              <tr style="border-bottom: 1px solid var(--border-hairline); text-align: left; color: var(--text-muted); font-family: var(--font-mono); font-size: 11px;">
-                <th style="padding: 8px;">NAME</th>
-                <th style="padding: 8px;">DEPARTMENT</th>
-                <th style="padding: 8px;">ROLE</th>
-                <th style="padding: 8px;">PRIORITY MSG PERMIT</th>
-                <th style="padding: 8px;">STATUS</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="border-bottom: 1px solid var(--border-hairline);">
-                <td style="padding: 10px 8px; font-weight: 600;">Z. K. Sabbir</td>
-                <td style="padding: 10px 8px;">Executive</td>
-                <td style="padding: 10px 8px; font-family: var(--font-mono); color: var(--rust-copper);">Owner</td>
-                <td style="padding: 10px 8px; color: #16a34a;">Critical / High</td>
-                <td style="padding: 10px 8px;"><span style="color: #16a34a;">Active</span></td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border-hairline);">
-                <td style="padding: 10px 8px; font-weight: 600;">Tanvir Ahmed</td>
-                <td style="padding: 10px 8px;">IT & Engineering</td>
-                <td style="padding: 10px 8px; font-family: var(--font-mono);">Dept Head</td>
-                <td style="padding: 10px 8px; color: #16a34a;">Critical / High</td>
-                <td style="padding: 10px 8px;"><span style="color: #16a34a;">Active</span></td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border-hairline);">
-                <td style="padding: 10px 8px; font-weight: 600;">Nusrat Jahan</td>
-                <td style="padding: 10px 8px;">Human Resources</td>
-                <td style="padding: 10px 8px; font-family: var(--font-mono);">Member</td>
-                <td style="padding: 10px 8px; color: #94a3b8;">Normal only</td>
-                <td style="padding: 10px 8px;"><span style="color: #16a34a;">Active</span></td>
-              </tr>
-            </tbody>
-          </table>
+              <div class="form-group-dense">
+                <label class="form-label-dense">Email (Sign in)</label>
+                <input type="email" class="form-input-dense" value="sabbir@fortress.com.bd" readonly style="opacity: 0.7; cursor: not-allowed;">
+              </div>
+
+              <div style="display: flex; gap: 10px; margin-top: 24px;">
+                <button type="submit" class="btn-action-sm">Save changes</button>
+                <button type="button" class="btn-action-sm" style="background: transparent; border: var(--border-subtle); color: #fff;">Change password</button>
+              </div>
+            </form>
+          </div>
         </div>
       </section>
 
     </main>
-
-    <!-- RIGHT CONTEXT PANE: DETAILS & AUDIT -->
-    <aside class="right-pane">
-      <div class="right-pane-header">
-        <span>EXECUTIVE AUDIT & STATS</span>
-        <span style="font-family: var(--font-mono); font-size: 11px; color: var(--rust-copper);">LIVE</span>
-      </div>
-
-      <div class="right-pane-body">
-        <div class="stat-box">
-          <div class="stat-num">98.4%</div>
-          <div class="stat-label">Priority Acknowledgment Rate</div>
-          <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">Avg Response Time: 7.2 minutes</div>
-        </div>
-
-        <div class="stat-box">
-          <div class="stat-num">0 msgs</div>
-          <div class="stat-label">Cross-Tenant Leak Risk</div>
-          <div style="font-size: 11px; color: #16a34a; margin-top: 6px;">Postgres RLS Session Verified</div>
-        </div>
-
-        <div>
-          <div class="section-headline">
-            <span>Today's Calendar / Brief</span>
-          </div>
-          <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 8px;">
-            <div style="background: var(--bg-surface); padding: 10px; border-radius: var(--radius-sm); border: var(--border-hairline);">
-              <div style="font-family: var(--font-mono); font-size: 11px; color: var(--rust-copper);">11:30 AM - 12:30 PM</div>
-              <div style="font-weight: 600; font-size: 12.5px; margin-top: 2px;">Emergency Board Meeting</div>
-              <div style="font-size: 11px; color: var(--text-muted);">Acquisition Term Sheets</div>
-            </div>
-            <div style="background: var(--bg-surface); padding: 10px; border-radius: var(--radius-sm); border: var(--border-hairline);">
-              <div style="font-family: var(--font-mono); font-size: 11px; color: #64748b;">03:00 PM - 03:45 PM</div>
-              <div style="font-weight: 600; font-size: 12.5px; margin-top: 2px;">IT Security & RLS Compliance Review</div>
-              <div style="font-size: 11px; color: var(--text-muted);">Engineering Architecture Team</div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="section-headline">
-            <span>Brand System Reference</span>
-          </div>
-          <div style="font-size: 11.5px; color: var(--text-muted); line-height: 1.5; margin-top: 6px;">
-            Wordmark: <strong>RUST.</strong> with engineered dot.<br>
-            Palette: Warm paper, deep navy slate, oxidized burnt copper.
-          </div>
-        </div>
-      </div>
-    </aside>
-
   </div>
 
   <script>
-    function switchView(viewId) {
-      document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active-view'));
-      const target = document.getElementById(viewId);
-      if (target) target.classList.add('active-view');
+    function navigateTo(screenKey) {
+      // Hide all screens
+      document.querySelectorAll('.screen-view').forEach(s => s.classList.remove('active-screen'));
+      document.querySelectorAll('.rail-btn').forEach(b => b.classList.remove('active'));
 
-      document.querySelectorAll('.view-pill-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.getAttribute('onclick').includes(viewId)) {
-          btn.classList.add('active');
-        }
-      });
+      const targetScreen = document.getElementById('screen-' + screenKey);
+      if (targetScreen) targetScreen.classList.add('active-screen');
+
+      const targetRail = document.getElementById('rail-' + screenKey);
+      if (targetRail) targetRail.classList.add('active');
+
+      const titleEl = document.getElementById('stage-main-title');
+      if (screenKey === 'home') {
+        titleEl.innerHTML = '<span>Hello, Sazzad</span><span style="font-size: 12px; font-weight: 400; color: var(--text-muted);"> | Workspace Pulse & Priority</span>';
+      } else if (screenKey === 'tasks') {
+        titleEl.innerHTML = '<span>Kanban Tasks</span><span style="font-size: 12px; font-weight: 400; color: var(--text-muted);"> | 14 Active Tasks across 4 Columns</span>';
+      } else if (screenKey === 'chat') {
+        titleEl.innerHTML = '<span>Corporate Messaging</span><span style="font-size: 12px; font-weight: 400; color: var(--text-muted);"> | Encrypted In-Transit</span>';
+      } else if (screenKey === 'team') {
+        titleEl.innerHTML = '<span>Team & RBAC Roles</span><span style="font-size: 12px; font-weight: 400; color: var(--text-muted);"> | FORTRESS Multi-tenant Directory</span>';
+      } else if (screenKey === 'profile') {
+        titleEl.innerHTML = '<span>Profile Settings</span><span style="font-size: 12px; font-weight: 400; color: var(--text-muted);"> | Sazzad Hossain Sabbir</span>';
+      }
     }
 
-    function acknowledgeMessage(btn) {
-      btn.innerText = "✓ Acknowledged at " + new Date().toLocaleTimeString();
-      btn.style.background = "#16a34a";
+    function openChannel(name) {
+      navigateTo('chat');
+      document.getElementById('chat-channel-title').innerText = name;
+    }
+
+    function openDirectMessage(name) {
+      navigateTo('chat');
+      document.getElementById('chat-channel-title').innerText = '@ ' + name;
+    }
+
+    function acknowledgeItem(btn) {
+      btn.innerText = '✓ Acknowledged';
+      btn.style.background = '#16a34a';
       btn.disabled = true;
-      const statusText = document.querySelector('.ack-status-text');
-      if (statusText) {
-        statusText.innerHTML = "Status: <strong>5 of 6 acknowledged</strong> (You confirmed)";
-      }
     }
 
-    function markDone(checkbox) {
-      const parentRow = checkbox.closest('.task-row');
-      if (checkbox.checked) {
-        parentRow.style.opacity = '0.5';
-        parentRow.style.textDecoration = 'line-through';
-      } else {
-        parentRow.style.opacity = '1';
-        parentRow.style.textDecoration = 'none';
-      }
+    function votePoll(optionNumber) {
+      alert('Your vote for Option ' + optionNumber + ' has been recorded!');
+      const votesEl = document.getElementById('poll-votes-count');
+      if (votesEl) votesEl.innerText = '14 votes · Your vote recorded';
     }
 
-    function turnIntoTask(title) {
-      switchView('tasks-view');
-      alert(`Message successfully converted into Task: "${title}"`);
+    function handleChatEnter(e) {
+      if (e.key === 'Enter') sendChatMessage();
     }
 
-    function toggleTheme() {
-      const current = document.documentElement.getAttribute('data-theme');
-      if (current === 'dark') {
-        document.documentElement.removeAttribute('data-theme');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
+    function sendChatMessage() {
+      const input = document.getElementById('chat-input-box');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const container = document.getElementById('chat-messages-scroll');
+      const newMsg = document.createElement('div');
+      newMsg.innerHTML = `
+        <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; margin-top: 12px;">
+          <span style="font-weight: 600; color: var(--rust-copper);">Sazzad Hossain Sabbir (You)</span>
+          <span style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">${new Date().toLocaleTimeString()}</span>
+        </div>
+        <div style="font-size: 13.5px; line-height: 1.5; color: #fff;">${text}</div>
+      `;
+      container.appendChild(newMsg);
+      input.value = '';
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function handleProfileSave(e) {
+      e.preventDefault();
+      alert('Profile details updated successfully!');
+    }
+
+    function showNewTaskModal() {
+      navigateTo('tasks');
+      alert('Quick Task Creation: Click any column to add a new task.');
+    }
+
+    function showCreatePollModal() {
+      alert('Create Poll: Enter question & options to broadcast in current channel.');
     }
   </script>
 </body>
