@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Private Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --danger: #ef4444;
+      --glow: rgba(99, 102, 241, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, var(--bg) 70%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 40px 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 40px var(--glow);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .lock-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      color: #818cf8;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 28px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: #fff;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    input[type="password"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 14px var(--glow);
+    }
+
+    button.btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    button.btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
+    }
+
+    .error-msg {
+      color: var(--danger);
+      font-size: 0.875rem;
+      margin-top: 14px;
+      min-height: 20px;
+    }
+
+    /* Secret Content */
+    #private-content {
+      display: none;
+      text-align: left;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #4ade80;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .content-box {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 16px 0;
+      line-height: 1.6;
+    }
+
+    .logout-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-muted);
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+      margin-top: 10px;
+    }
+
+    .logout-btn:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Login Screen -->
+    <div id="login-card" class="glass-card">
+      <div class="lock-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+      <h1>Restricted Access</h1>
+      <p class="subtitle">This repository and portal are strictly confidential.</p>
+
+      <form id="auth-form" onsubmit="handleAuth(event)">
+        <div class="input-group">
+          <label for="passcode">Security Key / Password</label>
+          <input type="password" id="passcode" placeholder="••••••••••••" autofocus required>
+        </div>
+        <button type="submit" class="btn">Authenticate</button>
+        <div id="error-msg" class="error-msg"></div>
+      </form>
+    </div>
+
+    <!-- Protected Content Screen -->
+    <div id="private-content" class="glass-card">
+      <span class="badge">Authenticated Session</span>
+      <h1>Welcome to Your Private Site</h1>
+      <p class="subtitle">Only authorized credentials can view this content.</p>
+
+      <div class="content-box">
+        <p>🔒 <strong>Private Space</strong></p>
+        <p style="margin-top: 8px; font-size: 0.95rem; color: #cbd5e1;">
+          আপনার প্রাইভেট সাইট সফলভাবে সেটআপ হয়েছে। এটি সার্চ ইঞ্জিন ইনডেক্সিং এবং পাবলিক ব্রাউজিং থেকে সুরক্ষিত।
+        </p>
+      </div>
+
+      <button onclick="handleLogout()" class="logout-btn">Log out</button>
+    </div>
+  </div>
+
+  <script>
+    // SHA-256 hash of password. Default password is: secret123
+    // SHA-256 for "secret123" is: "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"
+    const TARGET_HASH = "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3";
+
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function handleAuth(event) {
+      event.preventDefault();
+      const inputPass = document.getElementById('passcode').value;
+      const errorMsg = document.getElementById('error-msg');
+      
+      const hash = await sha256(inputPass);
+      if (hash === TARGET_HASH) {
+        sessionStorage.setItem('site_authenticated', 'true');
+        showPrivateView();
+      } else {
+        errorMsg.textContent = 'Invalid passkey. Access denied.';
+        document.getElementById('passcode').value = '';
+        document.getElementById('passcode').focus();
+      }
+    }
+
+    function showPrivateView() {
+      document.getElementById('login-card').style.display = 'none';
+      document.getElementById('private-content').style.display = 'block';
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem('site_authenticated');
+      document.getElementById('private-content').style.display = 'none';
+      document.getElementById('login-card').style.display = 'block';
+      document.getElementById('passcode').value = '';
+      document.getElementById('error-msg').textContent = '';
+    }
+
+    // Check if session already authenticated
+    if (sessionStorage.getItem('site_authenticated') === 'true') {
+      showPrivateView();
+    }
+  </script>
+</body>
+</html>
