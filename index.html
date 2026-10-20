@@ -117,7 +117,6 @@
         <div id="sidebar-section-notices">
           <div class="sidebar-category-header">
             <span>Official Announcements</span>
-            <span class="notice-pill-badge">ADMIN ONLY</span>
           </div>
           <div class="sidebar-nav-item" id="channel-notice-link" data-channel-id="c_notice">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--rust-accent);" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
@@ -270,7 +269,7 @@
           <div class="stage-title">
             <span id="active-chat-prefix" style="color: var(--rust-text-muted);">#</span>
             <span id="active-chat-title">general</span>
-            <span id="notice-only-badge" style="display: none; background: var(--rust-accent); color: #fff; font-size: 10px; font-family: var(--font-mono); padding: 1px 6px; border-radius: 3px; margin-left: 8px;">BROADCAST ONLY</span>
+            <span id="notice-only-badge" style="display: none; font-size: 10px; font-family: var(--font-mono); padding: 1px 6px; border-radius: 3px; margin-left: 8px; border: 1px solid var(--rust-border); color: var(--rust-text-muted);">BROADCAST</span>
           </div>
           <div style="display: flex; align-items: center; gap: 12px;">
             <span style="font-size: 12px; font-family: var(--font-mono); color: var(--rust-text-muted);" id="active-chat-members-label">9 Members</span>
@@ -306,6 +305,12 @@
                     <button type="button" class="btn-rust-secondary" id="btn-attach-files" style="padding: 4px 10px; font-size: 12px;" title="Attach Multiple Photos or Documents (Images, PDF, ZIP, PSD)">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;" aria-hidden="true"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
                       Attach Files
+                    </button>
+
+                    <!-- Interactive Poll Button -->
+                    <button type="button" class="btn-rust-secondary" id="btn-create-poll-toggle" style="padding: 4px 10px; font-size: 12px;" title="Create an Interactive Team Poll">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;" aria-hidden="true"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+                      Poll
                     </button>
 
                     <!-- Emergency Toggle Button -->
@@ -831,6 +836,39 @@
     </div>
   </div>
 
+  <!-- MODAL: CREATE TEAM POLL -->
+  <div class="rust-modal-backdrop" id="modal-create-poll" role="dialog" aria-modal="true" aria-label="Create Team Poll Dialog">
+    <div class="rust-modal-window" style="padding: 22px; max-width: 500px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 18px;">📊</span>
+          <h3 style="font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--rust-text-bright);">Create Team Poll</h3>
+        </div>
+        <button type="button" class="btn-rust-secondary" id="btn-close-poll-modal" style="padding: 2px 8px;" aria-label="Close Poll Modal">✕</button>
+      </div>
+      <form id="form-create-poll">
+        <div style="margin-bottom: 14px;">
+          <label style="display: block; font-size: 11px; font-family: var(--font-mono); color: var(--rust-text-muted); margin-bottom: 5px;" for="poll-input-question">POLL QUESTION <span style="color:var(--rust-critical);">*</span></label>
+          <input type="text" id="poll-input-question" required class="search-modal-input" style="border: 1px solid var(--rust-border); border-radius: 4px; padding: 9px 12px; font-size: 13.5px; width: 100%; box-sizing: border-box;" placeholder="e.g. Which brochure cover finish do you prefer for Fortress Group?">
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label style="display: block; font-size: 11px; font-family: var(--font-mono); color: var(--rust-text-muted); margin-bottom: 6px;">OPTIONS (MINIMUM 2)</label>
+          <div id="poll-options-inputs-container" style="display: flex; flex-direction: column; gap: 8px;">
+            <input type="text" class="search-modal-input poll-option-input" style="border: 1px solid var(--rust-border); border-radius: 4px; padding: 7px 12px; font-size: 13px; width: 100%; box-sizing: border-box;" placeholder="Option 1 (e.g. Matte Lamination + Spot UV)" required>
+            <input type="text" class="search-modal-input poll-option-input" style="border: 1px solid var(--rust-border); border-radius: 4px; padding: 7px 12px; font-size: 13px; width: 100%; box-sizing: border-box;" placeholder="Option 2 (e.g. Velvet Soft-Touch Foil)" required>
+          </div>
+          <button type="button" class="btn-rust-secondary" id="btn-add-poll-option" style="margin-top: 8px; font-size: 11.5px; padding: 4px 10px;">+ Add Another Option</button>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn-rust-secondary" id="btn-cancel-poll-modal">Cancel</button>
+          <button type="submit" class="btn-rust-primary" id="btn-submit-create-poll">Post Poll to Channel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- MODAL: INVITE TEAM MEMBER -->
   <div class="rust-modal-backdrop" id="modal-invite-member" role="dialog" aria-modal="true" aria-label="Invite Team Member Dialog">
     <div class="rust-modal-window" style="padding: 20px; max-width: 480px;">
@@ -956,6 +994,22 @@
               replies: [
                 { authorName: 'Zke Sabbir Designer', time: '09:45 AM', body: 'Looks incredible Naiem! Lighting balance is calibrated perfectly for client review.' }
               ]
+            },
+            {
+              id: 'm_poll_gen_1',
+              authorId: 'user_01',
+              authorName: 'Zke Sabbir Designer',
+              time: '10:45 AM',
+              isPoll: true,
+              question: 'Team Sprint Review: What time should we hold Thursday\'s milestone demo session?',
+              options: [
+                { id: 'opt_1', text: '10:30 AM (Morning Session)', votes: 7, voters: ['user_02', 'user_03', 'user_05', 'user_06', 'user_07', 'user_08', 'user_09'] },
+                { id: 'opt_2', text: '03:00 PM (Afternoon Session)', votes: 4, voters: ['user_01', 'user_04', 'user_10', 'user_11'] }
+              ],
+              priority: 'normal',
+              acknowledged: true,
+              reactions: { '👍 Ok': 8, '❤️': 5 },
+              replies: []
             },
             {
               id: 'm_102',
@@ -1365,15 +1419,22 @@
             }
           }
 
-          // Reactions HTML
-          let reactionsHtml = '';
+          // Reactions HTML (Includes Ok, Cancel, Love buttons)
+          let reactionsHtml = '<div class="msg-reactions-row">';
           if (msg.reactions && Object.keys(msg.reactions).length > 0) {
-            reactionsHtml = '<div class="msg-reactions-row">';
             Object.entries(msg.reactions).forEach(([emoji, count]) => {
-              reactionsHtml += `<span class="reaction-pill-badge" onclick="toggleReaction('${msg.id}', '${emoji}')">${emoji} ${count}</span>`;
+              if (count > 0) {
+                reactionsHtml += `<span class="reaction-pill-badge" onclick="toggleReaction('${msg.id}', '${emoji}')">${emoji} <span style="font-weight:700;margin-left:2px;">${count}</span></span>`;
+              }
             });
-            reactionsHtml += '</div>';
           }
+          // Quick Reaction Action Pills
+          reactionsHtml += `
+            <span class="reaction-add-btn" title="React Ok" onclick="toggleReaction('${msg.id}', '👍 Ok')">👍 Ok</span>
+            <span class="reaction-add-btn" title="React Cancel" onclick="toggleReaction('${msg.id}', '❌ Cancel')">❌ Cancel</span>
+            <span class="reaction-add-btn" title="React Love" onclick="toggleReaction('${msg.id}', '❤️')">❤️ Love</span>
+          `;
+          reactionsHtml += '</div>';
 
           // Thread Replies Summary
           let repliesHtml = '';
@@ -1388,11 +1449,14 @@
           row.innerHTML = `
             <!-- Clean SVG Hover Action Toolbar (No Cartoon Emojis, Clean Positioning) -->
             <div class="msg-hover-actions">
-              <button class="hover-action-btn" title="React Love" onclick="toggleReaction('${msg.id}', '❤️')">
+              <button class="hover-action-btn" title="React Love (❤️)" onclick="toggleReaction('${msg.id}', '❤️')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
               </button>
-              <button class="hover-action-btn" title="React Thumbs Up" onclick="toggleReaction('${msg.id}', '👍')">
+              <button class="hover-action-btn" title="React Ok (👍)" onclick="toggleReaction('${msg.id}', '👍 Ok')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+              </button>
+              <button class="hover-action-btn" title="React Cancel (❌)" onclick="toggleReaction('${msg.id}', '❌ Cancel')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
               <button class="hover-action-btn" title="Reply in Thread" onclick="openThreadDrawer('${msg.id}')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -1574,15 +1638,89 @@
       }
 
       // 6. Action Functions (React, Emergency, Inline Edit, Delete, Share)
+      
+      // Render Interactive Poll Card
+      function renderPollCardHtml(poll) {
+        const totalVotes = (poll.options || []).reduce((sum, opt) => sum + (opt.votes || 0), 0);
+        let optionsHtml = '';
+
+        (poll.options || []).forEach(opt => {
+          const percent = totalVotes > 0 ? Math.round(((opt.votes || 0) / totalVotes) * 100) : 0;
+          const hasVoted = (opt.voters || []).includes(state.currentUser.id);
+
+          optionsHtml += `
+            <div class="poll-option-row ${hasVoted ? 'user-voted' : ''}" onclick="votePollOption('${poll.id}', '${opt.id}')">
+              <div class="poll-progress-bar-bg" style="width: ${percent}%;"></div>
+              <div class="poll-option-content">
+                <span class="poll-option-label">${hasVoted ? '✓ ' : ''}${escapeHtml(opt.text)}</span>
+                <span class="poll-option-stat">${opt.votes || 0} vote${(opt.votes || 0) !== 1 ? 's' : ''} (${percent}%)</span>
+              </div>
+            </div>
+          `;
+        });
+
+        return `
+          <div class="poll-message-card">
+            <div class="poll-card-header">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="poll-badge-icon">📊 POLL</span>
+                <h4 class="poll-question-text">${escapeHtml(poll.question)}</h4>
+              </div>
+              <span class="poll-total-votes-label">${totalVotes} total vote${totalVotes !== 1 ? 's' : ''}</span>
+            </div>
+            <div class="poll-options-list">
+              ${optionsHtml}
+            </div>
+          </div>
+        `;
+      }
+
+      // Vote on Poll Option
+      window.votePollOption = function(pollId, optionId) {
+        const chId = state.activeChannelId;
+        const msg = (state.messages[chId] || []).find(m => m.id === pollId);
+        if (!msg || !msg.isPoll) return;
+
+        const userId = state.currentUser.id;
+
+        // Toggle vote: remove from other options, or toggle off
+        msg.options.forEach(opt => {
+          if (!opt.voters) opt.voters = [];
+          if (opt.id === optionId) {
+            if (opt.voters.includes(userId)) {
+              opt.voters = opt.voters.filter(id => id !== userId);
+              opt.votes = Math.max(0, (opt.votes || 1) - 1);
+              showToast('Vote removed');
+            } else {
+              opt.voters.push(userId);
+              opt.votes = (opt.votes || 0) + 1;
+              showToast(`Vote recorded: ${opt.text} ✓`);
+            }
+          } else {
+            if (opt.voters.includes(userId)) {
+              opt.voters = opt.voters.filter(id => id !== userId);
+              opt.votes = Math.max(0, (opt.votes || 1) - 1);
+            }
+          }
+        });
+
+        saveState();
+        renderChatFeed();
+      };
+
       window.toggleReaction = function(msgId, emoji) {
         const chId = state.activeChannelId;
         const msg = (state.messages[chId] || []).find(m => m.id === msgId);
         if (msg) {
           if (!msg.reactions) msg.reactions = {};
-          msg.reactions[emoji] = (msg.reactions[emoji] || 0) + 1;
+          if (msg.reactions[emoji]) {
+            msg.reactions[emoji] += 1;
+          } else {
+            msg.reactions[emoji] = 1;
+          }
           saveState();
           renderChatFeed();
-          showToast(`Reacted ${emoji}`);
+          showToast(`Reacted ${emoji} ✓`);
         }
       };
 

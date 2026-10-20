@@ -1701,3 +1701,136 @@ input:focus-visible,
   gap: 10px;
   margin-top: 6px;
 }
+
+
+/* ==========================================================================
+   INTERACTIVE TEAM POLL CARDS & ENHANCED REACTIONS (Ok, Cancel, Love)
+   ========================================================================== */
+.poll-message-card {
+  background: var(--rust-surface);
+  border: 1px solid var(--rust-border);
+  border-radius: var(--radius-xs);
+  padding: 16px;
+  margin-top: 8px;
+  max-width: 540px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+.poll-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 12px;
+}
+.poll-badge-icon {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--rust-accent);
+  background: rgba(184, 84, 43, 0.12);
+  border: 1px solid rgba(184, 84, 43, 0.25);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  letter-spacing: 0.04em;
+}
+.poll-question-text {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--rust-text-bright);
+  margin: 0;
+  line-height: 1.35;
+}
+.poll-total-votes-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--rust-text-muted);
+  white-space: nowrap;
+}
+.poll-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.poll-option-row {
+  position: relative;
+  background: var(--rust-bg-base);
+  border: 1px solid var(--rust-border);
+  border-radius: var(--radius-xs);
+  padding: 10px 14px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 120ms ease;
+  user-select: none;
+}
+.poll-option-row:hover {
+  border-color: var(--rust-accent);
+}
+.poll-option-row.user-voted {
+  border-color: var(--rust-accent);
+  box-shadow: 0 0 0 1px var(--rust-accent);
+}
+.poll-progress-bar-bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(184, 84, 43, 0.2);
+  transition: width 200ms ease;
+  pointer-events: none;
+}
+.poll-option-content {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--rust-text-bright);
+  gap: 12px;
+}
+.poll-option-stat {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--rust-text-muted);
+  font-weight: 700;
+}
+
+/* Quick Reaction Add Buttons */
+.reaction-add-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--rust-text-muted);
+  background: var(--rust-surface);
+  border: 1px solid var(--rust-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 100ms ease;
+  user-select: none;
+}
+.reaction-add-btn:hover {
+  background: rgba(184, 84, 43, 0.12);
+  color: var(--rust-accent);
+  border-color: var(--rust-accent);
+}
+.reaction-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--rust-text-bright);
+  background: var(--rust-surface);
+  border: 1px solid var(--rust-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 100ms ease;
+  user-select: none;
+}
+.reaction-pill-badge:hover {
+  border-color: var(--rust-accent);
+  background: rgba(184, 84, 43, 0.1);
+}
