@@ -6,448 +6,676 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RUST. — Corporate Platform</title>
   
-  <!-- Funnel Display Font & IBM Plex Mono -->
+  <!-- Funnel Display Font & IBM Plex Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
 
-  <!-- MASTER TOP SLACK SEARCH HEADER (Screenshots 1, 2, 3, 5) -->
-  <header class="slack-global-header">
-    <div class="header-nav-arrows">
-      <span>←</span>
-      <span>→</span>
-      <span style="font-size: 13px;">🕒</span>
+  <!-- MASTER TOP SLACK SEARCH HEADER -->
+  <header class="top-global-header">
+    <div class="header-history-controls">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="cursor: pointer;"><path d="m15 18-6-6 6-6"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="cursor: pointer;"><path d="m9 18 6-6-6-6"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="cursor: pointer;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
     </div>
 
-    <div class="global-search-bar" onclick="focusSearch()">
+    <div class="global-search-container" onclick="openSearchModal()">
       <div style="display: flex; align-items: center; gap: 8px;">
-        <span>🔍</span>
-        <span>Search Digital Team - Fortress Group</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <span id="search-placeholder">Search Fortress Group, channels, files, or tasks...</span>
       </div>
-      <span style="font-size: 11px; font-family: var(--font-mono); opacity: 0.7;">Ctrl + K</span>
+      <span style="font-size: 11px; font-family: var(--font-mono); opacity: 0.6;">Ctrl + K</span>
     </div>
 
-    <div style="display: flex; align-items: center; gap: 12px;">
-      <span style="cursor: pointer;">❓</span>
-      <div style="width: 26px; height: 26px; border-radius: 4px; background: #3f0e40; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; cursor: pointer;" onclick="openMembersModal()">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <button class="btn-rust" onclick="openAddMemberModal()" style="padding: 4px 10px; font-size: 11.5px;">+ Invite Member</button>
+      <div style="width: 28px; height: 28px; border-radius: 4px; background: #3f0e40; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; cursor: pointer; border: 1px solid var(--rust-copper);" onclick="openAddMemberModal()">
         ZS
       </div>
     </div>
   </header>
 
-  <!-- MASTER 3-PANE LAYOUT -->
-  <div class="slack-app-body">
+  <!-- MASTER 3-PANE WORKSPACE -->
+  <div class="app-workspace-body">
 
-    <!-- 1. LEFT ICON RAIL (Slack Exact) -->
-    <nav class="slack-icon-rail">
-      <div class="workspace-avatar-tile" onclick="switchStage('chat')">
+    <!-- 1. LEFTMOST SLACK ICON RAIL (Clean Professional SVGs) -->
+    <nav class="left-icon-rail">
+      <div class="rail-team-tile" onclick="switchStage('home')">
         DT
       </div>
 
-      <button class="rail-icon-btn active" id="rail-home-btn" onclick="switchStage('chat')">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <button class="rail-btn-unit active" id="rail-home-btn" onclick="switchStage('home')" title="Workspace Home Overview & Progress">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         <span>Home</span>
       </button>
 
-      <button class="rail-icon-btn" id="rail-dms-btn" onclick="switchStage('chat')">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      <button class="rail-btn-unit" id="rail-chat-btn" onclick="switchStage('chat')" title="Messages & Channels">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         <span>DMs</span>
       </button>
 
-      <button class="rail-icon-btn" id="rail-activity-btn" onclick="switchStage('chat')">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-        <span>Activity</span>
+      <button class="rail-btn-unit" id="rail-tasks-btn" onclick="switchStage('home')" title="Tasks & Progress Management">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>Tasks</span>
       </button>
 
-      <button class="rail-icon-btn" id="rail-files-btn" onclick="switchStage('files')">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+      <button class="rail-btn-unit" id="rail-files-btn" onclick="switchStage('files')" title="Company Files & Assets">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         <span>Files</span>
       </button>
 
-      <button class="rail-icon-btn" id="rail-todos-btn" onclick="switchStage('todos')">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-        <span>To-dos</span>
-      </button>
-
-      <div style="margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-        <div style="width: 28px; height: 28px; border-radius: 50%; background: #3f0e40; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; border: 1.5px solid var(--rust-copper); cursor: pointer;" onclick="openMembersModal()">
-          ZS
-        </div>
+      <div style="margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <button class="rail-btn-unit" onclick="openAddMemberModal()" title="Manage Team Members">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          <span>Team</span>
+        </button>
       </div>
     </nav>
 
-    <!-- 2. MIDDLE SLACK CHANNELS & DMS SIDEBAR -->
-    <aside class="slack-sidebar">
-      <div class="sidebar-team-header">
-        <div class="team-title">
+    <!-- 2. MIDDLE CHANNELS & DIRECT MESSAGES SIDEBAR -->
+    <aside class="channel-sidebar-pane">
+      <div class="sidebar-team-title-row">
+        <div class="team-name-text">
           <span>Digital Team - Fortress Group</span>
           <span class="dot"></span>
         </div>
-        <div class="sidebar-action-icons">
-          <span>⚙</span>
-          <span>✏️</span>
-        </div>
       </div>
 
-      <div class="sidebar-scroll-zone">
-        <div class="slack-jump-item">
-          <span>💬</span>
-          <span>Threads</span>
-        </div>
-        <div class="slack-jump-item">
-          <span>🎧</span>
-          <span>Huddles</span>
-        </div>
-        <div class="slack-jump-item">
-          <span>📝</span>
-          <span>Drafts & sent</span>
-          <span style="margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">2</span>
-        </div>
-        <div class="slack-jump-item">
-          <span>🔖</span>
-          <span>Saved</span>
+      <div class="sidebar-scroll-box">
+        <div class="sidebar-nav-entry active" onclick="switchStage('home')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/></svg>
+          <span>Overview & Tasks</span>
         </div>
 
-        <!-- Starred List (From your Screenshot 1) -->
-        <div class="slack-subheading">
-          <span>Starred</span>
+        <div class="sidebar-group-label">
+          <span>Starred Team</span>
         </div>
-        <div class="slack-jump-item">
-          <span style="font-size: 12px;">👤</span>
-          <span>Zke Sabbir Designer <small style="color: var(--text-muted);">(you)</small> 🪽</span>
+        <div class="sidebar-nav-entry" onclick="openDirectChat('Zke Sabbir')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Zke Sabbir Designer <small style="color: var(--text-muted);">(you)</small></span>
         </div>
-        <div class="slack-jump-item">
-          <span style="font-size: 12px;">👤</span>
-          <span>Md Rakibul Islam</span>
-        </div>
-        <div class="slack-jump-item">
-          <span style="font-size: 12px;">👤</span>
+        <div class="sidebar-nav-entry" onclick="openDirectChat('Md. Naiem Hossain')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           <span>Md. Naiem Hossain</span>
         </div>
-
-        <!-- Channels (From your Screenshot 1) -->
-        <div class="slack-subheading">
-          <span>Channels</span>
-          <span style="cursor: pointer;">+</span>
+        <div class="sidebar-nav-entry" onclick="openDirectChat('Md Rakibul Islam')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Md Rakibul Islam</span>
         </div>
-        <div class="slack-jump-item active" onclick="switchStage('chat')">
-          <span style="font-weight: 700;">#</span>
+
+        <div class="sidebar-group-label">
+          <span>Channels</span>
+          <span style="cursor: pointer;" onclick="openNewChannelModal()">+</span>
+        </div>
+        <div class="sidebar-nav-entry" id="channel-general-link" onclick="openChannelView('general')">
+          <span style="font-weight: 700; color: #94a3b8;">#</span>
           <span>general</span>
         </div>
-        <div class="slack-jump-item" onclick="switchStage('chat')">
-          <span style="font-weight: 700;">#</span>
+        <div class="sidebar-nav-entry" onclick="openChannelView('resource')">
+          <span style="font-weight: 700; color: #94a3b8;">#</span>
           <span>resource</span>
         </div>
+        <div class="sidebar-nav-entry" onclick="openChannelView('design-team')">
+          <span style="font-weight: 700; color: #94a3b8;">#</span>
+          <span>design-team</span>
+        </div>
 
-        <!-- Direct Messages -->
-        <div class="slack-subheading">
-          <span>Direct messages</span>
-          <span style="cursor: pointer;">+</span>
+        <div class="sidebar-group-label">
+          <span>Direct Messages</span>
+          <span style="cursor: pointer;" onclick="openAddMemberModal()">+</span>
         </div>
-        <div class="slack-jump-item">
-          <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span>
-          <span>Slackbot</span>
-        </div>
-        <div class="slack-jump-item">
+        <div class="sidebar-nav-entry" onclick="openDirectChat('Shimul-DMS')">
           <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span>
           <span>Shimul-DMS</span>
+        </div>
+        <div class="sidebar-nav-entry" onclick="openDirectChat('Anayat Munna')">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: #94a3b8;"></span>
+          <span>Anayat Munna</span>
         </div>
       </div>
     </aside>
 
-    <!-- 3. SLACK MAIN STAGE AREA -->
-    <main class="slack-main-stage">
+    <!-- 3. MAIN STAGE CONTENT PANE -->
+    <main class="main-stage-pane">
 
-      <!-- STAGE 1: OFFICIAL #general CHAT (Screenshots 1 & 5) -->
-      <section id="stage-chat" style="display: flex; flex-direction: column; height: 100%;">
-        <!-- Channel Top Navigation Bar -->
-        <div class="channel-top-bar">
-          <div class="channel-heading">
-            <span style="color: #eab308; cursor: pointer;">☆</span>
-            <span># general</span>
+      <!-- ====================================================================
+           VIEW 1: EXECUTIVE HOME OVERVIEW & WORK PROGRESS
+           ==================================================================== -->
+      <section id="view-home" class="view-panel active-view">
+        <div class="stage-top-bar">
+          <div class="stage-channel-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/></svg>
+            <span>Workspace Executive Overview</span>
           </div>
-          <div style="display: flex; align-items: center; gap: 14px; cursor: pointer;" onclick="openMembersModal()">
-            <div style="display: flex; align-items: center; gap: -4px;">
-              <span style="font-size: 12px; font-weight: 600; color: #fff;">👥 4</span>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-rust" onclick="openAddTaskModal()">+ Create Task</button>
+            <button class="btn-rust" style="background: rgba(255,255,255,0.08); border: 1px solid var(--slack-border);" onclick="openAddMemberModal()">+ Add Member</button>
+          </div>
+        </div>
+
+        <div class="home-overview-container">
+          <!-- 5 Master KPIs -->
+          <div class="kpi-metric-strip">
+            <div class="kpi-card">
+              <div class="kpi-val" id="kpi-total-tasks">6</div>
+              <div class="kpi-label">Active Tasks</div>
             </div>
-            <span>🎧</span>
-            <span>🔍</span>
-          </div>
-        </div>
-
-        <!-- Channel Tabs (From Screenshot 1) -->
-        <div class="channel-tabs-row">
-          <div class="channel-tab active">Messages</div>
-          <div class="channel-tab">Canvas</div>
-          <div class="channel-tab" onclick="switchStage('files')">Files & links</div>
-          <div class="channel-tab">Pins</div>
-          <div class="channel-tab">+</div>
-        </div>
-
-        <!-- Messages Stream with Real Media Cards -->
-        <div class="slack-messages-stream" id="messages-stream-box">
-          
-          <div class="day-divider">
-            <span class="day-pill">Thursday, October 15th ▾</span>
+            <div class="kpi-card">
+              <div class="kpi-val" style="color: #22c55e;" id="kpi-done-tasks">2</div>
+              <div class="kpi-label">Completed Tasks</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-val" style="color: #60a5fa;" id="kpi-progress-tasks">3</div>
+              <div class="kpi-label">In Progress</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-val" style="color: #f87171;">1</div>
+              <div class="kpi-label">Urgent / Priority</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-val" style="color: #eab308;" id="kpi-members-count">4</div>
+              <div class="kpi-label">Team Members</div>
+            </div>
           </div>
 
-          <!-- Message 1: Livora Post (From Screenshot 1) -->
-          <div class="slack-msg-group">
-            <div class="user-msg-avatar" style="background: #0284c7;">NH</div>
-            <div class="slack-msg-content">
-              <div class="slack-msg-author">
-                <span class="author-name">Md. Naiem Hossain</span>
-                <span class="msg-timestamp">09:31 AM</span>
+          <!-- Overall Work Progress Bar -->
+          <div class="work-progress-box">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <h3 style="font-family: var(--font-display); font-size: 15px; font-weight: 700;">Overall Sprint Progress</h3>
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Real-time execution status based on task updates</p>
               </div>
-              <div style="color: #fff; margin-bottom: 6px;">
+              <span style="font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: #22c55e;" id="progress-percentage-label">33% Completed</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" id="progress-bar-fill-elem" style="width: 33%;"></div>
+            </div>
+          </div>
+
+          <!-- Live Tasks Progress Table (Edit Status Live) -->
+          <div style="background: var(--slack-card-bg); border: 1px solid var(--slack-border); border-radius: var(--radius-sm); overflow: hidden;">
+            <div style="padding: 14px 18px; border-bottom: 1px solid var(--slack-border); display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-family: var(--font-display); font-weight: 700; font-size: 14px;">Work Execution & Tasks</span>
+              <button class="btn-rust" onclick="openAddTaskModal()" style="padding: 4px 10px; font-size: 11px;">+ New Task</button>
+            </div>
+
+            <table class="modern-tasks-table">
+              <thead>
+                <tr>
+                  <th>TASK / PROJECT</th>
+                  <th>ASSIGNEE</th>
+                  <th>PRIORITY</th>
+                  <th>DUE DATE</th>
+                  <th>STATUS (CHANGE LIVE)</th>
+                </tr>
+              </thead>
+              <tbody id="tasks-table-body">
+                <!-- Row 1 -->
+                <tr>
+                  <td><strong>Livora by Fortress Video Final Cut</strong><br><span style="font-size: 11px; color: var(--text-muted);">Marketing Campaign</span></td>
+                  <td>Zke Sabbir Designer</td>
+                  <td><span style="color: #ef4444; font-weight: 700; font-family: var(--font-mono); font-size: 11px;">CRITICAL</span></td>
+                  <td style="font-family: var(--font-mono); font-size: 12px;">Today</td>
+                  <td>
+                    <select class="status-select" onchange="updateTaskProgress(this)">
+                      <option value="in_progress" selected>In Progress</option>
+                      <option value="todo">To-do</option>
+                      <option value="done">Done ✓</option>
+                    </select>
+                  </td>
+                </tr>
+                <!-- Row 2 -->
+                <tr>
+                  <td><strong>FORTRESS Print File Vector Finalization</strong><br><span style="font-size: 11px; color: var(--text-muted);">Print Media Production</span></td>
+                  <td>Zke Sabbir Designer</td>
+                  <td><span style="color: #3b82f6; font-weight: 700; font-family: var(--font-mono); font-size: 11px;">NORMAL</span></td>
+                  <td style="font-family: var(--font-mono); font-size: 12px;">Tomorrow</td>
+                  <td>
+                    <select class="status-select" onchange="updateTaskProgress(this)">
+                      <option value="done" selected>Done ✓</option>
+                      <option value="in_progress">In Progress</option>
+                      <option value="todo">To-do</option>
+                    </select>
+                  </td>
+                </tr>
+                <!-- Row 3 -->
+                <tr>
+                  <td><strong>Q3 Financial Audit Ledger Signoff</strong><br><span style="font-size: 11px; color: var(--text-muted);">Accounts & Compliance</span></td>
+                  <td>Shimul-DMS</td>
+                  <td><span style="color: #ef4444; font-weight: 700; font-family: var(--font-mono); font-size: 11px;">CRITICAL</span></td>
+                  <td style="font-family: var(--font-mono); font-size: 12px;">Oct 24</td>
+                  <td>
+                    <select class="status-select" onchange="updateTaskProgress(this)">
+                      <option value="in_progress" selected>In Progress</option>
+                      <option value="todo">To-do</option>
+                      <option value="done">Done ✓</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           VIEW 2: SLACK CHAT & FILE TRANSMISSION
+           ==================================================================== -->
+      <section id="view-chat" class="view-panel">
+        <div class="stage-top-bar">
+          <div class="stage-channel-title">
+            <span style="color: #94a3b8;">#</span>
+            <span id="active-channel-name">general</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <button class="btn-rust" onclick="openAddMemberModal()" style="padding: 4px 10px; font-size: 11.5px;">👥 Members (4)</button>
+          </div>
+        </div>
+
+        <div class="chat-stream-box" id="chat-messages-container">
+          <!-- Sample message with video -->
+          <div class="chat-message-entry">
+            <div class="sender-avatar-tile" style="background: #0284c7;">NH</div>
+            <div class="message-body-col">
+              <div class="message-header-line">
+                <span class="author-title">Md. Naiem Hossain</span>
+                <span class="timestamp-txt">09:31 AM</span>
+              </div>
+              <div style="color: #fff; line-height: 1.5;">
                 apartment spell mistak ase<br>
                 <strong>Livora by Fortress.mp4</strong>
               </div>
-              <!-- Video Preview Thumbnail Card -->
-              <div style="width: 320px; border-radius: 8px; overflow: hidden; border: 1px solid var(--slack-border); background: #000; position: relative;">
-                <div style="height: 180px; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); display: flex; align-items: center; justify-content: center;">
-                  <span style="font-size: 32px; color: #fff; cursor: pointer;">▶ 0:31</span>
+              <div style="width: 320px; border-radius: 6px; overflow: hidden; border: 1px solid var(--slack-border); background: #000; margin-top: 6px;">
+                <div style="height: 160px; background: #0f172a; display: flex; align-items: center; justify-content: center; color: #fff;">
+                  ▶ 0:31 Video Asset
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="day-divider">
-            <span class="day-pill">Tuesday, October 20th ▾</span>
-          </div>
-
-          <!-- Message 2: Illustrator File Post (From Screenshot 5) -->
-          <div class="slack-msg-group">
-            <div class="user-msg-avatar" style="background: var(--rust-copper);">ZS</div>
-            <div class="slack-msg-content">
-              <div class="slack-msg-author">
-                <span class="author-name">Zke Sabbir Designer <small style="color: var(--text-muted);">(you)</small></span>
-                <span class="msg-timestamp">11:24 PM</span>
+          <!-- Sample message with Illustrator file -->
+          <div class="chat-message-entry">
+            <div class="sender-avatar-tile" style="background: var(--rust-copper);">ZS</div>
+            <div class="message-body-col">
+              <div class="message-header-line">
+                <span class="author-title">Zke Sabbir Designer <small style="color: var(--text-muted);">(you)</small></span>
+                <span class="timestamp-txt">11:24 PM</span>
               </div>
-              <div style="color: #fff; margin-bottom: 6px;">
+              <div style="color: #fff; line-height: 1.5;">
                 Final artwork files submitted for corporate branding:
               </div>
-              <!-- Slack Illustrator File Card -->
-              <div class="slack-file-box">
-                <div class="file-badge-ai">Ai</div>
+              <div class="attached-file-pill">
+                <span class="file-badge-tag">AI</span>
                 <div style="flex: 1;">
                   <div style="font-weight: 700; color: #fff; font-size: 13.5px;">FORTRESS Print File.ai</div>
-                  <div style="font-size: 11.5px; color: var(--text-muted);">Illustrator File · 48.2 MB</div>
+                  <div style="font-size: 11.5px; color: var(--text-muted);">Illustrator Vector · 48.2 MB</div>
                 </div>
-                <button class="btn-slack-send" onclick="alert('Downloading File...')">↓</button>
+                <button class="btn-rust" onclick="alert('Downloading FORTRESS Print File.ai...')">↓</button>
               </div>
             </div>
           </div>
-
         </div>
 
-        <!-- Slack Rich Composer Box (From Screenshots 1 & 5) -->
-        <div class="slack-composer-container">
-          <div class="slack-composer-border">
-            <div class="composer-formatting-bar">
-              <span><b>B</b></span>
-              <span><i>I</i></span>
-              <span><s>S</s></span>
-              <span>🔗</span>
-              <span>🔢</span>
-              <span>• List</span>
-              <span>&lt;/&gt;</span>
-            </div>
-            <div class="composer-input-area" contenteditable="true" id="slack-text-input" placeholder="Message #general" onkeypress="handleSlackKey(event)"></div>
-            <div class="composer-bottom-bar">
-              <div class="composer-tools-left">
-                <span title="Add attachment">➕</span>
-                <span title="Formatting">Aa</span>
-                <span title="Emoji">😊</span>
-                <span title="Mention">@</span>
-                <span title="Video clip">📹</span>
-                <span title="Audio note">🎙️</span>
+        <!-- Chat Input Composer with Real File Upload Support -->
+        <div class="chat-composer-box">
+          <!-- Hidden file input for real uploads -->
+          <input type="file" id="real-file-input" style="display: none;" onchange="handleFileSelected(event)">
+
+          <div class="composer-border-wrap">
+            <input type="text" class="composer-input-field" id="message-text-input" placeholder="Message #general... (Attach files or press Enter to send)" onkeypress="handleChatEnter(event)">
+            
+            <div class="composer-action-bar">
+              <div class="composer-tools">
+                <!-- Real File Upload Trigger -->
+                <div class="composer-tool-icon" title="Attach Computer File" onclick="document.getElementById('real-file-input').click()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                </div>
+                <div class="composer-tool-icon" title="Send Priority Message" onclick="togglePriorityPrompt()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <div class="composer-tool-icon" title="Mention Team" onclick="insertMention()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/></svg>
+                </div>
               </div>
-              <button class="btn-slack-send" onclick="sendSlackMessage()" title="Send">➤</button>
+              <button class="btn-send-message" onclick="sendMessageNow()">Send ➤</button>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- STAGE 2: FILES & CANVAS (Screenshot 2) -->
-      <section id="stage-files" style="display: none; flex-direction: column; height: 100%; padding: 24px; overflow-y: auto;">
-        <h2 style="font-family: var(--font-display); font-size: 22px; font-weight: 700; margin-bottom: 16px;">All files</h2>
-        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--slack-border); border-radius: 6px; padding: 10px 14px; margin-bottom: 24px; display: flex; align-items: center; gap: 8px;">
-          <span>🔍</span>
-          <input type="text" placeholder="Search canvases and files..." style="background: transparent; border: none; outline: none; color: #fff; width: 100%; font-size: 13.5px;">
+      <!-- ====================================================================
+           VIEW 3: FILES & DOCUMENTS VAULT
+           ==================================================================== -->
+      <section id="view-files" class="view-panel">
+        <div class="stage-top-bar">
+          <div class="stage-channel-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span>Company Files & Assets</span>
+          </div>
+          <button class="btn-rust" onclick="document.getElementById('real-file-input').click()">+ Upload File</button>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px;">
-          <div style="background: var(--slack-sidebar-bg); border: 1px solid var(--slack-border); border-radius: 8px; padding: 16px;">
-            <div style="font-weight: 700; font-size: 14px; color: #fff; margin-bottom: 6px;">Employee onboarding</div>
-            <div style="font-size: 12px; color: var(--text-muted);">Welcome new people and initialize task lists.</div>
-          </div>
-          <div style="background: var(--slack-sidebar-bg); border: 1px solid var(--slack-border); border-radius: 8px; padding: 16px;">
-            <div style="font-weight: 700; font-size: 14px; color: #fff; margin-bottom: 6px;">Monthly newsletter</div>
-            <div style="font-size: 12px; color: var(--text-muted);">Broadcast announcements to the company.</div>
-          </div>
-          <div style="background: var(--slack-sidebar-bg); border: 1px solid var(--slack-border); border-radius: 8px; padding: 16px;">
-            <div style="font-weight: 700; font-size: 14px; color: #fff; margin-bottom: 6px;">Out-of-office plan</div>
-            <div style="font-size: 12px; color: var(--text-muted);">Share coverage schedules with teammates.</div>
-          </div>
+        <div style="padding: 24px;">
+          <table class="modern-tasks-table">
+            <thead>
+              <tr>
+                <th>FILE NAME</th>
+                <th>UPLOADED BY</th>
+                <th>SIZE</th>
+                <th>DATE</th>
+                <th>ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="files-vault-list">
+              <tr>
+                <td><strong>FORTRESS Print File.ai</strong></td>
+                <td>Zke Sabbir Designer</td>
+                <td>48.2 MB</td>
+                <td>Oct 20</td>
+                <td><button class="btn-rust" onclick="alert('Downloading FORTRESS Print File.ai')">Download</button></td>
+              </tr>
+              <tr>
+                <td><strong>Livora by Fortress.mp4</strong></td>
+                <td>Md. Naiem Hossain</td>
+                <td>120.5 MB</td>
+                <td>Oct 15</td>
+                <td><button class="btn-rust" onclick="alert('Downloading Livora by Fortress.mp4')">Download</button></td>
+              </tr>
+              <tr>
+                <td><strong>Smitten Shah 01.pdf</strong></td>
+                <td>Shimul-DMS</td>
+                <td>250 KB</td>
+                <td>Oct 12</td>
+                <td><button class="btn-rust" onclick="alert('Downloading Smitten Shah 01.pdf')">Download</button></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
-        <!-- Files List -->
-        <table style="width: 100%; border-collapse: collapse; font-size: 13.5px;">
-          <thead>
-            <tr style="text-align: left; border-bottom: 1px solid var(--slack-border); color: var(--text-muted);">
-              <th style="padding: 10px 0;">NAME</th>
-              <th style="padding: 10px 0;">OWNER</th>
-              <th style="padding: 10px 0;">LAST VIEWED</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);">
-              <td style="padding: 12px 0;">📄 THE Epic Draft.pdf</td>
-              <td style="padding: 12px 0;">Md. Naiem Hossain</td>
-              <td style="padding: 12px 0; color: var(--text-muted);">August 19th</td>
-            </tr>
-            <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);">
-              <td style="padding: 12px 0;">🎨 FORTRESS Print File.ai</td>
-              <td style="padding: 12px 0;">Zke Sabbir Designer</td>
-              <td style="padding: 12px 0; color: var(--text-muted);">Today</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <!-- STAGE 3: TO-DOS (Screenshot 3) -->
-      <section id="stage-todos" style="display: none; flex-direction: column; height: 100%; align-items: center; justify-content: center; text-align: center;">
-        <div style="font-size: 48px; margin-bottom: 12px;">📑</div>
-        <h2 style="font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px;">No to-dos yet</h2>
-        <p style="font-size: 13px; color: var(--text-muted); max-width: 320px; margin-bottom: 18px;">
-          Add a to-do from any message or task to keep track of work right inside Slack.
-        </p>
-        <button class="global-search-bar" style="width: auto; padding: 8px 18px; color: #fff; border-color: var(--rust-copper);" onclick="alert('Creating To-do')">+ Add To-do</button>
       </section>
 
     </main>
   </div>
 
-  <!-- SLACK CHANNEL MEMBERS MODAL (Exact from Screenshot 4) -->
-  <div class="slack-modal-overlay" id="members-modal" style="display: none;" onclick="closeMembersModal(event)">
-    <div class="slack-modal-card" onclick="event.stopPropagation()">
-      <div class="modal-header-slack">
-        <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff;"># general</h3>
-        <button style="background: transparent; border: none; color: var(--text-muted); font-size: 18px; cursor: pointer;" onclick="closeMembersModal()">✕</button>
+  <!-- ====================================================================
+       FUNCTIONAL MODAL: ADD / INVITE MEMBER VIA EMAIL
+       ==================================================================== -->
+  <div class="modal-overlay" id="add-member-modal" style="display: none;" onclick="closeModal(event, 'add-member-modal')">
+    <div class="modal-window" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 style="font-family: var(--font-display); font-size: 17px; font-weight: 700; color: #fff;">Invite Team Member to Digital Team</h3>
+        <button style="background: transparent; border: none; color: var(--text-muted); font-size: 18px; cursor: pointer;" onclick="hideModal('add-member-modal')">✕</button>
       </div>
-
-      <div class="modal-tabs-slack">
-        <div class="modal-tab-item">About</div>
-        <div class="modal-tab-item active">Members (4)</div>
-        <div class="modal-tab-item">Integrations</div>
-        <div class="modal-tab-item">Settings</div>
-      </div>
-
-      <div style="padding: 14px 20px;">
-        <input type="text" placeholder="Find people or agents" style="width: 100%; background: #11141a; border: 1px solid var(--slack-border); border-radius: 4px; padding: 8px 12px; color: #fff; font-size: 13px; outline: none;">
-      </div>
-
-      <div style="max-height: 280px; overflow-y: auto;">
-        <div class="modal-member-row">
-          <div class="user-msg-avatar" style="width: 30px; height: 30px; font-size: 11px;">RI</div>
-          <div>
-            <div style="font-weight: 700; color: #fff; font-size: 13.5px;">Md Rakibul Islam</div>
-            <div style="font-size: 11px; color: var(--text-muted);">IT Expert</div>
+      <div class="modal-body">
+        <form onsubmit="handleInviteMember(event)">
+          <div style="margin-bottom: 14px;">
+            <label style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Corporate Email Address</label>
+            <input type="email" required id="invite-email-input" class="input-text-modern" placeholder="e.g. employee@fortress.com.bd">
           </div>
-        </div>
-
-        <div class="modal-member-row">
-          <div class="user-msg-avatar" style="width: 30px; height: 30px; font-size: 11px; background: #0284c7;">NH</div>
-          <div>
-            <div style="font-weight: 700; color: #fff; font-size: 13.5px;">Md. Naiem Hossain</div>
-            <div style="font-size: 11px; color: var(--text-muted);">Brand & Communications</div>
+          <div style="margin-bottom: 14px;">
+            <label style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Full Name</label>
+            <input type="text" required id="invite-name-input" class="input-text-modern" placeholder="e.g. Farhan Tanvir">
           </div>
-        </div>
-
-        <div class="modal-member-row">
-          <div class="user-msg-avatar" style="width: 30px; height: 30px; font-size: 11px; background: #16a34a;">SD</div>
-          <div>
-            <div style="font-weight: 700; color: #fff; font-size: 13.5px;">Shimul-DMS</div>
-            <div style="font-size: 11px; color: var(--text-muted);">Admin</div>
+          <div style="margin-bottom: 14px;">
+            <label style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Role & Department</label>
+            <select id="invite-role-input" class="input-text-modern" style="cursor: pointer;">
+              <option value="Designer">Visualizer / Designer</option>
+              <option value="Developer">IT Engineer</option>
+              <option value="Manager">Department Head</option>
+              <option value="Member">Regular Member</option>
+            </select>
           </div>
-        </div>
-
-        <div class="modal-member-row">
-          <div class="user-msg-avatar" style="width: 30px; height: 30px; font-size: 11px; background: var(--rust-copper);">ZS</div>
-          <div>
-            <div style="font-weight: 700; color: #fff; font-size: 13.5px;">Zke Sabbir Designer <small style="color: var(--rust-copper);">(you)</small> 🪽</div>
-            <div style="font-size: 11px; color: var(--text-muted);">Visualizer Fortress Development Limited</div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+            <button type="button" class="btn-rust" style="background: transparent; border: 1px solid var(--slack-border);" onclick="hideModal('add-member-modal')">Cancel</button>
+            <button type="submit" class="btn-rust">Send Invitation Email</button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
 
+  <!-- ====================================================================
+       FUNCTIONAL MODAL: CREATE NEW TASK
+       ==================================================================== -->
+  <div class="modal-overlay" id="add-task-modal" style="display: none;" onclick="closeModal(event, 'add-task-modal')">
+    <div class="modal-window" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 style="font-family: var(--font-display); font-size: 17px; font-weight: 700; color: #fff;">Create Workspace Task</h3>
+        <button style="background: transparent; border: none; color: var(--text-muted); font-size: 18px; cursor: pointer;" onclick="hideModal('add-task-modal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <form onsubmit="handleCreateTask(event)">
+          <div style="margin-bottom: 14px;">
+            <label style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Task Title</label>
+            <input type="text" required id="task-title-input" class="input-text-modern" placeholder="e.g. Complete 2027 Calendar Packaging">
+          </div>
+          <div style="margin-bottom: 14px;">
+            <label style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Assignee</label>
+            <select id="task-assignee-input" class="input-text-modern">
+              <option value="Zke Sabbir Designer">Zke Sabbir Designer (You)</option>
+              <option value="Md. Naiem Hossain">Md. Naiem Hossain</option>
+              <option value="Shimul-DMS">Shimul-DMS</option>
+              <option value="Md Rakibul Islam">Md Rakibul Islam</option>
+            </select>
+          </div>
+          <div style="margin-bottom: 14px;">
+            <label style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Priority</label>
+            <select id="task-priority-input" class="input-text-modern">
+              <option value="NORMAL">NORMAL</option>
+              <option value="CRITICAL">CRITICAL</option>
+            </select>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+            <button type="button" class="btn-rust" style="background: transparent; border: 1px solid var(--slack-border);" onclick="hideModal('add-task-modal')">Cancel</button>
+            <button type="submit" class="btn-rust">Add Task to Workspace</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT FOR ALL SYSTEM LOGIC -->
   <script>
-    function switchStage(stageName) {
-      document.getElementById('stage-chat').style.display = 'none';
-      document.getElementById('stage-files').style.display = 'none';
-      document.getElementById('stage-todos').style.display = 'none';
+    // Navigation Router
+    function switchStage(stageKey) {
+      document.querySelectorAll('.view-panel').forEach(v => v.classList.remove('active-view'));
+      document.querySelectorAll('.rail-btn-unit').forEach(b => b.classList.remove('active'));
 
-      document.querySelectorAll('.rail-icon-btn').forEach(btn => btn.classList.remove('active'));
-
-      if (stageName === 'chat') {
-        document.getElementById('stage-chat').style.display = 'flex';
+      if (stageKey === 'home') {
+        document.getElementById('view-home').classList.add('active-view');
         document.getElementById('rail-home-btn').classList.add('active');
-      } else if (stageName === 'files') {
-        document.getElementById('stage-files').style.display = 'flex';
+      } else if (stageKey === 'chat') {
+        document.getElementById('view-chat').classList.add('active-view');
+        document.getElementById('rail-chat-btn').classList.add('active');
+      } else if (stageKey === 'files') {
+        document.getElementById('view-files').classList.add('active-view');
         document.getElementById('rail-files-btn').classList.add('active');
-      } else if (stageName === 'todos') {
-        document.getElementById('stage-todos').style.display = 'flex';
-        document.getElementById('rail-todos-btn').classList.add('active');
       }
     }
 
-    function openMembersModal() {
-      document.getElementById('members-modal').style.display = 'flex';
+    function openChannelView(name) {
+      switchStage('chat');
+      document.getElementById('active-channel-name').innerText = name;
     }
 
-    function closeMembersModal(e) {
-      document.getElementById('members-modal').style.display = 'none';
+    function openDirectChat(person) {
+      switchStage('chat');
+      document.getElementById('active-channel-name').innerText = '@ ' + person;
     }
 
-    function focusSearch() {
-      alert('Quick Switcher: Type any channel name, file, or member.');
+    // Modal Handlers
+    function openAddMemberModal() {
+      document.getElementById('add-member-modal').style.display = 'flex';
     }
 
-    function handleSlackKey(e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        sendSlackMessage();
-      }
+    function openAddTaskModal() {
+      document.getElementById('add-task-modal').style.display = 'flex';
     }
 
-    function sendSlackMessage() {
-      const input = document.getElementById('slack-text-input');
-      const text = input.innerText.trim();
+    function hideModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function closeModal(e, id) {
+      hideModal(id);
+    }
+
+    // Dynamic Member Invitation with Email
+    function handleInviteMember(e) {
+      e.preventDefault();
+      const email = document.getElementById('invite-email-input').value;
+      const name = document.getElementById('invite-name-input').value;
+      const role = document.getElementById('invite-role-input').value;
+
+      // Update Member Counter
+      const memCount = document.getElementById('kpi-members-count');
+      memCount.innerText = parseInt(memCount.innerText) + 1;
+
+      alert(`Invitation sent successfully to ${email} for ${name} (${role})!`);
+      document.getElementById('invite-email-input').value = '';
+      document.getElementById('invite-name-input').value = '';
+      hideModal('add-member-modal');
+    }
+
+    // Dynamic Task Creation & Progress Updating
+    function handleCreateTask(e) {
+      e.preventDefault();
+      const title = document.getElementById('task-title-input').value;
+      const assignee = document.getElementById('task-assignee-input').value;
+      const priority = document.getElementById('task-priority-input').value;
+
+      const tbody = document.getElementById('tasks-table-body');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${title}</strong><br><span style="font-size: 11px; color: var(--text-muted);">Digital Team</span></td>
+        <td>${assignee}</td>
+        <td><span style="color: ${priority === 'CRITICAL' ? '#ef4444' : '#3b82f6'}; font-weight: 700; font-family: var(--font-mono); font-size: 11px;">${priority}</span></td>
+        <td style="font-family: var(--font-mono); font-size: 12px;">Just Added</td>
+        <td>
+          <select class="status-select" onchange="updateTaskProgress(this)">
+            <option value="in_progress" selected>In Progress</option>
+            <option value="todo">To-do</option>
+            <option value="done">Done ✓</option>
+          </select>
+        </td>
+      `;
+      tbody.prepend(tr);
+
+      // Update KPIs
+      const totalKpi = document.getElementById('kpi-total-tasks');
+      totalKpi.innerText = parseInt(totalKpi.innerText) + 1;
+
+      recalculateProgress();
+      hideModal('add-task-modal');
+      alert(`Task "${title}" created successfully!`);
+    }
+
+    // Real-time Progress Calculator
+    function updateTaskProgress(selectEl) {
+      recalculateProgress();
+    }
+
+    function recalculateProgress() {
+      const selects = document.querySelectorAll('.status-select');
+      let doneCount = 0;
+      let totalCount = selects.length;
+
+      selects.forEach(s => {
+        if (s.value === 'done') doneCount++;
+      });
+
+      const pct = Math.round((doneCount / totalCount) * 100);
+      document.getElementById('progress-percentage-label').innerText = pct + '% Completed';
+      document.getElementById('progress-bar-fill-elem').style.width = pct + '%';
+      document.getElementById('kpi-done-tasks').innerText = doneCount;
+      document.getElementById('kpi-progress-tasks').innerText = totalCount - doneCount;
+    }
+
+    // Live Message Dispatch
+    function handleChatEnter(e) {
+      if (e.key === 'Enter') sendMessageNow();
+    }
+
+    function sendMessageNow() {
+      const input = document.getElementById('message-text-input');
+      const text = input.value.trim();
       if (!text) return;
 
-      const container = document.getElementById('messages-stream-box');
-      const newMsg = document.createElement('div');
-      newMsg.className = 'slack-msg-group';
-      newMsg.innerHTML = `
-        <div class="user-msg-avatar" style="background: var(--rust-copper);">ZS</div>
-        <div class="slack-msg-content">
-          <div class="slack-msg-author">
-            <span class="author-name">Zke Sabbir Designer (you) 🪽</span>
-            <span class="msg-timestamp">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+      appendChatMessage(text, null);
+      input.value = '';
+    }
+
+    // Real File Attachment Support
+    function handleFileSelected(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const sizeStr = (file.size / (1024 * 1024)).toFixed(1) + ' MB';
+      appendChatMessage(`Uploaded file: <strong>${file.name}</strong>`, {
+        name: file.name,
+        size: sizeStr
+      });
+
+      // Also add to files vault
+      const vault = document.getElementById('files-vault-list');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${file.name}</strong></td>
+        <td>Zke Sabbir Designer</td>
+        <td>${sizeStr}</td>
+        <td>Just Now</td>
+        <td><button class="btn-rust" onclick="alert('Downloading ${file.name}...')">Download</button></td>
+      `;
+      vault.prepend(tr);
+    }
+
+    function appendChatMessage(text, fileData) {
+      const container = document.getElementById('chat-messages-container');
+      const entry = document.createElement('div');
+      entry.className = 'chat-message-entry';
+
+      let fileHtml = '';
+      if (fileData) {
+        fileHtml = `
+          <div class="attached-file-pill">
+            <span class="file-badge-tag">DOC</span>
+            <div style="flex: 1;">
+              <div style="font-weight: 700; color: #fff; font-size: 13.5px;">${fileData.name}</div>
+              <div style="font-size: 11.5px; color: var(--text-muted);">${fileData.size} · Uploaded Document</div>
+            </div>
+            <button class="btn-rust" onclick="alert('Downloading ${fileData.name}...')">↓</button>
+          </div>
+        `;
+      }
+
+      entry.innerHTML = `
+        <div class="sender-avatar-tile" style="background: var(--rust-copper);">ZS</div>
+        <div class="message-body-col">
+          <div class="message-header-line">
+            <span class="author-title">Zke Sabbir Designer <small style="color: var(--text-muted);">(you)</small></span>
+            <span class="timestamp-txt">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
           </div>
           <div style="color: #fff; line-height: 1.5;">${text}</div>
+          ${fileHtml}
         </div>
       `;
-      container.appendChild(newMsg);
-      input.innerText = '';
+      container.appendChild(entry);
       container.scrollTop = container.scrollHeight;
+    }
+
+    function togglePriorityPrompt() {
+      const input = document.getElementById('message-text-input');
+      input.value = '[CRITICAL PRIORITY]: ' + input.value;
+      input.focus();
+    }
+
+    function insertMention() {
+      const input = document.getElementById('message-text-input');
+      input.value += ' @channel ';
+      input.focus();
     }
   </script>
 </body>
