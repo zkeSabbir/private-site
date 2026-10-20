@@ -403,34 +403,43 @@ button, input, select {
 .msg-hover-actions {
   display: none;
   position: absolute;
-  top: -12px;
+  top: -14px;
   right: 14px;
   background: var(--rust-surface-elevated);
   border: var(--border-width) solid var(--rust-border);
-  border-radius: var(--radius-xs);
-  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  padding: 3px 5px;
   align-items: center;
-  gap: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  z-index: 10;
+  gap: 3px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  z-index: 20;
 }
 .hover-action-btn {
   background: transparent;
   border: none;
   color: var(--rust-text-muted);
-  font-size: 12px;
   cursor: pointer;
-  padding: 3px 6px;
-  border-radius: 3px;
-  display: flex;
+  padding: 4px 6px;
+  border-radius: var(--radius-xs);
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: all 100ms;
+}
+.hover-action-btn svg {
+  width: 15px;
+  height: 15px;
 }
 .hover-action-btn:hover {
-  background: var(--rust-surface);
+  background: var(--rust-bg-base);
   color: var(--rust-text-bright);
 }
 .hover-action-btn.emergency:hover {
+  background: rgba(180, 64, 47, 0.15);
+  color: var(--rust-critical);
+}
+.hover-action-btn.delete:hover {
+  background: rgba(180, 64, 47, 0.15);
   color: var(--rust-critical);
 }
 
@@ -460,7 +469,7 @@ button, input, select {
   max-width: 600px;
 }
 .photo-thumb-card {
-  height: 140px;
+  height: 150px;
   border-radius: var(--radius-xs);
   overflow: hidden;
   border: var(--border-width) solid var(--rust-border);
@@ -472,6 +481,37 @@ button, input, select {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 120ms ease;
+}
+.photo-thumb-card:hover img {
+  transform: scale(1.02);
+}
+.photo-hover-download-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-xs);
+  padding: 3px 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  display: none;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 5;
+  transition: all 100ms;
+}
+.photo-hover-download-btn:hover {
+  background: var(--rust-accent);
+  border-color: var(--rust-accent);
+  color: #fff;
+}
+.photo-thumb-card:hover .photo-hover-download-btn {
+  display: inline-flex;
 }
 
 /* File Attachment Card (Zip, PSD, PDF) */
@@ -1058,3 +1098,150 @@ button, input, select {
   outline: none;
   cursor: pointer;
 }
+
+/* ==========================================================================
+   Full In-Place Lightbox Modal for Images & Video
+   ========================================================================== */
+.rust-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 20, 0.94);
+  backdrop-filter: blur(10px);
+  display: none;
+  flex-direction: column;
+  z-index: 5000;
+  animation: lightboxFadeIn 120ms ease;
+}
+@keyframes lightboxFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.rust-lightbox-toolbar {
+  height: 52px;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  flex-shrink: 0;
+}
+.rust-lightbox-title {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rust-lightbox-content-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.lightbox-media-container {
+  max-width: 88vw;
+  max-height: 82vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.lightbox-media-container img {
+  max-width: 88vw;
+  max-height: 82vh;
+  object-fit: contain;
+  border-radius: var(--radius-xs);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.8);
+}
+.lightbox-nav-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 22px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 120ms;
+  user-select: none;
+}
+.lightbox-nav-btn:hover {
+  background: var(--rust-accent);
+  border-color: var(--rust-accent);
+}
+
+/* Video Hover Download Overlay */
+.video-hover-download-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-xs);
+  padding: 3px 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  display: none;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 5;
+  transition: all 100ms;
+}
+.video-hover-download-btn:hover {
+  background: var(--rust-accent);
+  border-color: var(--rust-accent);
+  color: #fff;
+}
+.attached-video-card:hover .video-hover-download-btn {
+  display: inline-flex;
+}
+
+/* Profile Form Elements */
+.pref-profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.pref-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pref-field-label {
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--rust-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.pref-field-input {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--rust-bg-base);
+  border: 1px solid var(--rust-border);
+  border-radius: var(--radius-xs);
+  color: var(--rust-text);
+  font-size: 13px;
+  font-family: var(--font-ui);
+  outline: none;
+  transition: border-color 100ms;
+}
+.pref-field-input:focus {
+  border-color: var(--rust-accent);
+}
+

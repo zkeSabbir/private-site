@@ -47,8 +47,8 @@
       <button class="btn-rust-secondary" id="btn-open-preferences" style="padding: 4px 10px; font-size: 11.5px;" title="Workspace Preferences & Settings">⚙ Settings</button>
 
       <!-- Current User Profile Avatar -->
-      <div id="btn-profile-toggle" class="avatar-tile" style="width: 30px; height: 30px; cursor: pointer; border: 1.5px solid var(--rust-accent);" title="Profile & Preferences">
-        <img id="header-user-avatar-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces" alt="Avatar">
+      <div id="btn-profile-toggle" class="avatar-tile" style="width: 32px; height: 32px; cursor: pointer; border: 1.5px solid var(--rust-accent); border-radius: var(--radius-xs);" title="Profile & Preferences">
+        <img id="header-user-avatar-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=faces" alt="Avatar">
       </div>
     </div>
   </header>
@@ -114,7 +114,7 @@
             <span class="notice-pill-badge">ADMIN ONLY</span>
           </div>
           <div class="sidebar-nav-item" id="channel-notice-link" data-channel-id="c_notice">
-            <span style="font-weight: 700; color: var(--rust-accent);">📢</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--rust-accent);"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
             <span style="font-weight: 600;">company-notices</span>
           </div>
         </div>
@@ -174,7 +174,7 @@
           <!-- KPI Cards -->
           <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;">
             <div class="attached-doc-card" style="flex-direction: column; align-items: flex-start; max-width: none; margin: 0;">
-              <div style="font-family: var(--font-display); font-size: 26px; font-weight: 800; color: #fff;" id="kpi-active-tasks">0</div>
+              <div style="font-family: var(--font-display); font-size: 26px; font-weight: 800; color: var(--rust-text-bright);" id="kpi-active-tasks">0</div>
               <div style="font-size: 11px; color: var(--rust-text-muted); text-transform: uppercase;">Active Tasks</div>
             </div>
             <div class="attached-doc-card" style="flex-direction: column; align-items: flex-start; max-width: none; margin: 0;">
@@ -199,12 +199,12 @@
           <div style="background: var(--rust-surface); border: 1px solid var(--rust-border); border-radius: var(--radius-xs); padding: 16px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
               <div>
-                <h3 style="font-family: var(--font-display); font-size: 15px; font-weight: 700;">Overall Sprint Progress</h3>
+                <h3 style="font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--rust-text-bright);">Overall Sprint Progress</h3>
                 <p style="font-size: 12px; color: var(--rust-text-muted); margin-top: 2px;">Real-time execution status based on task updates</p>
               </div>
               <span style="font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--rust-accent);" id="home-progress-percentage-label">0% Done</span>
             </div>
-            <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.08); border-radius: 9999px; overflow: hidden; margin-top: 8px;">
+            <div style="width: 100%; height: 8px; background: rgba(0,0,0,0.08); border-radius: 9999px; overflow: hidden; margin-top: 8px;">
               <div id="home-progress-bar-fill" style="height: 100%; background: var(--rust-accent); width: 0%; transition: width 150ms ease;"></div>
             </div>
           </div>
@@ -212,7 +212,7 @@
           <!-- Home Tasks Table -->
           <div style="background: var(--rust-surface); border: 1px solid var(--rust-border); border-radius: var(--radius-xs); overflow: hidden;">
             <div style="padding: 12px 16px; border-bottom: 1px solid var(--rust-border); display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-family: var(--font-display); font-weight: 700; font-size: 14px;">My Tasks (Action Required)</span>
+              <span style="font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--rust-text-bright);">My Tasks (Action Required)</span>
             </div>
             <table class="rust-data-table">
               <thead>
@@ -271,22 +271,16 @@
                 <div class="composer-toolbar-bottom" id="composer-toolbar-controls">
                   <div class="composer-tool-icons">
                     <!-- Attach Multiple Files Button -->
-                    <button type="button" class="btn-rust-secondary" id="btn-attach-files" style="padding: 3px 9px; font-size: 12px;" title="Attach Multiple Photos or Documents (Images, PDF, ZIP, PSD)">
-                      📎 Attach Files
+                    <button type="button" class="btn-rust-secondary" id="btn-attach-files" style="padding: 4px 10px; font-size: 12px;" title="Attach Multiple Photos or Documents (Images, PDF, ZIP, PSD)">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                      Attach Files
                     </button>
 
-                    <!-- Emergency Toggle Button right in composer (Screenshot 1 match) -->
-                    <button type="button" class="btn-msg-emergency" id="btn-composer-emergency-toggle" title="Toggle Emergency Priority">
-                      ! Emergency
+                    <!-- Emergency Toggle Button (Removed redundant Level dropdown per user feedback) -->
+                    <button type="button" class="btn-msg-emergency" id="btn-composer-emergency-toggle" title="Flag next message as Emergency / Critical">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 4px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                      Emergency
                     </button>
-
-                    <!-- Priority Selector -->
-                    <label for="select-message-priority" style="font-size: 11px; font-family: var(--font-mono); color: var(--rust-text-muted);">Level:</label>
-                    <select id="select-message-priority" class="table-status-select" style="padding: 2px 6px; font-size: 11.5px;">
-                      <option value="normal" selected>Normal</option>
-                      <option value="high">High</option>
-                      <option value="critical">Critical (!)</option>
-                    </select>
                   </div>
 
                   <button class="btn-rust-primary" id="btn-send-message">Send ➤</button>
@@ -300,7 +294,7 @@
           <aside class="chat-thread-drawer" id="chat-thread-drawer">
             <div class="thread-header-bar">
               <div>
-                <span style="font-family: var(--font-display); font-weight: 700; font-size: 15px;">Thread</span>
+                <span style="font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--rust-text-bright);">Thread</span>
                 <span id="thread-sub-channel-label" style="font-size: 11.5px; color: var(--rust-text-muted); margin-left: 6px;">#general</span>
               </div>
               <button class="btn-rust-secondary" id="btn-close-thread-drawer" style="padding: 2px 8px; font-size: 12px;">✕</button>
@@ -401,6 +395,7 @@
                 <th>MEMBER</th>
                 <th>ROLE</th>
                 <th>DEPARTMENT</th>
+                <th>MOBILE</th>
                 <th>EMAIL</th>
                 <th>STATUS</th>
                 <th>ACTION</th>
@@ -415,17 +410,60 @@
   </div>
 
   <!-- ====================================================================
-       MODAL: SLACK PREFERENCES & CUSTOM THEMES (Screenshot 5 Match)
+       IN-PLACE LIGHTBOX MODAL (Image & Video Full View without new tab)
+       ==================================================================== -->
+  <div class="rust-lightbox-overlay" id="modal-image-lightbox">
+    <div class="rust-lightbox-toolbar">
+      <div class="rust-lightbox-title" id="lightbox-filename">Image View</div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button class="btn-rust-secondary" id="btn-lightbox-download" style="color: #fff; border-color: rgba(255,255,255,0.3); font-size: 12px; padding: 4px 10px; display: inline-flex; align-items: center; gap: 5px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download
+        </button>
+        <button class="btn-rust-secondary" id="btn-close-lightbox" style="color: #fff; border-color: rgba(255,255,255,0.3); font-size: 14px; padding: 2px 10px;">✕</button>
+      </div>
+    </div>
+    <div class="rust-lightbox-content-box">
+      <button class="lightbox-nav-btn prev" id="btn-lightbox-prev" title="Previous Image">❮</button>
+      <div class="lightbox-media-container" id="lightbox-media-container">
+        <img id="lightbox-img-el" src="" alt="Full View">
+        <video id="lightbox-video-el" controls style="display: none; max-width: 88vw; max-height: 80vh;"></video>
+      </div>
+      <button class="lightbox-nav-btn next" id="btn-lightbox-next" title="Next Image">❯</button>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL: SLACK PREFERENCES & CUSTOM THEMES (Clean SVG Icons + Real Photo Upload)
        ==================================================================== -->
   <div class="pref-modal-overlay" id="modal-preferences">
-    <div class="pref-modal-card">
-      <!-- Left Preferences Sidebar (Matching Screenshot 5) -->
+    <div class="pref-modal-card" style="width: 780px; height: 560px;">
+      <!-- Left Preferences Sidebar (Clean SVG Line Icons, No Cartoon Emojis) -->
       <div class="pref-left-sidebar">
-        <button class="pref-menu-btn active" data-tab="themes">🎨 Themes & Appearance</button>
-        <button class="pref-menu-btn" data-tab="availability">⏰ Availability & Working Hours</button>
-        <button class="pref-menu-btn" data-tab="notifications">🔔 Notifications</button>
-        <button class="pref-menu-btn" data-tab="sidebar">📑 Navigation & Sidebar</button>
-        <button class="pref-menu-btn" data-tab="profile">👤 Profile & Persona</button>
+        <button class="pref-menu-btn active" data-tab="themes">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.563-2.512 5.563-5.563C22 6.5 17.5 2 12 2z"/></svg>
+          <span>Themes & Appearance</span>
+        </button>
+
+        <button class="pref-menu-btn" data-tab="availability">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Availability & Working Hours</span>
+        </button>
+
+        <button class="pref-menu-btn" data-tab="notifications">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span>Notifications</span>
+        </button>
+
+        <button class="pref-menu-btn" data-tab="sidebar">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+          <span>Navigation & Sidebar</span>
+        </button>
+
+        <button class="pref-menu-btn" data-tab="profile">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Profile & Persona</span>
+        </button>
       </div>
 
       <!-- Right Content Pane -->
@@ -513,27 +551,72 @@
           </div>
         </div>
 
-        <!-- Tab 5: Profile & Avatar URL -->
+        <!-- Tab 5: Profile & Persona (Real Photo Upload + Name, Role, Dept, Mobile, Email, Bio) -->
         <div id="pref-panel-profile" style="display: none;">
-          <h4 style="font-size: 14px; margin-bottom: 12px;">Active Persona Profile Settings</h4>
-          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-            <div class="avatar-tile" style="width: 54px; height: 54px;">
-              <img id="pref-preview-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces">
+          <h4 style="font-size: 15px; font-weight: 700; color: var(--rust-text-bright); margin-bottom: 4px;">Profile & Corporate Persona Settings</h4>
+          <p style="font-size: 12.5px; color: var(--rust-text-muted); margin-bottom: 16px;">Customize your photo, corporate role, contact information, and availability status.</p>
+
+          <!-- Photo Upload Section -->
+          <div style="display: flex; align-items: center; gap: 18px; margin-bottom: 18px; padding: 14px; background: var(--rust-bg-base); border: 1px solid var(--rust-border); border-radius: var(--radius-xs);">
+            <div class="avatar-tile" style="width: 68px; height: 68px; border-radius: var(--radius-sm); border: 2px solid var(--rust-accent); flex-shrink: 0;">
+              <img id="pref-preview-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=faces" alt="Avatar">
             </div>
-            <div style="flex: 1;">
-              <label style="font-size: 11px; font-family: var(--font-mono); color: var(--rust-text-muted); display: block; margin-bottom: 4px;">AVATAR IMAGE URL</label>
-              <input type="text" id="pref-avatar-input" class="search-modal-input" style="padding: 6px 10px; font-size: 12px; border: 1px solid var(--rust-border); border-radius: 4px;" value="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <button type="button" class="btn-rust-primary" id="btn-trigger-avatar-upload" style="font-size: 12px; padding: 5px 12px;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  Upload Photo
+                </button>
+                <button type="button" class="btn-rust-secondary" id="btn-clear-avatar" style="font-size: 12px; padding: 5px 10px;">Remove</button>
+                <input type="file" id="pref-avatar-file-input" accept="image/*" style="display: none;">
+              </div>
+              <div style="font-size: 11px; color: var(--rust-text-muted);">
+                Upload directly from your device (JPG, PNG, WebP) or click Save when done.
+              </div>
             </div>
           </div>
-          <div style="margin-bottom: 12px;">
-            <label style="font-size: 11px; font-family: var(--font-mono); color: var(--rust-text-muted); display: block; margin-bottom: 4px;">DISPLAY NAME</label>
-            <input type="text" id="pref-name-input" class="search-modal-input" style="padding: 6px 10px; font-size: 13px; border: 1px solid var(--rust-border); border-radius: 4px;" value="Zke Sabbir Designer">
+
+          <!-- Profile Details Grid (All Requested Fields: Name, Role, Dept, Phone, Email, Status) -->
+          <div class="pref-profile-grid">
+            <div class="pref-field-group">
+              <label class="pref-field-label">Full Name (নাম)</label>
+              <input type="text" id="pref-name-input" class="pref-field-input" placeholder="e.g. Sazzad Hossain Sabbir">
+            </div>
+            <div class="pref-field-group">
+              <label class="pref-field-label">Designation / Role (ডেজিগ্নেশন)</label>
+              <input type="text" id="pref-title-input" class="pref-field-input" placeholder="e.g. Lead Brand & UI/UX Visualizer">
+            </div>
+            <div class="pref-field-group">
+              <label class="pref-field-label">Department (ডিপার্টমেন্ট)</label>
+              <input type="text" id="pref-dept-input" class="pref-field-input" placeholder="e.g. Creative & Brand Strategy">
+            </div>
+            <div class="pref-field-group">
+              <label class="pref-field-label">Mobile Phone (মোবাইল)</label>
+              <input type="text" id="pref-phone-input" class="pref-field-input" placeholder="e.g. +880 1712-345678">
+            </div>
+            <div class="pref-field-group">
+              <label class="pref-field-label">Work Email (ইমেল)</label>
+              <input type="email" id="pref-email-input" class="pref-field-input" placeholder="e.g. sabbir@fortress.com.bd">
+            </div>
+            <div class="pref-field-group">
+              <label class="pref-field-label">Availability Status</label>
+              <select id="pref-status-input" class="pref-field-input">
+                <option value="Available">🟢 Available</option>
+                <option value="In a meeting">🟡 In a meeting</option>
+                <option value="In focus mode">🟣 In focus mode</option>
+                <option value="Working remotely">🌐 Working remotely</option>
+              </select>
+            </div>
           </div>
-          <div style="margin-bottom: 16px;">
-            <label style="font-size: 11px; font-family: var(--font-mono); color: var(--rust-text-muted); display: block; margin-bottom: 4px;">ROLE & TITLE</label>
-            <input type="text" id="pref-title-input" class="search-modal-input" style="padding: 6px 10px; font-size: 13px; border: 1px solid var(--rust-border); border-radius: 4px;" value="Visualizer">
+
+          <div class="pref-field-group" style="margin-bottom: 16px;">
+            <label class="pref-field-label">About Me / Bio (এবাউট)</label>
+            <textarea id="pref-about-input" class="pref-field-input" rows="2" placeholder="Brief note about your role, projects or technical focus..."></textarea>
           </div>
-          <button class="btn-rust-primary" id="btn-save-profile-pref">Save Profile Changes</button>
+
+          <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button class="btn-rust-primary" id="btn-save-profile-pref">Save Profile Changes</button>
+          </div>
         </div>
       </div>
     </div>
@@ -543,7 +626,7 @@
   <div class="rust-modal-backdrop" id="modal-create-task">
     <div class="rust-modal-window" style="padding: 20px;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <h3 style="font-family: var(--font-display); font-size: 16px; font-weight: 700;">Create Workspace Task</h3>
+        <h3 style="font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--rust-text-bright);">Create Workspace Task</h3>
         <button type="button" class="btn-rust-secondary" id="btn-close-task-modal" style="padding: 2px 8px;">✕</button>
       </div>
       <form id="form-create-task">
@@ -586,26 +669,30 @@
     (function() {
       'use strict';
 
-      // Seed Data with Rich Demo Members, Avatars, and Notice Board
+      // Seed Data with Rich Demo Members, Avatars, Roles, Mobile, Email, About
       const DEFAULT_STATE = {
         currentUser: {
           id: 'user_01',
           name: 'Zke Sabbir Designer',
-          title: 'Lead Visualizer & Brand Director',
-          department: 'Brand Communications',
+          title: 'Lead Brand & UI/UX Visualizer',
+          department: 'Creative & Brand Strategy',
+          phone: '+880 1712-892401',
+          email: 'sabbir.designer@fortress.com.bd',
+          about: 'Crafting high-density corporate design systems, 3D architectural visualizers, and brand identities.',
           role: 'admin',
-          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces'
+          status: 'Available',
+          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=faces'
         },
         members: [
-          { id: 'user_01', name: 'Zke Sabbir Designer', title: 'Lead Visualizer (you) 🪽', department: 'Brand Communications', role: 'admin', status: 'Available', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces' },
-          { id: 'user_05', name: 'Nusrat Jahan', title: 'Head of HR & People Ops', department: 'Human Resources', role: 'admin', status: 'Available', avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop&crop=faces' },
-          { id: 'user_02', name: 'Md Rakibul Islam', title: 'Senior Infrastructure & IT Lead', department: 'IT Operations', role: 'member', status: 'Available', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces' },
-          { id: 'user_03', name: 'Md. Naiem Hossain', title: 'Associate Art Director / 3D', department: 'Creative Dept', role: 'dept_head', status: 'In a meeting', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=faces' },
-          { id: 'user_04', name: 'Shimul-DMS', title: 'Company Administrator', department: 'Executive', role: 'admin', status: 'Available', avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=100&h=100&fit=crop&crop=faces' },
-          { id: 'user_06', name: 'Md. Faruk Hossain', title: 'Director, Finance & Supply Chain', department: 'Finance', role: 'member', status: 'In focus mode', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=faces' },
-          { id: 'user_07', name: 'Sarah Jenkins', title: 'Senior Product Manager', department: 'Product', role: 'member', status: 'Available', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=faces' },
-          { id: 'user_08', name: 'Arefin Shuvo', title: 'Cloud & Rust Systems Architect', department: 'Engineering', role: 'member', status: 'Available', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop&crop=faces' },
-          { id: 'user_09', name: 'Fatima Tuz Zohra', title: 'Corporate Legal Counsel', department: 'Legal', role: 'member', status: 'Available', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop&crop=faces' }
+          { id: 'user_01', name: 'Zke Sabbir Designer', title: 'Lead Visualizer (you) 🪽', department: 'Creative & Brand Strategy', phone: '+880 1712-892401', email: 'sabbir.designer@fortress.com.bd', about: 'Corporate design systems & 3D visualizations lead.', role: 'admin', status: 'Available', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=faces' },
+          { id: 'user_05', name: 'Nusrat Jahan', title: 'Head of HR & People Operations', department: 'Human Resources', phone: '+880 1819-445566', email: 'nusrat.hr@fortress.com.bd', about: 'Managing talent acquisition, office broadcasts, and corporate welfare.', role: 'admin', status: 'Available', avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop&crop=faces' },
+          { id: 'user_02', name: 'Md Rakibul Islam', title: 'Senior Infrastructure & IT Lead', department: 'IT Operations', phone: '+880 1723-998877', email: 'rakibul.it@fortress.com.bd', about: 'Network infrastructure, server security, and cloud VPN gateways.', role: 'member', status: 'Available', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&crop=faces' },
+          { id: 'user_03', name: 'Md. Naiem Hossain', title: 'Associate Art Director / 3D', department: 'Creative Dept', phone: '+880 1681-332211', email: 'naiem.art@fortress.com.bd', about: '3D motion design, architectural walkthroughs, and packaging artwork.', role: 'dept_head', status: 'In a meeting', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop&crop=faces' },
+          { id: 'user_04', name: 'Shimul-DMS', title: 'Company Administrator', department: 'Executive Operations', phone: '+880 1911-554433', email: 'shimul.admin@fortress.com.bd', about: 'Corporate executive coordination and facility governance.', role: 'admin', status: 'Available', avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=120&h=120&fit=crop&crop=faces' },
+          { id: 'user_06', name: 'Md. Faruk Hossain', title: 'Director, Finance & Supply Chain', department: 'Finance Management', phone: '+880 1711-223344', email: 'faruk.finance@fortress.com.bd', about: 'Fiscal ledgers, compliance audits, procurement, and supply chains.', role: 'member', status: 'In focus mode', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=faces' },
+          { id: 'user_07', name: 'Sarah Jenkins', title: 'Senior Product Manager', department: 'Product & Growth', phone: '+880 1552-667788', email: 'sarah.pm@fortress.com.bd', about: 'Sprint backlogs, feature prioritization, and client research.', role: 'member', status: 'Available', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&h=120&fit=crop&crop=faces' },
+          { id: 'user_08', name: 'Arefin Shuvo', title: 'Cloud & Rust Systems Architect', department: 'Core Engineering', phone: '+880 1745-112299', email: 'arefin.cloud@fortress.com.bd', about: 'Multi-tenant PostgreSQL isolation, low-latency APIs, and DevOps.', role: 'member', status: 'Available', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=120&h=120&fit=crop&crop=faces' },
+          { id: 'user_09', name: 'Fatima Tuz Zohra', title: 'Corporate Legal Counsel', department: 'Legal & Compliance', phone: '+880 1833-778899', email: 'fatima.legal@fortress.com.bd', about: 'Enterprise licensing, contract audits, and privacy governance.', role: 'member', status: 'Available', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&h=120&fit=crop&crop=faces' }
         ],
         channels: [
           { id: 'c_general', name: 'general', type: 'public' },
@@ -645,9 +732,9 @@
               priority: 'normal',
               acknowledged: true,
               files: [
-                { type: 'image', name: 'livora_night_render.jpg', url: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=400&fit=crop' },
-                { type: 'image', name: 'livora_day_render.jpg', url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop' },
-                { type: 'video', name: 'Livora by Fortress.mp4', duration: '0:31', poster: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=400&fit=crop' }
+                { type: 'image', name: 'livora_night_render.jpg', url: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=550&fit=crop' },
+                { type: 'image', name: 'livora_day_render.jpg', url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=550&fit=crop' },
+                { type: 'video', name: 'Livora by Fortress.mp4', duration: '0:31', poster: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=550&fit=crop' }
               ],
               reactions: { '👍': 4, '🔥': 2 },
               replies: [
@@ -678,8 +765,8 @@
               priority: 'normal',
               acknowledged: true,
               files: [
-                { type: 'image', name: 'business_card_front.jpg', url: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&h=400&fit=crop' },
-                { type: 'image', name: 'business_card_back.jpg', url: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&h=400&fit=crop' }
+                { type: 'image', name: 'business_card_front.jpg', url: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=550&fit=crop' },
+                { type: 'image', name: 'business_card_back.jpg', url: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=550&fit=crop' }
               ],
               reactions: { '👍': 5 },
               replies: []
@@ -687,9 +774,9 @@
           ]
         },
         tasks: [
-          { id: 't_1', title: 'Verify Row-Level Security tenant isolation policies in PostgreSQL', assignee: 'Arefin Shuvo', assigneeId: 'user_08', priority: 'critical', department: 'Engineering', status: 'in_progress', due: 'Today' },
-          { id: 't_2', title: 'Finalize brochure cover vector artwork for print release', assignee: 'Zke Sabbir Designer', assigneeId: 'user_01', priority: 'high', department: 'Creative', status: 'done', due: 'Oct 20' },
-          { id: 't_3', title: 'Review Q3 financial ledger and compliance audit exports', assignee: 'Md. Faruk Hossain', assigneeId: 'user_06', priority: 'critical', department: 'Executive', status: 'todo', due: 'Oct 24' },
+          { id: 't_1', title: 'Verify Row-Level Security tenant isolation policies in PostgreSQL', assignee: 'Arefin Shuvo', assigneeId: 'user_08', priority: 'critical', department: 'Core Engineering', status: 'in_progress', due: 'Today' },
+          { id: 't_2', title: 'Finalize brochure cover vector artwork for print release', assignee: 'Zke Sabbir Designer', assigneeId: 'user_01', priority: 'high', department: 'Creative & Brand Strategy', status: 'done', due: 'Oct 20' },
+          { id: 't_3', title: 'Review Q3 financial ledger and compliance audit exports', assignee: 'Md. Faruk Hossain', assigneeId: 'user_06', priority: 'critical', department: 'Finance Management', status: 'todo', due: 'Oct 24' },
           { id: 't_4', title: 'Audit infrastructure firewall configurations for remote access', assignee: 'Md Rakibul Islam', assigneeId: 'user_02', priority: 'high', department: 'IT Operations', status: 'in_progress', due: 'Today' }
         ],
         files: [
@@ -709,7 +796,7 @@
       let state = {};
       function loadState() {
         try {
-          const stored = localStorage.getItem('rust_platform_full_v3');
+          const stored = localStorage.getItem('rust_platform_full_v4');
           state = stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(DEFAULT_STATE));
         } catch (e) {
           state = JSON.parse(JSON.stringify(DEFAULT_STATE));
@@ -717,7 +804,7 @@
       }
       function saveState() {
         try {
-          localStorage.setItem('rust_platform_full_v3', JSON.stringify(state));
+          localStorage.setItem('rust_platform_full_v4', JSON.stringify(state));
         } catch (e) {}
       }
 
@@ -908,7 +995,6 @@
         document.getElementById('notice-only-badge').style.display = isNoticeChannel ? 'inline-block' : 'none';
 
         // Check if user has permission to write in notice channel
-        // HR Admin check
         const isHRorAdmin = (state.currentUser.role === 'admin' || state.currentUser.department === 'Human Resources');
         const canWrite = !isNoticeChannel || isHRorAdmin;
 
@@ -937,7 +1023,7 @@
           row.dataset.msgId = msg.id;
 
           // Find Author Avatar
-          const authorMember = state.members.find(m => m.id === msg.authorId) || { avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop' };
+          const authorMember = state.members.find(m => m.id === msg.authorId) || { avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop' };
 
           // Build Photo Gallery or File attachments HTML
           let attachmentsHtml = '';
@@ -946,46 +1032,55 @@
             const docs = msg.files.filter(f => f.type === 'doc');
             const videos = msg.files.filter(f => f.type === 'video');
 
-            // Video player / thumbnail (Screenshot 3 Match)
+            // Video player / thumbnail with mouse hover download button
             if (videos.length > 0) {
               videos.forEach(vid => {
                 attachmentsHtml += `
-                  <div class="attached-video-card" onclick="alert('Playing video: ${escapeHtml(vid.name)}')">
-                    <img src="${vid.poster || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop'}">
+                  <div class="attached-video-card" onclick="openLightboxVideo('${vid.poster}', '${escapeHtml(vid.name)}')">
+                    <img src="${vid.poster || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=550&fit=crop'}">
                     <div class="video-play-overlay-btn">
                       <span>▶ ${vid.duration || '0:31'}</span>
                       <span style="opacity:0.8;">${escapeHtml(vid.name)}</span>
                     </div>
+                    <button class="video-hover-download-btn" onclick="event.stopPropagation(); downloadMediaUrl('${vid.poster}', '${escapeHtml(vid.name)}');" title="Download Video">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                      Download
+                    </button>
                   </div>
                 `;
               });
             }
 
-            // Image Gallery (Screenshots 1 & 2 Match)
+            // Image Gallery with In-Place Lightbox and Hover Download Button
             if (images.length > 0) {
               attachmentsHtml += '<div class="photo-grid-gallery">';
-              images.forEach(img => {
+              images.forEach((img, imgIndex) => {
                 attachmentsHtml += `
-                  <div class="photo-thumb-card" onclick="window.open('${img.url}', '_blank')">
+                  <div class="photo-thumb-card" onclick="openLightboxFromMsg('${msg.id}', ${imgIndex})" title="Click to view full image in-place">
                     <img src="${img.url}" alt="${escapeHtml(img.name || 'Photo')}">
+                    <button class="photo-hover-download-btn" onclick="event.stopPropagation(); downloadMediaUrl('${img.url}', '${escapeHtml(img.name || 'photo.jpg')}');" title="Download Image">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                      Download
+                    </button>
                   </div>
                 `;
               });
               attachmentsHtml += '</div>';
 
-              // Download all strip for multi-image sets (Screenshot 1 match)
+              // Download all strip for multi-image sets
               if (images.length > 1) {
                 attachmentsHtml += `
                   <div>
                     <a class="download-all-strip" href="#" onclick="event.preventDefault(); showToast('Downloading all ${images.length} photos as archive (.zip)...');">
-                      ⬇ Download all ${images.length} files (.zip, 4.5 MB)
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                      Download all ${images.length} files (.zip, 4.5 MB)
                     </a>
                   </div>
                 `;
               }
             }
 
-            // Document & Archive Cards (Screenshot 1 & Dedicated ZIP match)
+            // Document & Archive Cards (With high contrast text and clean icons)
             if (docs.length > 0) {
               docs.forEach(doc => {
                 const ext = (doc.ext || 'doc').toLowerCase();
@@ -997,11 +1092,11 @@
                   <div class="attached-doc-card">
                     <div class="doc-icon-badge ${badgeClass}">${badgeLabel}</div>
                     <div style="flex:1;">
-                      <div style="font-weight:700;color:#fff;">${escapeHtml(doc.name)}</div>
-                      <div style="font-size:11px;color:var(--rust-text-muted);">${doc.size || 'Attachment'}</div>
+                      <div style="font-weight:700;color:var(--rust-text-bright);font-size:13px;">${escapeHtml(doc.name)}</div>
+                      <div style="font-size:11px;color:var(--rust-text-muted);font-family:var(--font-mono);margin-top:2px;">${doc.size || 'Attachment'}</div>
                     </div>
-                    <button class="btn-rust-secondary" style="padding:2px 8px;" onclick="showToast('Downloading ${escapeHtml(doc.name)}...')">⬇ Download</button>
-                    <button class="btn-rust-secondary" style="padding:2px 6px;" onclick="shareMessageLink('${msg.id}')" title="Copy Link">🔗</button>
+                    <button class="btn-rust-secondary" style="padding:4px 10px;font-size:11.5px;" onclick="showToast('Downloading ${escapeHtml(doc.name)}...')">⬇ Download</button>
+                    <button class="btn-rust-secondary" style="padding:4px 8px;font-size:11.5px;" onclick="shareMessageLink('${msg.id}')" title="Copy Link">🔗</button>
                   </div>
                 `;
               });
@@ -1025,20 +1120,33 @@
             repliesHtml = `<div class="thread-replies-summary" onclick="openThreadDrawer('${msg.id}')">💬 ${replyCount} repl${replyCount > 1 ? 'ies' : 'y'} · Last reply just now</div>`;
           }
 
-          // Emergency Indicator
-          const emergencyBadge = isEmergency ? '<span class="emergency-pill-tag">! EMERGENCY</span>' : '';
+          // Emergency Indicator Badge
+          const emergencyBadge = isEmergency ? '<span class="emergency-pill-tag">🚨 ! EMERGENCY</span>' : '';
 
           row.innerHTML = `
-            <!-- Hover Action Toolbar (React, Reply, Emergency, Edit, Delete, Share) -->
+            <!-- Clean SVG Hover Action Toolbar (No Cartoon Emojis, Clean Positioning) -->
             <div class="msg-hover-actions">
-              <button class="hover-action-btn" title="React Thumbs Up" onclick="toggleReaction('${msg.id}', '👍')">👍</button>
-              <button class="hover-action-btn" title="React Heart" onclick="toggleReaction('${msg.id}', '❤️')">❤️</button>
-              <button class="hover-action-btn" title="React Fire" onclick="toggleReaction('${msg.id}', '🔥')">🔥</button>
-              <button class="hover-action-btn" title="Reply in Thread" onclick="openThreadDrawer('${msg.id}')">💬</button>
-              <button class="hover-action-btn emergency" title="Mark as Emergency" onclick="toggleMessageEmergency('${msg.id}')">!</button>
-              <button class="hover-action-btn" title="Edit Message" onclick="startInlineEditMessage('${msg.id}')">✏️</button>
-              <button class="hover-action-btn" title="Share Direct Link" onclick="shareMessageLink('${msg.id}')">🔗</button>
-              <button class="hover-action-btn" style="color:var(--rust-critical);" title="Delete Message" onclick="deleteMessage('${msg.id}')">🗑️</button>
+              <button class="hover-action-btn" title="React Love" onclick="toggleReaction('${msg.id}', '❤️')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </button>
+              <button class="hover-action-btn" title="React Thumbs Up" onclick="toggleReaction('${msg.id}', '👍')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+              </button>
+              <button class="hover-action-btn" title="Reply in Thread" onclick="openThreadDrawer('${msg.id}')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </button>
+              <button class="hover-action-btn emergency" title="Toggle Emergency Priority" onclick="toggleMessageEmergency('${msg.id}')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </button>
+              <button class="hover-action-btn" title="Edit Message" onclick="startInlineEditMessage('${msg.id}')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="hover-action-btn" title="Share Message Link" onclick="shareMessageLink('${msg.id}')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              </button>
+              <button class="hover-action-btn delete" title="Delete Message" onclick="deleteMessage('${msg.id}')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+              </button>
             </div>
 
             <div class="avatar-tile">
@@ -1050,12 +1158,6 @@
                 <span class="msg-author">${escapeHtml(msg.authorName)}</span>
                 <span class="msg-time">${escapeHtml(msg.time)}</span>
                 ${emergencyBadge}
-
-                <!-- Direct Top-Right Inline Actions (Screenshot 1 Match: [ ! ] [ Delete ]) -->
-                <div class="msg-inline-actions">
-                  <button class="btn-msg-emergency ${isEmergency ? 'active' : ''}" title="Toggle Emergency Status" onclick="toggleMessageEmergency('${msg.id}')">! Emergency</button>
-                  <button class="btn-msg-delete" title="Delete Message" onclick="deleteMessage('${msg.id}')">Delete</button>
-                </div>
               </div>
 
               <!-- Message Body or Inline Editor -->
@@ -1155,8 +1257,7 @@
       function sendMessage() {
         const textInput = document.getElementById('chat-text-input');
         const text = textInput.value.trim();
-        let pri = document.getElementById('select-message-priority').value;
-        if (composerEmergencyFlag) pri = 'critical';
+        const pri = composerEmergencyFlag ? 'critical' : 'normal';
 
         if (!text && stagedFilesList.length === 0) return;
 
@@ -1196,7 +1297,6 @@
         textInput.value = '';
         stagedFilesList = [];
         renderStagedFilesStrip();
-        document.getElementById('select-message-priority').value = 'normal';
         composerEmergencyFlag = false;
         document.getElementById('btn-composer-emergency-toggle').classList.remove('active');
 
@@ -1293,7 +1393,92 @@
         }
       };
 
-      // 7. Slack Thread Side Drawer
+      // 7. Lightbox System (In-place modal view, No new tab opening)
+      let currentLightboxList = [];
+      let currentLightboxIndex = 0;
+
+      window.openLightboxFromMsg = function(msgId, imgIndex) {
+        const chId = state.activeChannelId;
+        const msg = (state.messages[chId] || []).find(m => m.id === msgId);
+        if (!msg || !msg.files) return;
+
+        const images = msg.files.filter(f => f.type === 'image');
+        if (images.length === 0) return;
+
+        currentLightboxList = images;
+        currentLightboxIndex = imgIndex || 0;
+        showLightboxItem();
+
+        document.getElementById('modal-image-lightbox').style.display = 'flex';
+      };
+
+      window.openLightboxVideo = function(videoUrl, title) {
+        currentLightboxList = [{ url: videoUrl, name: title, type: 'video' }];
+        currentLightboxIndex = 0;
+        showLightboxItem();
+        document.getElementById('modal-image-lightbox').style.display = 'flex';
+      };
+
+      function showLightboxItem() {
+        const item = currentLightboxList[currentLightboxIndex];
+        if (!item) return;
+
+        const imgEl = document.getElementById('lightbox-img-el');
+        const vidEl = document.getElementById('lightbox-video-el');
+        const titleEl = document.getElementById('lightbox-filename');
+        const prevBtn = document.getElementById('btn-lightbox-prev');
+        const nextBtn = document.getElementById('btn-lightbox-next');
+
+        titleEl.textContent = `${item.name || 'Image'} (${currentLightboxIndex + 1} of ${currentLightboxList.length})`;
+
+        if (item.type === 'video') {
+          imgEl.style.display = 'none';
+          vidEl.style.display = 'block';
+          vidEl.src = item.url;
+        } else {
+          vidEl.style.display = 'none';
+          imgEl.style.display = 'block';
+          imgEl.src = item.url;
+        }
+
+        prevBtn.style.visibility = (currentLightboxList.length > 1) ? 'visible' : 'hidden';
+        nextBtn.style.visibility = (currentLightboxList.length > 1) ? 'visible' : 'hidden';
+      }
+
+      window.downloadMediaUrl = function(url, filename) {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename || 'downloaded_asset.jpg';
+        a.target = '_blank';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        showToast(`Downloading ${filename || 'asset'}...`);
+      };
+
+      document.getElementById('btn-lightbox-download').addEventListener('click', () => {
+        const item = currentLightboxList[currentLightboxIndex];
+        if (item) {
+          downloadMediaUrl(item.url, item.name);
+        }
+      });
+      document.getElementById('btn-close-lightbox').addEventListener('click', () => {
+        document.getElementById('modal-image-lightbox').style.display = 'none';
+      });
+      document.getElementById('btn-lightbox-prev').addEventListener('click', () => {
+        if (currentLightboxList.length > 1) {
+          currentLightboxIndex = (currentLightboxIndex - 1 + currentLightboxList.length) % currentLightboxList.length;
+          showLightboxItem();
+        }
+      });
+      document.getElementById('btn-lightbox-next').addEventListener('click', () => {
+        if (currentLightboxList.length > 1) {
+          currentLightboxIndex = (currentLightboxIndex + 1) % currentLightboxList.length;
+          showLightboxItem();
+        }
+      });
+
+      // 8. Slack Thread Side Drawer
       window.openThreadDrawer = function(msgId) {
         const chId = state.activeChannelId;
         const msg = (state.messages[chId] || []).find(m => m.id === msgId);
@@ -1305,7 +1490,7 @@
 
         document.getElementById('thread-sub-channel-label').textContent = '#' + chId.replace('c_', '').replace('g_', '');
 
-        const authorMember = state.members.find(m => m.id === msg.authorId) || { avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop' };
+        const authorMember = state.members.find(m => m.id === msg.authorId) || { avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop' };
 
         document.getElementById('thread-parent-preview-box').innerHTML = `
           <div style="display:flex;gap:10px;">
@@ -1344,7 +1529,7 @@
           item.className = 'thread-reply-item';
           item.innerHTML = `
             <div class="avatar-tile" style="width:26px;height:26px;font-size:11px;">
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop">
             </div>
             <div style="flex:1;">
               <div style="display:flex;align-items:baseline;gap:6px;">
@@ -1396,7 +1581,7 @@
         showToast('Reply added to thread');
       }
 
-      // 8. Files Vault Table
+      // 9. Files Vault Table
       function renderFilesTable() {
         const tbody = document.getElementById('files-table-body');
         tbody.innerHTML = '';
@@ -1419,7 +1604,7 @@
         });
       }
 
-      // 9. Members Directory Table
+      // 10. Members Directory Table (Showing Role, Dept, Phone, Email, Status)
       function renderMembersTable() {
         const tbody = document.getElementById('members-table-body');
         tbody.innerHTML = '';
@@ -1432,17 +1617,18 @@
                 <div><strong>${escapeHtml(m.name)}</strong><div style="font-size:11px;color:var(--rust-text-muted);">${escapeHtml(m.title)}</div></div>
               </div>
             </td>
-            <td style="font-family:var(--font-mono);">${m.role.toUpperCase()}</td>
-            <td>${escapeHtml(m.department)}</td>
-            <td style="font-family:var(--font-mono);">${m.name.toLowerCase().replace(/[^a-z]/g, '')}@fortress.com</td>
-            <td><span style="color:${m.status === 'Available' ? 'var(--rust-ok)' : 'var(--rust-warn)'}">● ${escapeHtml(m.status)}</span></td>
-            <td><button class="btn-rust-secondary" style="padding:2px 8px;" onclick="switchChannel('${m.id}')">Message</button></td>
+            <td style="font-family:var(--font-mono);font-size:12px;">${m.role.toUpperCase()}</td>
+            <td>${escapeHtml(m.department || 'General')}</td>
+            <td style="font-family:var(--font-mono);font-size:12px;">${escapeHtml(m.phone || 'N/A')}</td>
+            <td style="font-family:var(--font-mono);font-size:12px;">${escapeHtml(m.email || 'N/A')}</td>
+            <td><span style="color:${m.status === 'Available' ? 'var(--rust-ok)' : 'var(--rust-warn)'}">● ${escapeHtml(m.status || 'Available')}</span></td>
+            <td><button class="btn-rust-secondary" style="padding:3px 9px;" onclick="switchChannel('${m.id}')">Message</button></td>
           `;
           tbody.appendChild(tr);
         });
       }
 
-      // 10. Persona Switcher in Top Bar
+      // 11. Persona Switcher in Top Bar
       function initPersonaSwitcher() {
         const sel = document.getElementById('persona-selector');
         sel.innerHTML = '';
@@ -1459,10 +1645,7 @@
           if (chosen) {
             state.currentUser = { ...chosen };
             document.getElementById('header-user-avatar-img').src = chosen.avatar;
-            document.getElementById('pref-preview-avatar').src = chosen.avatar;
-            document.getElementById('pref-name-input').value = chosen.name;
-            document.getElementById('pref-title-input').value = chosen.title;
-            document.getElementById('pref-avatar-input').value = chosen.avatar;
+            populateProfileForm();
             saveState();
             renderChatFeed();
             renderHome();
@@ -1471,16 +1654,31 @@
         });
       }
 
-      // 11. Preferences & Settings Modal Setup
+      // Populate Profile Form fields from current user
+      function populateProfileForm() {
+        const u = state.currentUser;
+        document.getElementById('pref-preview-avatar').src = u.avatar;
+        document.getElementById('pref-name-input').value = u.name || '';
+        document.getElementById('pref-title-input').value = u.title || '';
+        document.getElementById('pref-dept-input').value = u.department || '';
+        document.getElementById('pref-phone-input').value = u.phone || '';
+        document.getElementById('pref-email-input').value = u.email || '';
+        document.getElementById('pref-status-input').value = u.status || 'Available';
+        document.getElementById('pref-about-input').value = u.about || '';
+      }
+
+      // 12. Preferences & Settings Modal Setup
       function initPreferencesModal() {
         const modal = document.getElementById('modal-preferences');
         document.getElementById('btn-open-preferences').addEventListener('click', () => {
+          populateProfileForm();
           modal.style.display = 'flex';
         });
         document.getElementById('btn-close-preferences').addEventListener('click', () => {
           modal.style.display = 'none';
         });
         document.getElementById('btn-profile-toggle').addEventListener('click', () => {
+          populateProfileForm();
           modal.style.display = 'flex';
           switchPrefTab('profile');
         });
@@ -1508,6 +1706,30 @@
           });
         });
 
+        // Photo Upload File Picker
+        const avatarFileInput = document.getElementById('pref-avatar-file-input');
+        document.getElementById('btn-trigger-avatar-upload').addEventListener('click', () => {
+          avatarFileInput.click();
+        });
+        avatarFileInput.addEventListener('change', (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+              document.getElementById('pref-preview-avatar').src = evt.target.result;
+              state.currentUser.avatar = evt.target.result;
+              showToast('Photo uploaded! Click "Save Profile Changes" to apply.');
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+        document.getElementById('btn-clear-avatar').addEventListener('click', () => {
+          const fallback = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop';
+          document.getElementById('pref-preview-avatar').src = fallback;
+          state.currentUser.avatar = fallback;
+          showToast('Photo reset');
+        });
+
         // Sidebar Customizer Checkboxes
         const checks = {
           showNotices: document.getElementById('check-show-announcements'),
@@ -1526,32 +1748,27 @@
           });
         });
 
-        // Save Profile Preferences
+        // Save Profile Preferences (Name, Role, Dept, Phone, Email, Status, Bio, Photo)
         document.getElementById('btn-save-profile-pref').addEventListener('click', function() {
-          const newAv = document.getElementById('pref-avatar-input').value.trim();
-          const newName = document.getElementById('pref-name-input').value.trim();
-          const newTitle = document.getElementById('pref-title-input').value.trim();
-
-          if (newName) state.currentUser.name = newName;
-          if (newTitle) state.currentUser.title = newTitle;
-          if (newAv) {
-            state.currentUser.avatar = newAv;
-            document.getElementById('header-user-avatar-img').src = newAv;
-            document.getElementById('pref-preview-avatar').src = newAv;
-          }
+          state.currentUser.name = document.getElementById('pref-name-input').value.trim() || state.currentUser.name;
+          state.currentUser.title = document.getElementById('pref-title-input').value.trim() || state.currentUser.title;
+          state.currentUser.department = document.getElementById('pref-dept-input').value.trim() || state.currentUser.department;
+          state.currentUser.phone = document.getElementById('pref-phone-input').value.trim();
+          state.currentUser.email = document.getElementById('pref-email-input').value.trim();
+          state.currentUser.status = document.getElementById('pref-status-input').value;
+          state.currentUser.about = document.getElementById('pref-about-input').value.trim();
 
           const myMem = state.members.find(m => m.id === state.currentUser.id);
           if (myMem) {
-            myMem.name = state.currentUser.name;
-            myMem.title = state.currentUser.title;
-            myMem.avatar = state.currentUser.avatar;
+            Object.assign(myMem, state.currentUser);
           }
 
+          document.getElementById('header-user-avatar-img').src = state.currentUser.avatar;
           saveState();
           initPersonaSwitcher();
           renderChatFeed();
           renderMembersTable();
-          showToast('Profile updated successfully!');
+          showToast('✓ Profile updated successfully!');
         });
       }
 
@@ -1575,7 +1792,7 @@
         document.getElementById('pref-tab-title').textContent = titles[tabKey] || 'Settings';
       }
 
-      // 12. View Module Routing
+      // 13. View Module Routing
       function switchView(viewKey) {
         document.querySelectorAll('.stage-view-module').forEach(v => v.classList.remove('active-view'));
         document.querySelectorAll('.rail-nav-btn').forEach(b => b.classList.remove('active'));
@@ -1626,7 +1843,7 @@
         });
       }
 
-      // 13. Setup All Event Listeners
+      // 14. Setup All Event Listeners
       function initListeners() {
         // Rail Navigation
         document.querySelectorAll('.rail-nav-btn').forEach(b => {
@@ -1655,7 +1872,7 @@
         emBtn.addEventListener('click', () => {
           composerEmergencyFlag = !composerEmergencyFlag;
           emBtn.classList.toggle('active', composerEmergencyFlag);
-          showToast(composerEmergencyFlag ? '🚨 Emergency priority enabled for this message' : 'Normal priority restored');
+          showToast(composerEmergencyFlag ? '🚨 Emergency priority enabled for next message' : 'Normal priority restored');
         });
 
         // Send Message
@@ -1708,6 +1925,7 @@
             document.getElementById('modal-global-search').style.display = 'none';
             document.getElementById('modal-preferences').style.display = 'none';
             document.getElementById('modal-create-task').style.display = 'none';
+            document.getElementById('modal-image-lightbox').style.display = 'none';
             document.getElementById('chat-thread-drawer').classList.remove('open');
           }
         });
@@ -1742,7 +1960,7 @@
             title: title,
             assignee: assignee,
             assigneeId: 'user_01',
-            department: 'Digital Team',
+            department: 'Creative & Brand Strategy',
             priority: priority,
             status: 'todo',
             due: 'Today'
@@ -1829,6 +2047,7 @@
       initPersonaSwitcher();
       initListeners();
       initPreferencesModal();
+      populateProfileForm();
       renderHome();
       renderSidebar();
       renderChatFeed();
