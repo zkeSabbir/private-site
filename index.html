@@ -4,569 +4,449 @@
   <meta charset="UTF-8">
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RUST. — Corporate Communication & Execution OS</title>
+  <title>RUST. — Corporate Platform</title>
   
-  <!-- Funnel Display, IBM Plex Sans & IBM Plex Mono Fonts -->
+  <!-- Funnel Display Font & IBM Plex Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
 
-  <div class="app-container">
+  <!-- MASTER TOP SLACK SEARCH HEADER (Screenshots 1, 2, 3, 5) -->
+  <header class="slack-global-header">
+    <div class="header-nav-arrows">
+      <span>←</span>
+      <span>→</span>
+      <span style="font-size: 13px;">🕒</span>
+    </div>
 
-    <!-- 1. LEFT SLACK-STYLE ICON RAIL -->
-    <nav class="icon-rail">
-      <div class="brand-badge" onclick="navigateTo('home')">
-        RUST<span class="dot"></span>
+    <div class="global-search-bar" onclick="focusSearch()">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span>🔍</span>
+        <span>Search Digital Team - Fortress Group</span>
+      </div>
+      <span style="font-size: 11px; font-family: var(--font-mono); opacity: 0.7;">Ctrl + K</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <span style="cursor: pointer;">❓</span>
+      <div style="width: 26px; height: 26px; border-radius: 4px; background: #3f0e40; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; cursor: pointer;" onclick="openMembersModal()">
+        ZS
+      </div>
+    </div>
+  </header>
+
+  <!-- MASTER 3-PANE LAYOUT -->
+  <div class="slack-app-body">
+
+    <!-- 1. LEFT ICON RAIL (Slack Exact) -->
+    <nav class="slack-icon-rail">
+      <div class="workspace-avatar-tile" onclick="switchStage('chat')">
+        DT
       </div>
 
-      <button class="rail-action-btn active" id="rail-home" onclick="navigateTo('home')" title="Workspace Dashboard">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <button class="rail-icon-btn active" id="rail-home-btn" onclick="switchStage('chat')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Home</span>
       </button>
 
-      <button class="rail-action-btn" id="rail-chat" onclick="navigateTo('chat')" title="Messages & Channels">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        <span class="badge-count">2</span>
+      <button class="rail-icon-btn" id="rail-dms-btn" onclick="switchStage('chat')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span>DMs</span>
       </button>
 
-      <button class="rail-action-btn" id="rail-tasks" onclick="navigateTo('tasks')" title="Kanban Tasks Board">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      <button class="rail-icon-btn" id="rail-activity-btn" onclick="switchStage('chat')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        <span>Activity</span>
       </button>
 
-      <button class="rail-action-btn" id="rail-team" onclick="navigateTo('team')" title="Team & Roles">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      <button class="rail-icon-btn" id="rail-files-btn" onclick="switchStage('files')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        <span>Files</span>
       </button>
 
-      <div style="margin-top: auto; display: flex; flex-direction: column; gap: 12px; align-items: center;">
-        <button class="rail-action-btn" id="rail-profile" onclick="navigateTo('profile')" title="Profile Settings">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-        </button>
+      <button class="rail-icon-btn" id="rail-todos-btn" onclick="switchStage('todos')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        <span>To-dos</span>
+      </button>
+
+      <div style="margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+        <div style="width: 28px; height: 28px; border-radius: 50%; background: #3f0e40; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; border: 1.5px solid var(--rust-copper); cursor: pointer;" onclick="openMembersModal()">
+          ZS
+        </div>
       </div>
     </nav>
 
-    <!-- 2. MIDDLE NAVIGATION SIDEBAR WITH STORIES & CATEGORIES -->
-    <aside class="nav-sidebar">
-      <div class="sidebar-top">
-        <div>
-          <div class="company-name">FORTRESS CORP</div>
-          <div style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">TENANT · FORTRESS-01</div>
+    <!-- 2. MIDDLE SLACK CHANNELS & DMS SIDEBAR -->
+    <aside class="slack-sidebar">
+      <div class="sidebar-team-header">
+        <div class="team-title">
+          <span>Digital Team - Fortress Group</span>
+          <span class="dot"></span>
         </div>
-        <span class="status-pill-green">● ACTIVE</span>
-      </div>
-
-      <!-- Live Stories Strip (From Screenshot 1) -->
-      <div class="story-status-strip">
-        <div class="story-avatar-box" onclick="alert('Viewing Sazzad Status')">
-          <div class="story-ring">
-            <div class="story-avatar" style="background: var(--rust-copper);">ZS</div>
-          </div>
-          <span class="story-name">My Status</span>
+        <div class="sidebar-action-icons">
+          <span>⚙</span>
+          <span>✏️</span>
         </div>
-        <div class="story-avatar-box" onclick="openDirectMessage('Shimul Ahmad')">
-          <div class="story-ring">
-            <div class="story-avatar">SA</div>
-          </div>
-          <span class="story-name">Shimul</span>
-        </div>
-        <div class="story-avatar-box" onclick="openDirectMessage('Naiem Hossain')">
-          <div class="story-ring">
-            <div class="story-avatar">NH</div>
-          </div>
-          <span class="story-name">Naiem</span>
-        </div>
-        <div class="story-avatar-box" onclick="openDirectMessage('Anayat Munna')">
-          <div class="story-ring story-ring-gray">
-            <div class="story-avatar">AM</div>
-          </div>
-          <span class="story-name">Anayat</span>
-        </div>
-      </div>
-
-      <!-- Search Field -->
-      <div class="search-wrapper">
-        <input type="text" class="search-input" placeholder="Search channels, people, files...">
       </div>
 
       <div class="sidebar-scroll-zone">
-        <!-- Quick System Jump -->
-        <div class="sidebar-row active" onclick="navigateTo('home')">
-          <span>⚡</span>
-          <span>Home Overview</span>
+        <div class="slack-jump-item">
+          <span>💬</span>
+          <span>Threads</span>
         </div>
-        <div class="sidebar-row" onclick="navigateTo('tasks')">
-          <span>☑</span>
-          <span>Tasks & Board</span>
-          <span style="margin-left: auto; font-family: var(--font-mono); font-size: 10px; background: rgba(255,255,255,0.1); padding: 1px 6px; border-radius: 8px;">14</span>
+        <div class="slack-jump-item">
+          <span>🎧</span>
+          <span>Huddles</span>
         </div>
-
-        <!-- AFA ADMIN FOR ALL -->
-        <div class="category-title">
-          <span>AFA · Admin For All</span>
+        <div class="slack-jump-item">
+          <span>📝</span>
+          <span>Drafts & sent</span>
+          <span style="margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">2</span>
         </div>
-        <div class="sidebar-row" onclick="openChannel('afa-facilities')">
-          <span style="color: #64748b;">#</span>
-          <span>afa-facilities</span>
-        </div>
-        <div class="sidebar-row" onclick="openChannel('afa-hr-leave')">
-          <span style="color: #64748b;">#</span>
-          <span>afa-hr-leave</span>
-        </div>
-        <div class="sidebar-row" onclick="openChannel('afa-it-help')">
-          <span style="color: #64748b;">#</span>
-          <span>afa-it-help</span>
+        <div class="slack-jump-item">
+          <span>🔖</span>
+          <span>Saved</span>
         </div>
 
-        <!-- BRAND KITCHEN (LOCKED CHANNELS) -->
-        <div class="category-title">
-          <span>Brand Kitchen (Private)</span>
+        <!-- Starred List (From your Screenshot 1) -->
+        <div class="slack-subheading">
+          <span>Starred</span>
         </div>
-        <div class="sidebar-row" onclick="openChannel('fortress-logo')">
-          <span>🔒</span>
-          <span>fortress-logo</span>
+        <div class="slack-jump-item">
+          <span style="font-size: 12px;">👤</span>
+          <span>Zke Sabbir Designer <small style="color: var(--text-muted);">(you)</small> 🪽</span>
         </div>
-        <div class="sidebar-row" onclick="openChannel('mb-announcements')">
-          <span>🔒</span>
-          <span>mb-announcements</span>
+        <div class="slack-jump-item">
+          <span style="font-size: 12px;">👤</span>
+          <span>Md Rakibul Islam</span>
         </div>
-        <div class="sidebar-row active" onclick="openChannel('mb-general')">
-          <span>🔒</span>
-          <span>mb-general</span>
-          <span style="margin-left: auto; font-family: var(--font-mono); font-size: 10px; background: #dc2626; color: #fff; padding: 1px 5px; border-radius: 8px;">1</span>
+        <div class="slack-jump-item">
+          <span style="font-size: 12px;">👤</span>
+          <span>Md. Naiem Hossain</span>
         </div>
 
-        <!-- DIRECT MESSAGES -->
-        <div class="category-title">
-          <span>Direct Messages</span>
+        <!-- Channels (From your Screenshot 1) -->
+        <div class="slack-subheading">
+          <span>Channels</span>
+          <span style="cursor: pointer;">+</span>
         </div>
-        <div class="sidebar-row" onclick="openDirectMessage('Anayat Munna')">
-          <span style="width: 7px; height: 7px; border-radius: 50%; background: #64748b;"></span>
-          <span>Anayat Munna</span>
+        <div class="slack-jump-item active" onclick="switchStage('chat')">
+          <span style="font-weight: 700;">#</span>
+          <span>general</span>
         </div>
-        <div class="sidebar-row" onclick="openDirectMessage('Shimul Ahmad')">
-          <span style="width: 7px; height: 7px; border-radius: 50%; background: #22c55e;"></span>
-          <span>Shimul Ahmad</span>
+        <div class="slack-jump-item" onclick="switchStage('chat')">
+          <span style="font-weight: 700;">#</span>
+          <span>resource</span>
         </div>
-      </div>
 
-      <!-- Current User Footer -->
-      <div class="current-user-widget">
-        <div class="user-avatar-round" onclick="navigateTo('profile')" style="cursor: pointer;">
-          ZS
+        <!-- Direct Messages -->
+        <div class="slack-subheading">
+          <span>Direct messages</span>
+          <span style="cursor: pointer;">+</span>
         </div>
-        <div style="flex: 1; overflow: hidden; cursor: pointer;" onclick="navigateTo('profile')">
-          <div style="font-size: 12.5px; font-weight: 600; color: #fff;">Sazzad Hossain Sabbir</div>
-          <div style="font-size: 10.5px; font-family: var(--font-mono); color: var(--rust-copper);">VISUALIZER · BRAND</div>
+        <div class="slack-jump-item">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span>
+          <span>Slackbot</span>
         </div>
-        <button onclick="navigateTo('profile')" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer;" title="Profile">
-          ⚙
-        </button>
+        <div class="slack-jump-item">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span>
+          <span>Shimul-DMS</span>
+        </div>
       </div>
     </aside>
 
-    <!-- 3. MAIN CONTENT STAGE -->
-    <main class="main-stage">
+    <!-- 3. SLACK MAIN STAGE AREA -->
+    <main class="slack-main-stage">
 
-      <!-- TOP STAGE BAR -->
-      <header class="top-bar-stage">
-        <div class="top-bar-title" id="stage-main-title">
-          <span>Hello, Sazzad</span>
-          <span style="font-size: 12px; font-weight: 400; color: var(--text-muted); font-family: var(--font-ui);">| Here is what is happening in your workspace</span>
+      <!-- STAGE 1: OFFICIAL #general CHAT (Screenshots 1 & 5) -->
+      <section id="stage-chat" style="display: flex; flex-direction: column; height: 100%;">
+        <!-- Channel Top Navigation Bar -->
+        <div class="channel-top-bar">
+          <div class="channel-heading">
+            <span style="color: #eab308; cursor: pointer;">☆</span>
+            <span># general</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px; cursor: pointer;" onclick="openMembersModal()">
+            <div style="display: flex; align-items: center; gap: -4px;">
+              <span style="font-size: 12px; font-weight: 600; color: #fff;">👥 4</span>
+            </div>
+            <span>🎧</span>
+            <span>🔍</span>
+          </div>
         </div>
-        <div style="display: flex; gap: 10px; align-items: center;">
-          <button class="top-action-pill" onclick="navigateTo('tasks')">+ New Task</button>
+
+        <!-- Channel Tabs (From Screenshot 1) -->
+        <div class="channel-tabs-row">
+          <div class="channel-tab active">Messages</div>
+          <div class="channel-tab">Canvas</div>
+          <div class="channel-tab" onclick="switchStage('files')">Files & links</div>
+          <div class="channel-tab">Pins</div>
+          <div class="channel-tab">+</div>
         </div>
-      </header>
 
-      <!-- SCREEN 1: DASHBOARD OVERVIEW (#home) -->
-      <section id="screen-home" class="screen-module active">
-        <div style="padding: 20px; display: flex; flex-direction: column; gap: 20px;">
-
-          <!-- 6 Top Metrics -->
-          <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;">
-            <div style="background: var(--bg-surface); border: var(--border-subtle); border-radius: var(--radius-sm); padding: 14px 16px;">
-              <div style="font-family: var(--font-display); font-size: 26px; font-weight: 700; color: #fff;">8</div>
-              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Team members</div>
-            </div>
-            <div style="background: var(--bg-surface); border: var(--border-subtle); border-radius: var(--radius-sm); padding: 14px 16px;">
-              <div style="font-family: var(--font-display); font-size: 26px; font-weight: 700; color: #22c55e;">1</div>
-              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Online now</div>
-            </div>
-            <div style="background: var(--bg-surface); border: var(--border-subtle); border-radius: var(--radius-sm); padding: 14px 16px;">
-              <div style="font-family: var(--font-display); font-size: 26px; font-weight: 700; color: #fff;">4</div>
-              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Messages today</div>
-            </div>
-            <div style="background: var(--bg-surface); border: var(--border-subtle); border-radius: var(--radius-sm); padding: 14px 16px;">
-              <div style="font-family: var(--font-display); font-size: 26px; font-weight: 700; color: #60a5fa;">14</div>
-              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Open tasks</div>
-            </div>
-            <div style="background: var(--bg-surface); border: var(--border-subtle); border-radius: var(--radius-sm); padding: 14px 16px;">
-              <div style="font-family: var(--font-display); font-size: 26px; font-weight: 700; color: #f87171;">0</div>
-              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Overdue tasks</div>
-            </div>
-            <div style="background: var(--bg-surface); border: var(--border-subtle); border-radius: var(--radius-sm); padding: 14px 16px;">
-              <div style="font-family: var(--font-display); font-size: 26px; font-weight: 700; color: #4ade80;">5</div>
-              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Done this week</div>
-            </div>
+        <!-- Messages Stream with Real Media Cards -->
+        <div class="slack-messages-stream" id="messages-stream-box">
+          
+          <div class="day-divider">
+            <span class="day-pill">Thursday, October 15th ▾</span>
           </div>
 
-          <!-- Priority Messages Deck -->
-          <div style="background: var(--bg-surface); border: var(--border-subtle); border-radius: var(--radius-sm); overflow: hidden;">
-            <div style="padding: 10px 16px; background: var(--status-urgent-bg); border-bottom: 1px solid rgba(239, 68, 68, 0.3); display: flex; justify-content: space-between; align-items: center; color: #fca5a5; font-family: var(--font-mono); font-size: 11px; font-weight: 700;">
-              <span>! PRIORITY MESSAGES (2) · ACKNOWLEDGMENT REQUIRED</span>
-              <span>LIVE ESCALATION ACTIVE</span>
-            </div>
-            
-            <div style="background: var(--bg-surface-elevated); border-left: 3px solid #ef4444; padding: 12px 14px; border-radius: var(--radius-xs); display: flex; justify-content: space-between; align-items: center; margin: 12px 16px;">
-              <div>
-                <div style="font-size: 11.5px; font-family: var(--font-mono); color: #fca5a5;">
-                  Shimul Ahmad · #mb-general · Oct 18, 12:15 PM
-                </div>
-                <div style="font-weight: 600; font-size: 13.5px; margin-top: 4px;">
-                  "Naiem Nexus service er logo ta design kore dao"
+          <!-- Message 1: Livora Post (From Screenshot 1) -->
+          <div class="slack-msg-group">
+            <div class="user-msg-avatar" style="background: #0284c7;">NH</div>
+            <div class="slack-msg-content">
+              <div class="slack-msg-author">
+                <span class="author-name">Md. Naiem Hossain</span>
+                <span class="msg-timestamp">09:31 AM</span>
+              </div>
+              <div style="color: #fff; margin-bottom: 6px;">
+                apartment spell mistak ase<br>
+                <strong>Livora by Fortress.mp4</strong>
+              </div>
+              <!-- Video Preview Thumbnail Card -->
+              <div style="width: 320px; border-radius: 8px; overflow: hidden; border: 1px solid var(--slack-border); background: #000; position: relative;">
+                <div style="height: 180px; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); display: flex; align-items: center; justify-content: center;">
+                  <span style="font-size: 32px; color: #fff; cursor: pointer;">▶ 0:31</span>
                 </div>
               </div>
-              <button class="top-action-pill" style="background: #dc2626;" onclick="acknowledgeItem(this)">
-                ✓ Acknowledge
-              </button>
             </div>
           </div>
 
-          <!-- Team Today Activity Table -->
-          <div style="background: var(--bg-surface); border: var(--border-subtle); border-radius: var(--radius-sm); overflow: hidden;">
-            <div style="padding: 12px 16px; border-bottom: var(--border-subtle); font-weight: 700; font-size: 13px; font-family: var(--font-display); display: flex; align-items: center; justify-content: space-between;">
-              <span>Team today <span style="color: #22c55e; font-size: 11px; font-family: var(--font-mono);">● LIVE</span></span>
+          <div class="day-divider">
+            <span class="day-pill">Tuesday, October 20th ▾</span>
+          </div>
+
+          <!-- Message 2: Illustrator File Post (From Screenshot 5) -->
+          <div class="slack-msg-group">
+            <div class="user-msg-avatar" style="background: var(--rust-copper);">ZS</div>
+            <div class="slack-msg-content">
+              <div class="slack-msg-author">
+                <span class="author-name">Zke Sabbir Designer <small style="color: var(--text-muted);">(you)</small></span>
+                <span class="msg-timestamp">11:24 PM</span>
+              </div>
+              <div style="color: #fff; margin-bottom: 6px;">
+                Final artwork files submitted for corporate branding:
+              </div>
+              <!-- Slack Illustrator File Card -->
+              <div class="slack-file-box">
+                <div class="file-badge-ai">Ai</div>
+                <div style="flex: 1;">
+                  <div style="font-weight: 700; color: #fff; font-size: 13.5px;">FORTRESS Print File.ai</div>
+                  <div style="font-size: 11.5px; color: var(--text-muted);">Illustrator File · 48.2 MB</div>
+                </div>
+                <button class="btn-slack-send" onclick="alert('Downloading File...')">↓</button>
+              </div>
             </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-              <thead>
-                <tr style="text-align: left; background: rgba(0,0,0,0.2); font-family: var(--font-display); font-size: 12px; color: var(--text-muted);">
-                  <th style="padding: 10px 14px;">MEMBER</th>
-                  <th style="padding: 10px 14px;">STATUS</th>
-                  <th style="padding: 10px 14px;">MESSAGES</th>
-                  <th style="padding: 10px 14px;">DONE</th>
-                  <th style="padding: 10px 14px;">OPEN TASKS</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: var(--border-subtle);">
-                  <td style="padding: 12px 14px;"><strong>Anayat Munna</strong><br><span style="font-size: 11px; color: var(--text-muted);">ARCH LEAD</span></td>
-                  <td style="padding: 12px 14px;"><span style="color: #94a3b8;">● Not active yet</span></td>
-                  <td style="padding: 12px 14px;">0</td>
-                  <td style="padding: 12px 14px;">0</td>
-                  <td style="padding: 12px 14px;">0</td>
-                </tr>
-                <tr style="border-bottom: var(--border-subtle);">
-                  <td style="padding: 12px 14px;"><strong>Sazzad Hossain Sabbir</strong><br><span style="font-size: 11px; color: var(--rust-copper);">VISUALIZER</span></td>
-                  <td style="padding: 12px 14px;"><span style="color: #22c55e;">● Active Now</span></td>
-                  <td style="padding: 12px 14px;">14</td>
-                  <td style="padding: 12px 14px;">2</td>
-                  <td style="padding: 12px 14px;">4</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
 
         </div>
-      </section>
 
-      <!-- SCREEN 2: MODERN CHAT & POLLS (#chat) (Screenshots 1, 2, 3) -->
-      <section id="screen-chat" class="screen-module">
-        <div class="chat-workspace">
-          <!-- Pinned strip -->
-          <div class="chat-pinned-strip">
-            <span>⭐</span>
-            <span><strong>10 Pinned:</strong> Q3 Campaign deadlines & brand asset guidelines locked.</span>
-          </div>
-
-          <!-- Message Stream with Modern Chat Bubbles -->
-          <div class="messages-stream" id="chat-messages-container">
-
-            <!-- Incoming Message (Emily Carter) -->
-            <div class="chat-msg-row incoming">
-              <div class="user-avatar-round" style="width: 32px; height: 32px; font-size: 11px;">EC</div>
-              <div>
-                <div class="bubble-box bubble-incoming">
-                  Hey team! Standup in 10 minutes. Please have your task boards updated.
-                </div>
-                <div class="bubble-meta">Emily Carter · 04:48 PM</div>
-              </div>
+        <!-- Slack Rich Composer Box (From Screenshots 1 & 5) -->
+        <div class="slack-composer-container">
+          <div class="slack-composer-border">
+            <div class="composer-formatting-bar">
+              <span><b>B</b></span>
+              <span><i>I</i></span>
+              <span><s>S</s></span>
+              <span>🔗</span>
+              <span>🔢</span>
+              <span>• List</span>
+              <span>&lt;/&gt;</span>
             </div>
-
-            <!-- Incoming Poll Box (From Screenshot 2) -->
-            <div class="chat-msg-row incoming">
-              <div class="user-avatar-round" style="width: 32px; height: 32px; font-size: 11px;">CS</div>
-              <div>
-                <div class="poll-card-bubble">
-                  <div class="poll-title">
-                    📊 Which direction should we take for the landing page?
-                  </div>
-
-                  <div class="poll-option-row" onclick="votePoll(1)">
-                    <div class="poll-fill-bar" style="width: 31%;"></div>
-                    <span class="poll-opt-name">Bold and colourful</span>
-                    <span class="poll-opt-pct">31%</span>
-                  </div>
-
-                  <div class="poll-option-row" onclick="votePoll(2)">
-                    <div class="poll-fill-bar" style="width: 54%; background: rgba(194, 94, 46, 0.75);"></div>
-                    <span class="poll-opt-name">Minimal and clean</span>
-                    <span class="poll-opt-pct">54%</span>
-                  </div>
-
-                  <div class="poll-option-row" onclick="votePoll(3)">
-                    <div class="poll-fill-bar" style="width: 15%;"></div>
-                    <span class="poll-opt-name">Illustration heavy</span>
-                    <span class="poll-opt-pct">15%</span>
-                  </div>
-
-                  <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); margin-top: 8px;" id="poll-votes-text">
-                    13 votes · Click to cast your vote
-                  </div>
-                </div>
-                <div class="bubble-meta">Clyde Smith · 05:48 PM</div>
+            <div class="composer-input-area" contenteditable="true" id="slack-text-input" placeholder="Message #general" onkeypress="handleSlackKey(event)"></div>
+            <div class="composer-bottom-bar">
+              <div class="composer-tools-left">
+                <span title="Add attachment">➕</span>
+                <span title="Formatting">Aa</span>
+                <span title="Emoji">😊</span>
+                <span title="Mention">@</span>
+                <span title="Video clip">📹</span>
+                <span title="Audio note">🎙️</span>
               </div>
-            </div>
-
-            <!-- Outgoing Message (You) -->
-            <div class="chat-msg-row outgoing">
-              <div>
-                <div class="bubble-box bubble-outgoing">
-                  Minimal gets my vote @Emily Carter what do you think?
-                </div>
-                <div class="bubble-meta" style="justify-content: flex-end;">06:48 PM · Read ✓✓</div>
-              </div>
-            </div>
-
-            <!-- Incoming File Attachment (From Screenshot 1) -->
-            <div class="chat-msg-row incoming">
-              <div class="user-avatar-round" style="width: 32px; height: 32px; font-size: 11px;">SA</div>
-              <div>
-                <div class="bubble-box bubble-incoming">
-                  Here is the finalized artwork file for the print edition.
-                  <div class="attachment-card">
-                    <div class="file-badge-icon">PDF</div>
-                    <div style="flex: 1;">
-                      <div style="font-weight: 600; font-size: 13px;">Smitten Shah 01.pdf</div>
-                      <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">1 Page · 250 KB</div>
-                    </div>
-                    <button class="top-action-pill" style="padding: 4px 10px;" onclick="alert('Downloading Smitten Shah 01.pdf')">↓</button>
-                  </div>
-                </div>
-                <div class="bubble-meta">Shimul Ahmad · 08:30 PM</div>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Composer Bar -->
-          <div class="chat-bottom-bar">
-            <div class="composer-input-box">
-              <input type="text" class="composer-text-input" id="chat-input-field" placeholder="Type your message... (Use @ for mentions)" onkeypress="handleEnter(event)">
-              <button class="top-action-pill" onclick="sendChat()">Send</button>
+              <button class="btn-slack-send" onclick="sendSlackMessage()" title="Send">➤</button>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SCREEN 3: KANBAN TASKS (#tasks) -->
-      <section id="screen-tasks" class="screen-module">
-        <div class="kanban-container">
-          <div class="kanban-lane">
-            <div class="lane-head">
-              <span>TO DO</span>
-              <span style="background: rgba(255,255,255,0.1); padding: 2px 7px; border-radius: 10px; font-size: 11px;">8</span>
-            </div>
-            <div class="task-card-item">
-              <div style="font-weight: 600; font-size: 13px; margin-bottom: 6px;">Nexus Service Logo Design</div>
-              <span class="badge-urgent">URGENT</span>
-              <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 6px;">Concern of FORTRESS</div>
-            </div>
-            <div class="task-card-item">
-              <div style="font-weight: 600; font-size: 13px; margin-bottom: 6px;">The Panaroma by FORTRESS wall design</div>
-              <span class="badge-urgent">URGENT</span>
-              <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 6px;">THE PANAROMA</div>
-            </div>
-          </div>
+      <!-- STAGE 2: FILES & CANVAS (Screenshot 2) -->
+      <section id="stage-files" style="display: none; flex-direction: column; height: 100%; padding: 24px; overflow-y: auto;">
+        <h2 style="font-family: var(--font-display); font-size: 22px; font-weight: 700; margin-bottom: 16px;">All files</h2>
+        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--slack-border); border-radius: 6px; padding: 10px 14px; margin-bottom: 24px; display: flex; align-items: center; gap: 8px;">
+          <span>🔍</span>
+          <input type="text" placeholder="Search canvases and files..." style="background: transparent; border: none; outline: none; color: #fff; width: 100%; font-size: 13.5px;">
+        </div>
 
-          <div class="kanban-lane">
-            <div class="lane-head">
-              <span>IN PROGRESS</span>
-              <span style="background: rgba(255,255,255,0.1); padding: 2px 7px; border-radius: 10px; font-size: 11px;">6</span>
-            </div>
-            <div class="task-card-item">
-              <div style="font-weight: 600; font-size: 13px; margin-bottom: 6px;">AR-FDL Starlit Abode Air — 3 creatives</div>
-              <span class="badge-medium">MEDIUM</span>
-              <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 6px;">Creative Suite</div>
-            </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px;">
+          <div style="background: var(--slack-sidebar-bg); border: 1px solid var(--slack-border); border-radius: 8px; padding: 16px;">
+            <div style="font-weight: 700; font-size: 14px; color: #fff; margin-bottom: 6px;">Employee onboarding</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Welcome new people and initialize task lists.</div>
           </div>
-
-          <div class="kanban-lane">
-            <div class="lane-head">
-              <span>IN REVIEW</span>
-              <span style="background: rgba(255,255,255,0.1); padding: 2px 7px; border-radius: 10px; font-size: 11px;">0</span>
-            </div>
-            <div style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 20px 0;">No tasks under review</div>
+          <div style="background: var(--slack-sidebar-bg); border: 1px solid var(--slack-border); border-radius: 8px; padding: 16px;">
+            <div style="font-weight: 700; font-size: 14px; color: #fff; margin-bottom: 6px;">Monthly newsletter</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Broadcast announcements to the company.</div>
           </div>
-
-          <div class="kanban-lane">
-            <div class="lane-head">
-              <span>DONE</span>
-              <span style="background: rgba(255,255,255,0.1); padding: 2px 7px; border-radius: 10px; font-size: 11px;">5</span>
-            </div>
-            <div class="task-card-item" style="opacity: 0.8;">
-              <div style="font-weight: 600; font-size: 13px; margin-bottom: 6px; text-decoration: line-through;">Id Card Design</div>
-              <span class="badge-medium">MEDIUM</span>
-              <div style="font-size: 11.5px; color: #22c55e; margin-top: 6px;">Completed by Sazzad</div>
-            </div>
+          <div style="background: var(--slack-sidebar-bg); border: 1px solid var(--slack-border); border-radius: 8px; padding: 16px;">
+            <div style="font-weight: 700; font-size: 14px; color: #fff; margin-bottom: 6px;">Out-of-office plan</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Share coverage schedules with teammates.</div>
           </div>
         </div>
+
+        <!-- Files List -->
+        <table style="width: 100%; border-collapse: collapse; font-size: 13.5px;">
+          <thead>
+            <tr style="text-align: left; border-bottom: 1px solid var(--slack-border); color: var(--text-muted);">
+              <th style="padding: 10px 0;">NAME</th>
+              <th style="padding: 10px 0;">OWNER</th>
+              <th style="padding: 10px 0;">LAST VIEWED</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+              <td style="padding: 12px 0;">📄 THE Epic Draft.pdf</td>
+              <td style="padding: 12px 0;">Md. Naiem Hossain</td>
+              <td style="padding: 12px 0; color: var(--text-muted);">August 19th</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+              <td style="padding: 12px 0;">🎨 FORTRESS Print File.ai</td>
+              <td style="padding: 12px 0;">Zke Sabbir Designer</td>
+              <td style="padding: 12px 0; color: var(--text-muted);">Today</td>
+            </tr>
+          </tbody>
+        </table>
       </section>
 
-      <!-- SCREEN 4: TEAM DIRECTORY (#team) -->
-      <section id="screen-team" class="screen-module">
-        <div style="padding: 24px;">
-          <h2 style="font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 16px;">Team Directory & Roles</h2>
-          <div style="background: var(--bg-surface); border: var(--border-subtle); border-radius: var(--radius-sm); overflow: hidden;">
-            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-              <thead>
-                <tr style="text-align: left; background: rgba(0,0,0,0.2); font-family: var(--font-display); font-size: 12px; color: var(--text-muted);">
-                  <th style="padding: 10px 14px;">MEMBER</th>
-                  <th style="padding: 10px 14px;">EMAIL</th>
-                  <th style="padding: 10px 14px;">ROLE</th>
-                  <th style="padding: 10px 14px;">STATUS</th>
-                  <th style="padding: 10px 14px;">ACTION</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: var(--border-subtle);">
-                  <td style="padding: 12px 14px;"><strong>Anayat Munna</strong><br><span style="font-size: 11px; color: var(--text-muted);">ARCH-LEAD</span></td>
-                  <td style="padding: 12px 14px;">anayat@fortress.com.bd</td>
-                  <td style="padding: 12px 14px;"><span style="font-family: var(--font-mono); font-size: 11px;">ARCH</span></td>
-                  <td style="padding: 12px 14px;"><span style="color: #22c55e;">Active</span></td>
-                  <td style="padding: 12px 14px;"><button class="top-action-pill" style="background: var(--bg-surface-elevated); border: var(--border-subtle); color: #fff;" onclick="openDirectMessage('Anayat Munna')">Message</button></td>
-                </tr>
-                <tr style="border-bottom: var(--border-subtle);">
-                  <td style="padding: 12px 14px;"><strong>Sazzad Hossain Sabbir</strong><br><span style="font-size: 11px; color: var(--rust-copper);">VISUALIZER</span></td>
-                  <td style="padding: 12px 14px;">sabbir@fortress.com.bd</td>
-                  <td style="padding: 12px 14px;"><span style="font-family: var(--font-mono); font-size: 11px; color: var(--rust-copper);">Visualizer</span></td>
-                  <td style="padding: 12px 14px;"><span style="color: #22c55e;">Active (You)</span></td>
-                  <td style="padding: 12px 14px;"><button class="top-action-pill" onclick="navigateTo('profile')">Edit Profile</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- SCREEN 5: PROFILE SETTINGS (#profile) -->
-      <section id="screen-profile" class="screen-module">
-        <div style="padding: 30px; display: flex; justify-content: center;">
-          <div style="background: var(--bg-surface); border: var(--border-subtle); border-radius: var(--radius-sm); padding: 32px; width: 100%; max-width: 650px;">
-            <h2 style="font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 4px;">Your Profile</h2>
-            <p style="font-size: 12px; font-family: var(--font-mono); color: var(--rust-copper); margin-bottom: 24px;">sabbir@fortress.com.bd · VISUALIZER</p>
-
-            <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 24px;">
-              <div class="user-avatar-round" style="width: 76px; height: 76px; font-size: 24px;">ZS</div>
-              <div>
-                <button class="top-action-pill" style="margin-right: 8px;">Change photo</button>
-                <button class="top-action-pill" style="background: transparent; border: var(--border-subtle); color: var(--text-muted);">Remove photo</button>
-              </div>
-            </div>
-
-            <form onsubmit="event.preventDefault(); alert('Profile Saved Successfully!');">
-              <div style="margin-bottom: 14px;">
-                <label style="display: block; font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;">Name</label>
-                <input type="text" value="Sazzad Hossain Sabbir" style="width: 100%; background: var(--bg-app); border: var(--border-subtle); border-radius: 4px; padding: 10px 14px; color: #fff; font-size: 13.5px;">
-              </div>
-
-              <div style="margin-bottom: 14px;">
-                <label style="display: block; font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;">Designation</label>
-                <input type="text" value="Executive, Brand & Communications" style="width: 100%; background: var(--bg-app); border: var(--border-subtle); border-radius: 4px; padding: 10px 14px; color: #fff; font-size: 13.5px;">
-              </div>
-
-              <div style="margin-bottom: 14px;">
-                <label style="display: block; font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;">Phone</label>
-                <input type="text" value="+8801761134166" style="width: 100%; background: var(--bg-app); border: var(--border-subtle); border-radius: 4px; padding: 10px 14px; color: #fff; font-size: 13.5px;">
-              </div>
-
-              <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <button type="submit" class="top-action-pill">Save changes</button>
-              </div>
-            </form>
-          </div>
-        </div>
+      <!-- STAGE 3: TO-DOS (Screenshot 3) -->
+      <section id="stage-todos" style="display: none; flex-direction: column; height: 100%; align-items: center; justify-content: center; text-align: center;">
+        <div style="font-size: 48px; margin-bottom: 12px;">📑</div>
+        <h2 style="font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px;">No to-dos yet</h2>
+        <p style="font-size: 13px; color: var(--text-muted); max-width: 320px; margin-bottom: 18px;">
+          Add a to-do from any message or task to keep track of work right inside Slack.
+        </p>
+        <button class="global-search-bar" style="width: auto; padding: 8px 18px; color: #fff; border-color: var(--rust-copper);" onclick="alert('Creating To-do')">+ Add To-do</button>
       </section>
 
     </main>
   </div>
 
+  <!-- SLACK CHANNEL MEMBERS MODAL (Exact from Screenshot 4) -->
+  <div class="slack-modal-overlay" id="members-modal" style="display: none;" onclick="closeMembersModal(event)">
+    <div class="slack-modal-card" onclick="event.stopPropagation()">
+      <div class="modal-header-slack">
+        <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff;"># general</h3>
+        <button style="background: transparent; border: none; color: var(--text-muted); font-size: 18px; cursor: pointer;" onclick="closeMembersModal()">✕</button>
+      </div>
+
+      <div class="modal-tabs-slack">
+        <div class="modal-tab-item">About</div>
+        <div class="modal-tab-item active">Members (4)</div>
+        <div class="modal-tab-item">Integrations</div>
+        <div class="modal-tab-item">Settings</div>
+      </div>
+
+      <div style="padding: 14px 20px;">
+        <input type="text" placeholder="Find people or agents" style="width: 100%; background: #11141a; border: 1px solid var(--slack-border); border-radius: 4px; padding: 8px 12px; color: #fff; font-size: 13px; outline: none;">
+      </div>
+
+      <div style="max-height: 280px; overflow-y: auto;">
+        <div class="modal-member-row">
+          <div class="user-msg-avatar" style="width: 30px; height: 30px; font-size: 11px;">RI</div>
+          <div>
+            <div style="font-weight: 700; color: #fff; font-size: 13.5px;">Md Rakibul Islam</div>
+            <div style="font-size: 11px; color: var(--text-muted);">IT Expert</div>
+          </div>
+        </div>
+
+        <div class="modal-member-row">
+          <div class="user-msg-avatar" style="width: 30px; height: 30px; font-size: 11px; background: #0284c7;">NH</div>
+          <div>
+            <div style="font-weight: 700; color: #fff; font-size: 13.5px;">Md. Naiem Hossain</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Brand & Communications</div>
+          </div>
+        </div>
+
+        <div class="modal-member-row">
+          <div class="user-msg-avatar" style="width: 30px; height: 30px; font-size: 11px; background: #16a34a;">SD</div>
+          <div>
+            <div style="font-weight: 700; color: #fff; font-size: 13.5px;">Shimul-DMS</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Admin</div>
+          </div>
+        </div>
+
+        <div class="modal-member-row">
+          <div class="user-msg-avatar" style="width: 30px; height: 30px; font-size: 11px; background: var(--rust-copper);">ZS</div>
+          <div>
+            <div style="font-weight: 700; color: #fff; font-size: 13.5px;">Zke Sabbir Designer <small style="color: var(--rust-copper);">(you)</small> 🪽</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Visualizer Fortress Development Limited</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    function navigateTo(key) {
-      document.querySelectorAll('.screen-module').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.rail-action-btn').forEach(b => b.classList.remove('active'));
+    function switchStage(stageName) {
+      document.getElementById('stage-chat').style.display = 'none';
+      document.getElementById('stage-files').style.display = 'none';
+      document.getElementById('stage-todos').style.display = 'none';
 
-      const targetScreen = document.getElementById('screen-' + key);
-      if (targetScreen) targetScreen.classList.add('active');
+      document.querySelectorAll('.rail-icon-btn').forEach(btn => btn.classList.remove('active'));
 
-      const targetRail = document.getElementById('rail-' + key);
-      if (targetRail) targetRail.classList.add('active');
-
-      const titleEl = document.getElementById('stage-main-title');
-      if (key === 'home') {
-        titleEl.innerHTML = '<span>Hello, Sazzad</span><span style="font-size: 12px; font-weight: 400; color: var(--text-muted); font-family: var(--font-ui);"> | Workspace Pulse & Priority</span>';
-      } else if (key === 'tasks') {
-        titleEl.innerHTML = '<span>Kanban Tasks</span><span style="font-size: 12px; font-weight: 400; color: var(--text-muted); font-family: var(--font-ui);"> | 14 Active Tasks across 4 Columns</span>';
-      } else if (key === 'chat') {
-        titleEl.innerHTML = '<span>Corporate Messaging</span><span style="font-size: 12px; font-weight: 400; color: var(--text-muted); font-family: var(--font-ui);"> | End-to-End Encrypted</span>';
-      } else if (key === 'team') {
-        titleEl.innerHTML = '<span>Team & RBAC Roles</span><span style="font-size: 12px; font-weight: 400; color: var(--text-muted); font-family: var(--font-ui);"> | FORTRESS Multi-tenant Directory</span>';
-      } else if (key === 'profile') {
-        titleEl.innerHTML = '<span>Profile Settings</span><span style="font-size: 12px; font-weight: 400; color: var(--text-muted); font-family: var(--font-ui);"> | Sazzad Hossain Sabbir</span>';
+      if (stageName === 'chat') {
+        document.getElementById('stage-chat').style.display = 'flex';
+        document.getElementById('rail-home-btn').classList.add('active');
+      } else if (stageName === 'files') {
+        document.getElementById('stage-files').style.display = 'flex';
+        document.getElementById('rail-files-btn').classList.add('active');
+      } else if (stageName === 'todos') {
+        document.getElementById('stage-todos').style.display = 'flex';
+        document.getElementById('rail-todos-btn').classList.add('active');
       }
     }
 
-    function openChannel(name) {
-      navigateTo('chat');
+    function openMembersModal() {
+      document.getElementById('members-modal').style.display = 'flex';
     }
 
-    function openDirectMessage(name) {
-      navigateTo('chat');
+    function closeMembersModal(e) {
+      document.getElementById('members-modal').style.display = 'none';
     }
 
-    function acknowledgeItem(btn) {
-      btn.innerText = '✓ Acknowledged';
-      btn.style.background = '#16a34a';
-      btn.disabled = true;
+    function focusSearch() {
+      alert('Quick Switcher: Type any channel name, file, or member.');
     }
 
-    function votePoll(option) {
-      alert('Your vote has been cast for Option ' + option);
-      const pollText = document.getElementById('poll-votes-text');
-      if (pollText) pollText.innerText = '14 votes · Your vote recorded';
+    function handleSlackKey(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendSlackMessage();
+      }
     }
 
-    function handleEnter(e) {
-      if (e.key === 'Enter') sendChat();
-    }
-
-    function sendChat() {
-      const input = document.getElementById('chat-input-field');
-      const text = input.value.trim();
+    function sendSlackMessage() {
+      const input = document.getElementById('slack-text-input');
+      const text = input.innerText.trim();
       if (!text) return;
 
-      const container = document.getElementById('chat-messages-container');
-      const row = document.createElement('div');
-      row.className = 'chat-msg-row outgoing';
-      row.innerHTML = `
-        <div>
-          <div class="bubble-box bubble-outgoing">${text}</div>
-          <div class="bubble-meta" style="justify-content: flex-end;">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} · Sent ✓</div>
+      const container = document.getElementById('messages-stream-box');
+      const newMsg = document.createElement('div');
+      newMsg.className = 'slack-msg-group';
+      newMsg.innerHTML = `
+        <div class="user-msg-avatar" style="background: var(--rust-copper);">ZS</div>
+        <div class="slack-msg-content">
+          <div class="slack-msg-author">
+            <span class="author-name">Zke Sabbir Designer (you) 🪽</span>
+            <span class="msg-timestamp">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+          </div>
+          <div style="color: #fff; line-height: 1.5;">${text}</div>
         </div>
       `;
-      container.appendChild(row);
-      input.value = '';
+      container.appendChild(newMsg);
+      input.innerText = '';
       container.scrollTop = container.scrollHeight;
     }
   </script>
